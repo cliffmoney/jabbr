@@ -1,4 +1,4 @@
-# Project Name #
+# Jabber #
 
 <!-- 
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
@@ -17,28 +17,28 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+  Jabber is an innovative application for foreign language learners that emphasizes the two most important steps in learning a language - speaking and listening. 
 
 ## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  Our audio-centric platform will help anyone in the world learn any language remotely.
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  After creating an account, you'll be connected with language learners for whom you are a match. You'll use our native video-chat to conduct language exchange with partners, and be able to record the audio of the chat so that you can later listen both to yourself and the native speaker you were chatting with. You'll be able to splice any part of that chat into smaller audio segments and manipulate and tag these segments in a number of ways to help you practice and retain what you said and heard during every language exchange. 
 
 ## Problem ##
-  > Describe the problem your product solves.
+  When you are learning a language remotely, the most difficult part is finding opportunities to practice your speech and hear actual speech from native speakers. On the other hand, when you're learning a language in the target language's society, you might wish you had a recorder as you chatted during the day, so that you could listen at the end of the day to your conversations and retain more of what you said and heard. 
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+  We solve these two problems by leveraging the power of the internet in two important ways. We use the peer-to-peer capability of the internet to match language learners and provide a seamless environment for conversation practice. And we use internet data storage to give users the ability to record and manipulate the audio of their conversations to help them retain every sound spoken. Modern browser technologies and the asychronous capabilities of Node.js help use achieve both these solutions. 
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+  "Be like a baby - surrender yourself to a world of sound and you can learn any language" 
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  Simply create an account, link up with a recommended language partner, and use our intuitive to UI to record your conversations and manipulate audio snippets of that conversation. 
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  "I never thought it was possible to learn a language in this way through the internet! Thanks to Jabber, I'm so much closer to my goal of becoming fluent in Tagalog!" - Bill Killmer
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+  What are you waiting for? Create an account with Jabber and accelerate your language learning in a way you never thought possible. 
