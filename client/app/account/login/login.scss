@@ -1,0 +1,20 @@
+// Colors
+// --------------------------------------------------
+
+$btnText:                           #fff;
+$btnTextAlt:                        #000;
+
+$btnFacebookBackground:             #3B5998;
+$btnFacebookBackgroundHighlight:    #133783;
+$btnGithubBackground:               #fafafa;
+$btnGithubBackgroundHighlight:      #ccc;
+
+// Social buttons
+// --------------------------------------------------
+
+.btn-facebook {
+  @include button-variant($btnText, $btnFacebookBackgroundHighlight, $btnFacebookBackgroundHighlight);
+}
+.btn-github {
+  @include button-variant($btnTextAlt, $btnGithubBackground, $btnGithubBackgroundHighlight);
+}
