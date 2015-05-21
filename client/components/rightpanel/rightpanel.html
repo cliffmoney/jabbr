@@ -1,0 +1,11 @@
+<div class="rightPanel" ng-controller="rightPanelCtrl">
+  <h4>My Meetups</h4>
+  <div class="meetup" ng-repeat="meetup in meetups">
+    <ul>
+      <li>With {{meetup.partnerName}}</li>
+      <li>{{meetup.meetupTime}}</li>
+      <li>{{meetup.meetupDate}}</li>
+    </ul>
+
+  </div>
+</div>
