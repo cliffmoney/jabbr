@@ -16,8 +16,8 @@ var UserSchema = new Schema({
   provider: String,
   salt: String,
   facebook: {},
-  nativeLanguages: [String],
-  languagesLearning: [String]
+  nativeLanguage: String,
+  languageLearning: String
 });
 
 /**
