@@ -17,6 +17,12 @@ angular.module('jabbrApp')
         params: {
           id:'me'
         }
+      },
+      getMeetups: {
+        method: 'GET',
+        params: {
+          controller:'meetups'
+        }
       }
     });
   });
