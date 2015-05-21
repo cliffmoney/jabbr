@@ -35,7 +35,37 @@ User.find({}).remove(function() {
     provider: 'local',
     name: 'Test User',
     email: 'test@test.com',
-    password: 'test'
+    password: 'test',
+    nativeLanguages: ['Arabic'],
+    languagesLearning: ['English']
+  }, {
+    provider: 'local',
+    name: 'Angela',
+    email: 'angela@gmail.com',
+    password: '123',
+    nativeLanguages: ['Chinese, English'],
+    languagesLearning: ['Spanish']
+  }, {
+    provider: 'local',
+    name: 'Bill',
+    email: 'bill@gmail.com',
+    password: '123',
+    nativeLanguages: ['English'],
+    languagesLearning: ['Spanish']
+  }, {
+    provider: 'local',
+    name: 'Brandon',
+    email: 'brandon@gmail.com',
+    password: '123',
+    nativeLanguages: ['English'],
+    languagesLearning: ['Arabic']
+  }, {
+    provider: 'local',
+    name: 'Jeff',
+    email: 'jeff@gmail.com',
+    password: '123',
+    nativeLanguages: ['English', 'Spanish'],
+    languagesLearning: ['Chinese']
   }, {
     provider: 'local',
     role: 'admin',
