@@ -16,7 +16,7 @@ angular.module('jabbrApp')
         })
         .then( function() {
           // Account created, redirect to home
-          $location.path('/');
+          $location.path('/preferences');
         })
         .catch( function(err) {
           err = err.data;

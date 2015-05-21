@@ -8,7 +8,6 @@ angular.module('jabbrApp')
     }
 
     return {
-
       /**
        * Authenticate user and save token
        *
