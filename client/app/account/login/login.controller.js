@@ -15,7 +15,7 @@ angular.module('jabbrApp')
         })
         .then( function() {
           // Logged in, redirect to home
-          $location.path('/preferences');
+          $location.path('/dashboard');
         })
         .catch( function(err) {
           $scope.errors.other = err.message;
