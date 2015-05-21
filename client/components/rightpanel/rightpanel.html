@@ -1,11 +1,14 @@
-<div class="rightPanel" ng-controller="rightPanelCtrl">
+<div class="rightPanel" ng-controller="RightPanelCtrl">
   <h4>My Meetups</h4>
-  <div class="meetup" ng-repeat="meetup in meetups">
-    <ul>
-      <li>With {{meetup.partnerName}}</li>
-      <li>{{meetup.meetupTime}}</li>
-      <li>{{meetup.meetupDate}}</li>
-    </ul>
-
+  <div class="nav">
+        <ul class="nav nav-stacked">
+            <li ng-repeat="meetup in meetups" class="meetup">
+              <a href="#">
+                With {{meetup.partnerName}}
+                {{meetup.meetupTime}}
+                {{meetup.meetupDate}}
+              </a>
+            </li>
+        </ul>
   </div>
 </div>
