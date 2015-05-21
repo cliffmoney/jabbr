@@ -1,3 +1,42 @@
+<<<<<<< HEAD
 <div class="col-md-12">
 This is the preferences view.
 </div>
+=======
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Hello {{ getCurrentUser().name }}</h1>
+    </div>
+    <div class="col-sm-12">
+      <form class="form" name="form" ng-submit="submit(form)" novalidate>
+
+        <div class="form-group">
+          <label>What's your native language?</label>
+
+          <select ng-options="language for language in tempLanguages" ng-model="user.native"></select>
+
+        </div>
+
+        <div class="form-group">
+          <label>What language do you want to learn?</label>
+
+          <select ng-options="language for language in tempLanguages" ng-model="user.learning"></select>
+
+        </div>
+
+        <div>
+          <button class="btn btn-inverse btn-lg btn-login" type="submit">
+            Submit
+          </button>
+        </div>
+
+        
+      </form>
+    </div>
+  </div>
+  
+</div>
+>>>>>>> Implement user preference page upon login/signup
