@@ -12,7 +12,7 @@ angular.module('jabbrApp')
       meetupTime: "11:00AM",
       meetupDate: "Saturday, May 24rd"
     }];
-    $scope.user = Auth.getCurrentUser();
+
 
     // $scope.getMeetups = function() {
     //   User.getMeetups({ id: user._id 

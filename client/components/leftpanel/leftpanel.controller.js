@@ -24,7 +24,9 @@ angular.module('jabbrApp')
         'link': '/preferences'
       }
     ];
+
     $scope.isActive = function(route) {
       return route === $location.path();
     };
+
   });
