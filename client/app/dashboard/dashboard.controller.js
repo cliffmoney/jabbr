@@ -16,7 +16,6 @@ angular.module('jabbrApp')
 
     $scope.messagePartner = function(userId) {
       Session.setCurrentlyMessaging(userId);
-      console.log(userId);
       $location.path('/messager');
     }
   });
