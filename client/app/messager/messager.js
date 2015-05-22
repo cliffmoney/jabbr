@@ -6,7 +6,7 @@ angular.module('jabbrApp')
       .state('messager', {
         url: '/messager',
         templateUrl: 'app/messager/messager.html',
-        controller: 'MessagerCtrl'
+        controller: 'MessagerCtrl',
         authenticate: true
       });
   });

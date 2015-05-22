@@ -2,5 +2,5 @@
 
 angular.module('jabbrApp')
   .controller('MessagerCtrl', function ($scope, Auth, Session) {
-    $scope.currentlyMessaging = Session.getCurrentlyMessagin();
+    $scope.currentlyMessaging = Session.getCurrentlyMessaging();
   });
