@@ -11,13 +11,11 @@ angular.module('jabbrApp')
     $scope.tempLanguages = ["English","Chinese","Spanish","Arabic"];
     //save what languages user want to learn on submit
     $scope.submit = function(form) {
-      $scope.status = 'saving...';
       $http.put('api/users/preferences', {
         native: $scope.user.native, 
         learning: $scope.user.learning
       })
-      .success(function (data, status) {
-        $scope.status = 'saved';
+      .success(function () {
         $location.path('/dashboard');
       })
       .error( function(err) {
