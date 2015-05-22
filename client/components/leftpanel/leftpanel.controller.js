@@ -5,8 +5,8 @@ angular.module('jabbrApp')
         'title': 'Home',
         'link': '/dashboard'
       }, {
-        'title': 'My Saved Sessions',
-        'link': '/sessions'
+        'title': 'My Saved Recordings',
+        'link': '/recordings'
       }, {
         'title': 'My Practice Deck',
         'link': '/deck'
