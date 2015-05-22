@@ -8,7 +8,7 @@ describe('Controller: PreferencesCtrl', function () {
   var PreferencesCtrl, scope;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
+  beforeEach(inject(function (_$httpBackend_, $controller, $rootScope) {
     scope = $rootScope.$new();
     PreferencesCtrl = $controller('PreferencesCtrl', {
       $scope: scope
