@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jabbrApp')
-  .controller('DashboardCtrl', function ($scope, Auth, User) {
+  .controller('DashboardCtrl', function ($scope, Auth, User, Session, $location) {
     $scope.getCurrentUser = Auth.getCurrentUser;
     $scope.suggestedPartners = [];
 
@@ -13,4 +13,9 @@ angular.module('jabbrApp')
     };
 
     $scope.getSuggestedPartners();
+
+    $scope.messagePartner = function(userId) {
+      Session.setCurrentlyMessaging(userId);
+      $location.path('/messager');
+    }
   });
