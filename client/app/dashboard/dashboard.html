@@ -5,7 +5,20 @@
       <div ng-include="'components/leftpanel/leftpanel.html'"></div>
     </div>
     <div class="col-md-8">
-      The dashboard view that will change often
+      <h3>Suggested Language Partners</h3>
+      <div class='row' ng-repeat="partner in suggestedPartners">
+        <div class='col-md-3'>
+        Name: {{partner.name}}
+        </div>
+        <div class='col-md-3'>
+        Native Language: {{partner.nativeLanguage}}
+        </div>
+        <div class='col-md-3'>
+        Learning: {{partner.languageLearning}}
+        </div>
+        <div class='col-md-3'>
+        </div>
+      </div>
     </div>
     <div class="col-md-2">
       <div ng-include="'components/rightpanel/rightpanel.html'"></div>

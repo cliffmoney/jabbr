@@ -23,6 +23,12 @@ angular.module('jabbrApp')
         params: {
           controller:'meetups'
         }
+      },
+      getSuggestedPartners: {
+        method: 'GET',
+        params: {
+          id:'suggestedPartners'
+        }
       }
     });
   });

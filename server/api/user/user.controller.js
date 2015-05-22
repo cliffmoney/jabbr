@@ -94,6 +94,39 @@ exports.me = function(req, res, next) {
 };
 
 /**
+ * Changes user language preferences
+ */
+exports.changeUserPreferences = function(req, res, next) {
+  var userId = req.user._id;
+  User.findById(userId, function (err, user) {
+    if (err) return next(err);
+    if (!user) return res.json(500);
+    user.nativeLanguage = req.native;
+    user.languageLearning = req.learning;
+    user.save(function(err) {
+        if (err) return validationError(res, err);
+        res.send(200);
+    });
+  });
+};
+
+/**
+ * Gets suggestions for language partners
+ */
+ exports.getSuggestedPartners = function(req, res, next) {
+  var userId = req.user._id;
+  User.findById(userId, function(err, user) {
+    if (err) return next(err);
+    if (!user) return res.json(500);
+    User.find({ nativeLanguage: user.languageLearning }, 'name languageLearning nativeLanguage',
+      function(err, partners) {
+        if(err) return next(err);
+        res.json({partners: partners});
+    });
+  });
+ };
+
+/**
  * Authentication callback
  */
 exports.authCallback = function(req, res, next) {

@@ -16,7 +16,7 @@ angular.module('jabbrApp')
         learning: $scope.user.learning
       })
       .success(function () {
-        $location.path('/');
+        $location.path('/dashboard');
       })
       .error( function(err) {
         console.log(err);
