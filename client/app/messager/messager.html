@@ -6,6 +6,20 @@
     </div>
     <div class="col-md-8">
       <h3>To {{currentlyMessaging.name}}</h3>
+      <form class="form" name="messageForm" ng-submit="videoInvite(messageForm)" novalidate>
+
+        <div class="form-group">
+          <label>Message</label>
+
+          <textarea type="text" name="text" class="form-control" ng-model="message.text"
+                 mongoose-error required></textarea>
+          <p class="help-block" ng-show="form.text.$error.mongoose">
+              {{ errors.other }}
+          </p>
+        </div>
+
+        <button class="btn btn-lg btn-primary" type="submit">Send Video Invitation</button>
+      </form>
       
       
     </div>

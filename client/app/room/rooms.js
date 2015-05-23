@@ -7,6 +7,7 @@ angular.module('jabbrApp')
         controller: 'RoomCtrl'
       })
       .state('room',{
+        url: '/room',
         templateUrl: 'views/room.html',
         controller: 'RoomCtrl'
       });

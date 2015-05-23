@@ -144,6 +144,39 @@ exports.changeUserPreferences = function(req, res, next) {
  };
 
 /**
+ * Creates an invitation from one user to another 
+ */
+ exports.createInvite = function(req, res, next) {
+  var userId = req.user._id;
+  var invitedId = req.body.invited;
+  User.findByIdAndUpdate(userId, 
+    {$push: {"invitations": {
+      text: req.body.text, 
+      invited: invitedId,
+      inviter: userId
+    }}},
+    {safe: true},
+    function(err, user) {
+      if (err) return next(err);
+      if (!user) return res.json(500);
+      console.log(user);
+      User.findByIdAndUpdate(invitedId,
+       {$push: {"invitations": {
+        text: req.body.text, 
+        invited: invitedId,
+        inviter: userId
+       }}}, 
+       {safe: true},
+       function(err, user) {
+        if (err) return next(err);
+        if (!user) return res.json(500);
+        console.log(user);
+        res.send(200);
+      });
+  });
+ };
+
+/**
  * Authentication callback
  */
 exports.authCallback = function(req, res, next) {

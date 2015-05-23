@@ -13,6 +13,7 @@ router.get('/me', auth.isAuthenticated(), controller.me);
 router.put('/preferences', auth.isAuthenticated(), controller.changeUserPreferences);
 router.get('/suggestedPartners', auth.isAuthenticated(), controller.getSuggestedPartners);
 router.get('/userRecordings', auth.isAuthenticated(), controller.getUserRecordings);
+router.post('/invitations', auth.isAuthenticated(), controller.createInvite);
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);
