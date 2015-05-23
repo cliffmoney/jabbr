@@ -6,7 +6,9 @@ var mongoose = require('mongoose'),
 var RecordingSchema = new Schema({
   url: String,
   creator: String,
-  partner: String
+  partner: String,
+  date: Number
+
 });
 
 module.exports = mongoose.model('Recording', RecordingSchema);

@@ -3,16 +3,16 @@
 <h1>Recordings</h1>
 <div class='row' ng-repeat="recording in userRecordings">
   <div class='col-md-3'>
-  Name: {{recording.url}}
-  </div>
-  <div class='col-md-3'>
   Creator: {{recording.creator}}
   </div>
   <div class='col-md-3'>
-  Partner: {{recording.partner}}
+  Date: {{ parseDate(recording.date) }}<br>
+  <!-- <audio controls src="https://s3-us-west-1.amazonaws.com/hr-mytunes/data/03+Age+Ain%27t+Nothing+But+A+Number.mp3"></audio> -->
+  <audio controls ng-src="{{recording.url}}"></audio>
   </div>
   <div class='col-md-3'>
-    <button><a ng-click='messagePartner(partner._id)'>Message</a></button>
+  Partner: {{recording.partner}}<br>
+  Creator: {{recording.creator}}<br><br><br><br><br>
   </div>
 </div>
 </div>

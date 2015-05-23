@@ -84,22 +84,27 @@ Recording.find({}).remove(function() {
   {
     url: "https://s3-us-west-1.amazonaws.com/hr-mytunes/data/04+One+In+A+Million.mp3",
     creator: "angela@gmail.com",
-    partner: "jeff@gmail.com"
+    partner: "jeff@gmail.com",
+    date: new Date('May 16, 2015').valueOf()
   },
   {
     url: "https://s3-us-west-1.amazonaws.com/hr-mytunes/data/04+One+In+A+Million.mp3",
     creator: "bill@gmail.com",
-    partner: "brandon@gmail.com"
+    partner: "brandon@gmail.com",
+    date: new Date('May 15, 2015').valueOf()
+
   },
   {
     url: "https://s3-us-west-1.amazonaws.com/hr-mytunes/data/04+One+In+A+Million.mp3",
     creator: "angela@gmail.com",
-    partner: "bill@gmail.com"
+    partner: "bill@gmail.com",
+    date: new Date('May 14, 2015').valueOf()
   },
   {
     url: "https://s3-us-west-1.amazonaws.com/hr-mytunes/data/03+Age+Ain%27t+Nothing+But+A+Number.mp3",
     creator: "jeff@gmail.com",
-    partner: "angela@gmail.com"
+    partner: "angela@gmail.com",
+    date: new Date('May 13, 2015').valueOf()
   }, function() {
       console.log('finished populating recordings');
     }

@@ -135,7 +135,7 @@ exports.changeUserPreferences = function(req, res, next) {
   User.findById(userId, function(err, user) {
     if (err) return next(err);
     if (!user) return res.json(500);
-    Recording.find({ $or: [ { creator: user.email }, { partner: user.email } ] }, 'url creator partner',
+    Recording.find({ $or: [ { creator: user.email }, { partner: user.email } ] }, 'url creator partner date',
       function(err, recordings) {
         if(err) return next(err);
         res.json({recordings: recordings});
