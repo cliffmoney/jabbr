@@ -29,6 +29,12 @@ angular.module('jabbrApp')
         params: {
           id:'suggestedPartners'
         }
+      },
+      getUserRecordings: {
+        method: 'GET',
+        params: {
+          id:'userRecordings'
+        }
       }
     });
   });
