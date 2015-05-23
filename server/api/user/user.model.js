@@ -17,7 +17,8 @@ var UserSchema = new Schema({
   salt: String,
   facebook: {},
   nativeLanguage: String,
-  languageLearning: String
+  languageLearning: String,
+  invitations: [{text: String, invitedId: String, inviterId: String, room: Number, invitedName: String, inviterName: String}]
 });
 
 /**

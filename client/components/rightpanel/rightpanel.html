@@ -3,10 +3,8 @@
   <div class="nav">
         <ul class="nav nav-stacked">
             <li ng-repeat="meetup in meetups" class="meetup">
-              <a href="#">
-                With {{meetup.partnerName}}
-                {{meetup.meetupTime}}
-                {{meetup.meetupDate}}
+              <a ng-click="enterRoom(meetup.room)">
+                {{meetup.invitedName}} and {{meetup.inviterName}}
               </a>
             </li>
         </ul>
