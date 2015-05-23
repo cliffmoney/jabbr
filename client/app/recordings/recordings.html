@@ -1,3 +1,18 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
 <div class="col-md-12">
-This is the recordings view.
+<h1>Recordings</h1>
+<div class='row' ng-repeat="recording in userRecordings">
+  <div class='col-md-3'>
+  Name: {{recording.url}}
+  </div>
+  <div class='col-md-3'>
+  Creator: {{recording.creator}}
+  </div>
+  <div class='col-md-3'>
+  Partner: {{recording.partner}}
+  </div>
+  <div class='col-md-3'>
+    <button><a ng-click='messagePartner(partner._id)'>Message</a></button>
+  </div>
+</div>
 </div>

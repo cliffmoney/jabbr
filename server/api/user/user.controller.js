@@ -1,6 +1,7 @@
 'use strict';
 
 var User = require('./user.model');
+var Recording = require('../recording/recording.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
@@ -122,6 +123,22 @@ exports.changeUserPreferences = function(req, res, next) {
       function(err, partners) {
         if(err) return next(err);
         res.json({partners: partners});
+    });
+  });
+ };
+
+/**
+ * Gets user recordings
+ */
+ exports.getUserRecordings = function(req, res, next) {
+  var userId = req.user._id;
+  User.findById(userId, function(err, user) {
+    if (err) return next(err);
+    if (!user) return res.json(500);
+    Recording.find({ $or: [ { creator: user.email }, { partner: user.email } ] }, 'url creator partner',
+      function(err, recordings) {
+        if(err) return next(err);
+        res.json({recordings: recordings});
     });
   });
  };

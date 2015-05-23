@@ -7,6 +7,7 @@
 
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
+var Recording = require('../api/recording/recording.model');
 
 Thing.find({}).remove(function() {
   Thing.create({
@@ -74,6 +75,33 @@ User.find({}).remove(function() {
     password: 'admin'
   }, function() {
       console.log('finished populating users');
+    }
+  );
+});
+
+Recording.find({}).remove(function() {
+  Recording.create(
+  {
+    url: "https://s3-us-west-1.amazonaws.com/hr-mytunes/data/04+One+In+A+Million.mp3",
+    creator: "angela@gmail.com",
+    partner: "jeff@gmail.com"
+  },
+  {
+    url: "https://s3-us-west-1.amazonaws.com/hr-mytunes/data/04+One+In+A+Million.mp3",
+    creator: "bill@gmail.com",
+    partner: "brandon@gmail.com"
+  },
+  {
+    url: "https://s3-us-west-1.amazonaws.com/hr-mytunes/data/04+One+In+A+Million.mp3",
+    creator: "angela@gmail.com",
+    partner: "bill@gmail.com"
+  },
+  {
+    url: "https://s3-us-west-1.amazonaws.com/hr-mytunes/data/03+Age+Ain%27t+Nothing+But+A+Number.mp3",
+    creator: "jeff@gmail.com",
+    partner: "angela@gmail.com"
+  }, function() {
+      console.log('finished populating recordings');
     }
   );
 });

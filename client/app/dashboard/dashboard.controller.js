@@ -7,7 +7,7 @@ angular.module('jabbrApp')
 
     $scope.getSuggestedPartners = function() {
       User.getSuggestedPartners(function(res) {
-        console.log(res.partners)
+        console.log(res.partners);
         $scope.suggestedPartners = res.partners;
       });
     };
@@ -17,5 +17,5 @@ angular.module('jabbrApp')
     $scope.messagePartner = function(userId) {
       Session.setCurrentlyMessaging(userId);
       $location.path('/messager');
-    }
+    };
   });
