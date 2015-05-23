@@ -14,6 +14,9 @@ router.put('/preferences', auth.isAuthenticated(), controller.changeUserPreferen
 router.get('/suggestedPartners', auth.isAuthenticated(), controller.getSuggestedPartners);
 router.get('/userRecordings', auth.isAuthenticated(), controller.getUserRecordings);
 router.post('/invitations', auth.isAuthenticated(), controller.createInvite);
+router.get('/invitations', auth.isAuthenticated(), controller.getInvites);
+router.put('/invitations', auth.isAuthenticated(), controller.updateInvite);
+router.get('/meetups', auth.isAuthenticated(), controller.getMeetups);
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);

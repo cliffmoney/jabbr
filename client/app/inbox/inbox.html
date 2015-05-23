@@ -6,7 +6,18 @@
     </div>
     <div class="col-md-8">
       <h3>My Messages</h3>
-      
+      <div ng-repeat="message in messages">
+        <div class="row">
+          <div class="col-md-6">
+            Language Exchange Invitation From {{message.inviterName}}
+          </div>
+          <div class="col-md-3">
+            <button ng-show='!message.room'><a ng-click="acceptInvite(message)">Accept Invite</a></button>
+            <h4 ng-show='message.room'><a href='#'>Room</a></h4>
+          </div>
+        </div>
+        <p>{{message.text}}</p>
+      </div>
       
     </div>
     <div class="col-md-2">

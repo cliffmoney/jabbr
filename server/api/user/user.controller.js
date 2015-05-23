@@ -149,11 +149,15 @@ exports.changeUserPreferences = function(req, res, next) {
  exports.createInvite = function(req, res, next) {
   var userId = req.user._id;
   var invitedId = req.body.invited;
+  var invitedName = req.body.invitedName;
+  var inviterName = req.body.inviterName;
   User.findByIdAndUpdate(userId, 
     {$push: {"invitations": {
       text: req.body.text, 
-      invited: invitedId,
-      inviter: userId
+      invitedId: invitedId,
+      inviterId: userId,
+      invitedName: invitedName,
+      inviterName: inviterName
     }}},
     {safe: true},
     function(err, user) {
@@ -163,8 +167,10 @@ exports.changeUserPreferences = function(req, res, next) {
       User.findByIdAndUpdate(invitedId,
        {$push: {"invitations": {
         text: req.body.text, 
-        invited: invitedId,
-        inviter: userId
+        invitedId: invitedId,
+        inviterId: userId,
+        invitedName: invitedName,
+        inviterName: inviterName
        }}}, 
        {safe: true},
        function(err, user) {
@@ -173,6 +179,79 @@ exports.changeUserPreferences = function(req, res, next) {
         console.log(user);
         res.send(200);
       });
+  });
+ };
+
+/**
+ * Gets all invites that were sent to the logged in user from other users
+ */
+ exports.getInvites = function(req, res, next) {
+  var userId = req.user._id;
+  User.findById(userId, function(err, user) {
+    if (err) return next(err);
+    if (!user) return res.json(500);
+    var invites = [];
+    for(var i = 0; i < user.invitations.length; i++) {
+      if(user.invitations[i].invitedId = userId) {
+        invites.push(user.invitations[i]);
+      }
+    }
+    res.json({invitations: user.invitations});
+  });
+};
+
+/**
+ * Gets all invites that were sent to the logged in user from other users
+ */
+exports.updateInvite = function(req, res, next) {
+  var inviteId = req.body.inviteId;
+  var inviterId = req.body.inviterId;
+  var invitedId = req.body.invitedId;
+  var roomId = 1123214124; // do something here to create a unique room id for webRTC
+  User.findById(inviterId, function(err, user) {
+    if (err) return next(err);
+    if (!user) return res.json(500);
+    for(var i = 0; i < user.invitations.length; i++) {
+      if(user.invitations[i]._id = inviteId) {
+        user.invitations[i].room = roomId; 
+      }
+    }
+    user.save(function(err, user) {
+      console.log(user);
+      User.findById(invitedId, function(err, user) {
+        if (err) return next(err);
+        if (!user) return res.json(500);
+        for(var i = 0; i < user.invitations.length; i++) {
+          if(user.invitations[i]._id = inviteId) {
+            user.invitations[i].room = roomId;
+          }
+        }
+        user.save(function(err, user) {
+          console.log(user);
+          res.send(201);
+        });
+      });
+    });
+  });
+};
+
+/**
+ * Get the user meetups that have been agreed to and have a room assigned
+ */
+
+ exports.getMeetups = function(req, res, next) {
+  var userId = req.user._id;
+  User.findById(userId, function(err, user) {
+    if(err) return next(err);
+    if (!user) return res.json(500);
+    var activeMeetups = [] // each meetup (invitation) that has a room will be pushed here
+    for(var i = 0; i < user.invitations.length; i++) {
+      if(user.invitations[i].room) {
+        activeMeetups.push(user.invitations[i]);
+      }
+    }
+    console.log(activeMeetups);
+    res.json({meetups: activeMeetups});
   });
  };
 
