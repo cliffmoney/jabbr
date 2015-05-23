@@ -15,7 +15,7 @@ angular.module('jabbrApp')
         'link': '/partners'
       }, {
         'title': 'My Messages',
-        'link': '/messages'
+        'link': '/inbox'
       }, {
         'title': 'My Profile',
         'link': '/profile'
