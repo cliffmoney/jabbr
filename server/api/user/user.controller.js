@@ -163,7 +163,6 @@ exports.changeUserPreferences = function(req, res, next) {
     function(err, user) {
       if (err) return next(err);
       if (!user) return res.json(500);
-      console.log(user);
       User.findByIdAndUpdate(invitedId,
        {$push: {"invitations": {
         text: req.body.text, 
@@ -176,7 +175,6 @@ exports.changeUserPreferences = function(req, res, next) {
        function(err, user) {
         if (err) return next(err);
         if (!user) return res.json(500);
-        console.log(user);
         res.send(200);
       });
   });
@@ -217,7 +215,6 @@ exports.updateInvite = function(req, res, next) {
       }
     }
     user.save(function(err, user) {
-      console.log(user);
       User.findById(invitedId, function(err, user) {
         if (err) return next(err);
         if (!user) return res.json(500);
@@ -227,7 +224,6 @@ exports.updateInvite = function(req, res, next) {
           }
         }
         user.save(function(err, user) {
-          console.log(user);
           res.send(201);
         });
       });
@@ -250,7 +246,6 @@ exports.updateInvite = function(req, res, next) {
         activeMeetups.push(user.invitations[i]);
       }
     }
-    console.log(activeMeetups);
     res.json({meetups: activeMeetups});
   });
  };
