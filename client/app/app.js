@@ -30,7 +30,11 @@ angular.module('jabbrApp', [
       // Allow same origin resource loads.
       'self',
       // Allow loading from outer templates domain.
-      'https://s3-us-west-1.amazonaws.com/hr-mytunes/data/**'
+      'https://s3-us-west-1.amazonaws.com/hr-mytunes/data/**',
+      'https://avatars3.githubusercontent.com/**',
+      'https://avatars2.githubusercontent.com/**',
+      'https://avatars1.githubusercontent.com/**',
+      'https://avatars0.githubusercontent.com/**',
     ]);
   })
 
