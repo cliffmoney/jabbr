@@ -14,5 +14,10 @@ angular.module('jabbrApp')
 
     $scope.getUserRecordings();
 
+    $scope.parseDate = function(unixDate) {
+      var foo = new Date(unixDate);
+      return foo.toDateString();
+    };
+
 
   });

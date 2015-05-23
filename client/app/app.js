@@ -13,12 +13,19 @@ angular.module('jabbrApp', [
   'ui.router',
   'ui.bootstrap'
 ])
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, 
+                    $httpProvider, $sceDelegateProvider) {
     $urlRouterProvider
       .otherwise('/');
 
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
+    $sceDelegateProvider.resourceUrlWhitelist([
+      // Allow same origin resource loads.
+      'self',
+      // Allow loading from outer templates domain.
+      'https://s3-us-west-1.amazonaws.com/hr-mytunes/data/**'
+    ]);
   })
 
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
