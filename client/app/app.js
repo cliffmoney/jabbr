@@ -1,5 +1,10 @@
 'use strict';
 
+Object.setPrototypeOf = Object.setPrototypeOf || function(obj, proto) {
+  obj.__proto__ = proto;
+  return obj; 
+};
+
 angular.module('jabbrApp', [
   'ngCookies',
   'ngResource',
@@ -40,6 +45,11 @@ angular.module('jabbrApp', [
         }
       }
     };
+  })
+
+  
+  .constant('config', {
+      SIGNALIG_SERVER_URL: undefined
   })
 
   .run(function ($rootScope, $location, Auth) {
