@@ -7,15 +7,14 @@ angular.module('jabbrApp')
 
     $scope.getSuggestedPartners = function() {
       User.getSuggestedPartners(function(res) {
-        console.log(res.partners);
         $scope.suggestedPartners = res.partners;
       });
     };
 
     $scope.getSuggestedPartners();
 
-    $scope.messagePartner = function(userId) {
-      Session.setCurrentlyMessaging(userId);
+    $scope.messagePartner = function(partner) {
+      Session.setCurrentlyMessaging(partner);
       $location.path('/messager');
     };
   });
