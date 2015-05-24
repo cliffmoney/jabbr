@@ -5,6 +5,7 @@ angular.module('jabbrApp')
     $stateProvider
       .state('preferences', {
         url: '/preferences',
+        parent: 'dashboard',
         templateUrl: 'app/account/preferences/preferences.html',
         controller: 'PreferencesCtrl'
       });

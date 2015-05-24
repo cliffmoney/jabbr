@@ -3,12 +3,13 @@ angular.module('jabbrApp')
     $stateProvider
       .state('roomId', {
         url: '/room/:roomId',
-        templateUrl: 'views/room.html',
+        templateUrl: 'app/dashboard/room/views/room.html',
         controller: 'RoomCtrl'
       })
       .state('room',{
         url: '/room',
-        templateUrl: 'views/room.html',
+        parent: 'dashboard',
+        templateUrl: 'app/dashboard/room/views/room.html',
         controller: 'RoomCtrl'
       });
   });

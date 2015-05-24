@@ -5,7 +5,8 @@ angular.module('jabbrApp')
     $stateProvider
       .state('recordings', {
         url: '/recordings',
-        templateUrl: 'app/recordings/recordings.html',
+        parent: 'dashboard',
+        templateUrl: 'app/dashboard/recordings/recordings.html',
         controller: 'RecordingsCtrl'
       });
   });

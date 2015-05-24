@@ -6,22 +6,22 @@ angular.module('jabbrApp')
         'link': '/dashboard'
       }, {
         'title': 'My Saved Recordings',
-        'link': '/recordings'
+        'link': 'dashboard/recordings'
       }, {
         'title': 'My Practice Deck',
-        'link': '/deck'
+        'link': 'dashboard/deck'
       }, {
         'title': 'My Partners',
-        'link': '/partners'
+        'link': 'dashboard/partners'
       }, {
         'title': 'My Messages',
-        'link': '/inbox'
+        'link': 'dashboard/inbox'
       }, {
         'title': 'My Profile',
-        'link': '/profile'
+        'link': 'dashboard/profile'
       }, {
         'title': 'My Preferences',
-        'link': '/preferences'
+        'link': 'dashboard/preferences'
       }
     ];
 

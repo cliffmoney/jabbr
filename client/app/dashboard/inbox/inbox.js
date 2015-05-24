@@ -5,7 +5,8 @@ angular.module('jabbrApp')
     $stateProvider
       .state('inbox', {
         url: '/inbox',
-        templateUrl: 'app/inbox/inbox.html',
+        parent: 'dashboard',
+        templateUrl: 'app/dashboard/inbox/inbox.html',
         controller: 'InboxCtrl'
       });
   });

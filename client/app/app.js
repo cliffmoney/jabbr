@@ -15,8 +15,15 @@ angular.module('jabbrApp', [
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, 
                     $httpProvider, $sceDelegateProvider) {
-    $urlRouterProvider
-      .otherwise('/');
+    $urlRouterProvider.when('/dashboard', '/dashboard/overview');
+    $urlRouterProvider.otherwise('/');
+
+    $stateProvider
+      .state('base', {
+        abstract: true,
+        url: '',
+        templateUrl: 'app/base.html'
+      });
 
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');

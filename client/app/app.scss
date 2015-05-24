@@ -21,9 +21,10 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'account/preferences/preferences.scss';
 @import 'admin/admin.scss';
 @import 'dashboard/dashboard.scss';
-@import 'inbox/inbox.scss';
+@import 'dashboard/inbox/inbox.scss';
+@import 'dashboard/messager/messager.scss';
+@import 'dashboard/overview/overview.scss';
+@import 'dashboard/recordings/recordings.scss';
 @import 'main/main.scss';
-@import 'messager/messager.scss';
-@import 'recordings/recordings.scss';
 @import 'modal/modal.scss';
 // endinjector

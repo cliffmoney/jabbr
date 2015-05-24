@@ -5,6 +5,7 @@ angular.module('jabbrApp')
     $stateProvider
       .state('main', {
         url: '/',
+        parent: 'base',
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
       });
