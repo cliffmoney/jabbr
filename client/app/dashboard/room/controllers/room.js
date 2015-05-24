@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jabbrApp')
-  .controller('RoomCtrl', function ($sce, VideoStream, $location, $routeParams, $scope, Room) {
+  .controller('RoomCtrl', function ($sce, VideoStream, $location, $stateParams, $scope, Room) {
 
     if (!window.RTCPeerConnection || !navigator.getUserMedia) {
       $scope.error = 'WebRTC is not supported by your browser. You can try the app with Chrome and Firefox.';
@@ -15,13 +15,13 @@ angular.module('jabbrApp')
       stream = s;
       Room.init(stream);
       stream = URL.createObjectURL(stream);
-      if (!$routeParams.roomId) {
+      if (!$stateParams.roomId) {
         Room.createRoom()
         .then(function (roomId) {
           $location.path('/room/' + roomId);
         });
       } else {
-        Room.joinRoom($routeParams.roomId);
+        Room.joinRoom($stateParams.roomId);
       }
     }, function () {
       $scope.error = 'No audio/video permissions. Please refresh your browser and allow the audio/video capturing.';
