@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jabbrApp')
-  .controller('InboxCtrl', function ($scope, $http) {
+  .controller('InboxCtrl', function ($scope, $state, $http) {
     $scope.messages = [];
 
     $http.get('api/users/invitations')
@@ -19,7 +19,7 @@ angular.module('jabbrApp')
           inviterId: invite.inviterId
         })
         .success(function(data, status) {
-          console.log("accepted");
+          $state.go($state.current, {}, {reload: true});
         })
         .error(function(error) {
           console.log(error);

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jabbrApp')
-  .controller('NavbarCtrl', function ($scope, $location, Auth) {
+  .controller('NavbarCtrl', function ($scope, $state, $location, Auth) {
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
@@ -14,7 +14,7 @@ angular.module('jabbrApp')
 
     $scope.logout = function() {
       Auth.logout();
-      $location.path('/login');
+      $state.go('login');
     };
 
     $scope.isActive = function(route) {
