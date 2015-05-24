@@ -1,7 +1,7 @@
-<div class="leftPanel" ng-controller="LeftPanelCtrl">
+<div ng-controller="LeftPanelCtrl">
   <h4>Hello {{ currentUser.name }}</h4>
   <div class="nav">
-    <ul class="nav nav-stacked">
+    <ul class="nav nav-stacked nav-sidebar">
       <li ng-repeat="item in menu" ng-class="{active: $state.includes(item.state)}">
         <a ui-sref="{{item.state}}">{{item.title}}</a>
       </li>

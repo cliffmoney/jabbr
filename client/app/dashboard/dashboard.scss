@@ -1,3 +1,41 @@
 .dashboard {
-  border: 3px solid black;
+  position: relative
+}
+
+.dashboard {
+
+  .sidePanel {
+    background-color: $dashboard-primary;
+    height: 600px;
+    color: white;
+    padding: 0px;
+
+
+    h4 {
+      text-align: center;
+    }
+
+    a {
+      color: #fff;
+    }
+
+    a:hover {
+      color: $dashboard-primary;
+    }
+
+    li.active {
+      a {
+        color: $dashboard-primary;
+        background-color: #eee;
+      }
+    }
+  }
+
+  .leftPanel {
+  }
+
+  .rightPanel {
+
+  }
+
 }
