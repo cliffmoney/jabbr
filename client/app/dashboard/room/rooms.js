@@ -5,6 +5,7 @@ angular.module('jabbrApp')
     $stateProvider
       .state('roomId', {
         url: '/room/:roomId',
+        parent: 'dashboard',
         templateUrl: 'app/dashboard/room/views/room.html',
         controller: 'RoomCtrl'
       })
