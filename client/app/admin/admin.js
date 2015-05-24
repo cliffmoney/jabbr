@@ -5,6 +5,7 @@ angular.module('jabbrApp')
     $stateProvider
       .state('admin', {
         url: '/admin',
+        parent: 'base',
         templateUrl: 'app/admin/admin.html',
         controller: 'AdminCtrl'
       });

@@ -1,0 +1,15 @@
+<h3>Suggested Language Partners</h3>
+<div class='row' ng-repeat="partner in suggestedPartners">
+  <div class='col-md-3'>
+    Name: {{partner.name}}
+  </div>
+  <div class='col-md-3'>
+    Native Language: {{partner.nativeLanguage}}
+  </div>
+  <div class='col-md-3'>
+    Learning: {{partner.languageLearning}}
+  </div>
+  <div class='col-md-3'>
+    <button><a ng-click='messagePartner(partner)'>Message</a></button>
+  </div>
+</div>

@@ -5,7 +5,8 @@ angular.module('jabbrApp')
     $stateProvider
       .state('messager', {
         url: '/messager',
-        templateUrl: 'app/messager/messager.html',
+        parent: 'dashboard',
+        templateUrl: 'app/dashboard/messager/messager.html',
         controller: 'MessagerCtrl',
         authenticate: true
       });
