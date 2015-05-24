@@ -3,30 +3,26 @@ angular.module('jabbrApp')
     $scope.menu = [
       {
         'title': 'Home',
-        'link': '/dashboard'
+        'state': 'overview'
       }, {
         'title': 'My Saved Recordings',
-        'link': 'dashboard/recordings'
+        'state': 'recordings'
       }, {
         'title': 'My Practice Deck',
-        'link': 'dashboard/deck'
+        'state': 'deck'
       }, {
         'title': 'My Partners',
-        'link': 'dashboard/partners'
+        'state': 'partners'
       }, {
         'title': 'My Messages',
-        'link': 'dashboard/inbox'
+        'state': 'inbox'
       }, {
         'title': 'My Profile',
-        'link': 'dashboard/profile'
+        'state': 'profile'
       }, {
         'title': 'My Preferences',
-        'link': 'dashboard/preferences'
+        'state': 'preferences'
       }
     ];
-
-    $scope.isActive = function(route) {
-      return route === $location.path();
-    };
 
   });
