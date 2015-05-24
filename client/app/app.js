@@ -14,7 +14,7 @@ angular.module('jabbrApp', [
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider,
                     $httpProvider, $sceDelegateProvider,JabbrSocketProvider) {
-    $urlRouterProvider.when('/dashboard', '/dashboard/overview');
+    $urlRouterProvider.when('/dashboard', '/dashboard/overview', '/room', '/room/:roomId');
     $urlRouterProvider.otherwise('/');
 
     $stateProvider

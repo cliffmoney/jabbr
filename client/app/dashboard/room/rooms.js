@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('jabbrApp')
   .config(function ($stateProvider) {
     $stateProvider
