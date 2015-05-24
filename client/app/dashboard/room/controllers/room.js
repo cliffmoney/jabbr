@@ -18,7 +18,7 @@ angular.module('jabbrApp')
       if (!$stateParams.roomId) {
         Room.createRoom()
         .then(function (roomId) {
-          $state.go('room', {roomId: roomId});
+          $state.go('room', {roomId: roomId}, {location: true});
         });
       } else {
         Room.joinRoom($stateParams.roomId);
