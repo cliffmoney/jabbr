@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('jabbrApp')
-  .controller('OverviewCtrl', function ($scope, $state, Auth, User, Session, $location) {
-    $scope.getCurrentUser = Auth.getCurrentUser;
+  .controller('OverviewCtrl', function ($scope, $state, User, Session, $location) {
     $scope.suggestedPartners = [];
 
     $scope.getSuggestedPartners = function() {

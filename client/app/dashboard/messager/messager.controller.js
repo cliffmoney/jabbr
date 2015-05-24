@@ -3,7 +3,6 @@
 angular.module('jabbrApp')
   .controller('MessagerCtrl', function ($scope, Auth, Session, $http) {
     $scope.currentlyMessaging = Session.getCurrentlyMessaging();
-    $scope.user = Auth.getCurrentUser();
     $scope.message = {};
     
     $scope.videoInvite = function(form) {
@@ -13,7 +12,7 @@ angular.module('jabbrApp')
           text: $scope.message.text,
           invited: $scope.currentlyMessaging._id,
           invitedName: $scope.currentlyMessaging.name,
-          inviterName: $scope.user.name
+          inviterName: $scope.currentUser.name
         })
         .success(function(data, status) {
           console.log("invitation sent!");
