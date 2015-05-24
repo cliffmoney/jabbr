@@ -3,8 +3,10 @@
 
 
 angular.module('jabbrApp')
-  .factory('Room', function ($rootScope, $q, Io, config) {
+  .factory('Room', function ($rootScope, $q, JabbrSocket) {
 
+    var connected = false;
+    var socket = JabbrSocket;
     var iceConfig = { 'iceServers': [{ 'url': 'stun:stun.l.google.com:19302' }]},
         peerConnections = {},
         currentId, roomId,
@@ -73,8 +75,8 @@ angular.module('jabbrApp')
       }
     }
 
-    var socket = Io.connect(config.SIGNALIG_SERVER_URL),
-        connected = false;
+    // var socket = Io.connect(config.SIGNALIG_SERVER_URL),
+    //     connected = false;
 
     function addHandlers(socket) {
       socket.on('peer.connected', function (params) {
@@ -94,21 +96,32 @@ angular.module('jabbrApp')
     var api = {
       joinRoom: function (r) {
         if (!connected) {
-          socket.emit('init', { room: r }, function (roomid, id) {
-            currentId = id;
-            roomId = roomid;
+          socket.emit('joinRoom', { roomid: r });
+          socket.on('enterRoom', function(roomInfo){
+            currentId = roomInfo.id;
+            roomId = roomInfo.roomid;
+            connected = true;
           });
-          connected = true;
         }
       },
       createRoom: function () {
         var d = $q.defer();
-        socket.emit('init', null, function (roomid, id) {
-          d.resolve(roomid);
-          roomId = roomid;
+        console.log('creating Room');
+        socket.emit('createRoom', null);
+        socket.on('newRoom', function(roomInfo){
+          roomId = roomInfo.roomid;
+          var id = roomInfo.id;
+          d.resolve(roomId);
+          console.log('Your roomId is:' + roomId);
           currentId = id;
           connected = true;
         });
+        //   console.log("Server has created Room")
+        //   d.resolve(roomid);
+        //   roomId = roomid;
+        //   currentId = id;
+        //   connected = true;
+        // });
         return d.promise;
       },
       init: function (s) {

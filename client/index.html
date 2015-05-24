@@ -18,6 +18,7 @@
     <!-- build:css({.tmp,client}) app/app.css -->
     <link rel="stylesheet" href="app/app.css">
       <!-- injector:css -->
+      <link rel="stylesheet" href="app/room.css">
       <!-- endinjector -->
     <!-- endbuild -->
   </head>
@@ -53,10 +54,10 @@
       <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
       <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
       <script src="bower_components/lodash/dist/lodash.compat.js"></script>
-      <script src="bower_components/angular-socket-io/socket.js"></script>
       <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+      <script src="bower_components/eventEmitter/EventEmitter.js"></script>
       <!-- endbower -->
-      <script src="socket.io-client/socket.io.js"></script>
+      <script src="socket.io/socket.io.js"></script>
     <!-- endbuild -->
 
         <!-- build:js({.tmp,client}) app/app.js -->
@@ -90,7 +91,6 @@
           <script src="app/dashboard/room/controllers/room.js"></script>
           <script src="app/dashboard/room/directives/videoplayer.js"></script>
           <script src="app/dashboard/room/rooms.js"></script>
-          <script src="app/dashboard/room/services/io.js"></script>
           <script src="app/dashboard/room/services/room.js"></script>
           <script src="app/dashboard/room/services/videostream.js"></script>
           <script src="app/main/main.controller.js"></script>
@@ -103,7 +103,7 @@
           <script src="components/mongoose-error/mongoose-error.directive.js"></script>
           <script src="components/navbar/navbar.controller.js"></script>
           <script src="components/rightpanel/rightpanel.controller.js"></script>
-          <script src="components/socket/socket.service.js"></script>
+          <script src="components/socket/jabbrSocket.js"></script>
           <!-- endinjector -->
         <!-- endbuild -->
 </body>

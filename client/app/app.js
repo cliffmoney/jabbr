@@ -2,19 +2,18 @@
 
 Object.setPrototypeOf = Object.setPrototypeOf || function(obj, proto) {
   obj.__proto__ = proto;
-  return obj; 
+  return obj;
 };
 
 angular.module('jabbrApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'btford.socket-io',
   'ui.router',
   'ui.bootstrap'
 ])
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, 
-                    $httpProvider, $sceDelegateProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $locationProvider,
+                    $httpProvider, $sceDelegateProvider,JabbrSocketProvider) {
     $urlRouterProvider.when('/dashboard', '/dashboard/overview');
     $urlRouterProvider.otherwise('/');
 
@@ -61,10 +60,6 @@ angular.module('jabbrApp', [
     };
   })
 
-  
-  .constant('config', {
-      SIGNALIG_SERVER_URL: undefined
-  })
 
   .run(function ($rootScope, $location, Auth) {
     // Redirect to login if route requires auth and you're not logged in
@@ -75,4 +70,11 @@ angular.module('jabbrApp', [
         }
       });
     });
+  });
+
+
+
+ angular.module('jabbrApp')
+  .constant('config', {
+      SIGNALIG_SERVER_URL: undefined
   });

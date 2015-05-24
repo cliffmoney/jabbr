@@ -2,14 +2,21 @@
 
 'use strict';
 
-var config = require('./environment'),
-    currentRoom, id,
-    uuid = require('node-uuid'),
+var uuid = require('node-uuid'),
     rooms = {},
     userIds = {};
-// When the user disconnects.. perform this
-function onDisconnect(socket) {
-      socket.on('disconnect', function () {
+
+
+module.exports = function (socketio) {
+
+  socketio.on('connection', function (socket) {
+    console.log("Client has Connected");
+    socket.emit('firstContact');
+    var currentRoom, id;
+
+  // -----------SOCKET ON DISCONNECT START--------------
+    socket.on('disconnect', function () {
+      console.log("Client Disconnected");
       if (!currentRoom || !rooms[currentRoom]) {
         return;
       }
@@ -20,38 +27,63 @@ function onDisconnect(socket) {
         }
       });
     });
-}
+  // -----------SOCKET ON DISCONNECT END----------------
 
-// When the user connects.. perform this
-function onConnect(socket) {
-  // When the client emits 'info', this listens and executes
-  socket.on('info', function (data) {
-    console.info('[%s] %s', socket.address, JSON.stringify(data, null, 2)); 
-  });
-
-  socket.on('init', function (data, fn) {
-      currentRoom = (data || {}).room || uuid.v4();
-      var room = rooms[currentRoom];
-      if (!data) {
-        rooms[currentRoom] = [socket];
-        id = userIds[currentRoom] = 0;
-        fn(currentRoom, id);
-        console.log('Room created, with #', currentRoom);
-      } else {
-        if (!room) {
-          return;
-        }
-        userIds[currentRoom] += 1;
-        id = userIds[currentRoom];
-        fn(currentRoom, id);
-        room.forEach(function (s) {
-          s.emit('peer.connected', { id: id });
-        });
-        room[id] = socket;
-        console.log('Peer connected to room', currentRoom, 'with #', id);
-      }
+  //------------SOCKET ON INIT START--------------------
+    socket.on('joinRoom', function(data){
+      console.log('Joining Room: '+ data.roomid);
+      var room = data.roomid;
+      userIds[room] += 1;
+      socket.emit('enterRoom', {'roomid': room, 'id':id})
+      currentRoom = rooms[room];
+      currentRoom.forEach(function(s){
+        s.emit('peer.connected',{'id':id});
+      });
     });
 
+    socket.on('createRoom', function(data){
+      var room = uuid.v4();
+      console.log("Created Room: " + room);
+      rooms[room] = [socket];
+      id = userIds[room] = 0;
+      socket.emit("newRoom", {roomid:room, 'id': id})
+    });
+
+    // socket.on('init', function (data) {
+    //     console.log('Initiating Room Creation');
+    //     currentRoom = (data || {}).room || uuid.v4();
+    //     var room = rooms[currentRoom];
+    //     console.log('The new room is: ' + room);
+    //     if (!data) {
+    //       console.log("Hello");
+    //       rooms[currentRoom] = [socket];
+    //       id = userIds[currentRoom] = 0;
+    //       var roomInfo = {};
+    //       roomInfo.currentRoom = currentRoom;
+    //       roomInfo.id = id;
+    //       socket.emit("newRoom", roomInfo);
+    //       console.log('Room created, with #', currentRoom);
+    //     } else {
+    //       if (!room) {
+    //         console.log("NO ROOM! :(")
+    //         return;
+    //       }
+    //       userIds[currentRoom] += 1;
+    //       id = userIds[currentRoom];
+    //       var roomInfo = {};
+    //       roomInfo.currentRoom = currentRoom;
+    //       roomInfo.id = id;
+    //       socket.emit("newRoom", roomInfo);
+    //       room.forEach(function (s) {
+    //         s.emit('peer.connected', { id: id });
+    //       });
+    //       room[id] = socket;
+    //       console.log('Peer connected to room', currentRoom, 'with #', id);
+    //     }
+    //   });
+  //------------SOCKET ON INIT END----------------------
+
+  //------------SOCKET ON MSG START--------------------
     socket.on('msg', function (data) {
       var to = parseInt(data.to, 10);
       if (rooms[currentRoom] && rooms[currentRoom][to]) {
@@ -61,42 +93,6 @@ function onConnect(socket) {
         console.warn('Invalid user');
       }
     });
-
-  // Insert sockets below
-  require('../api/thing/thing.socket').register(socket);
-}
-
-module.exports = function (socketio) {
-  // socket.io (v1.x.x) is powered by debug.
-  // In order to see all the debug output, set DEBUG (in server/config/local.env.js) to including the desired scope.
-  //
-  // ex: DEBUG: "http*,socket.io:socket"
-
-  // We can authenticate socket.io users and access their token through socket.handshake.decoded_token
-  //
-  // 1. You will need to send the token in `client/components/socket/socket.service.js`
-  //
-  // 2. Require authentication here:
-  // socketio.use(require('socketio-jwt').authorize({
-  //   secret: config.secrets.session,
-  //   handshake: true
-  // }));
-
-  socketio.on('connection', function (socket) {
-    socket.address = socket.handshake.address !== null ?
-            socket.handshake.address.address + ':' + socket.handshake.address.port :
-            process.env.DOMAIN;
-
-    socket.connectedAt = new Date();
-
-    // Call onDisconnect.
-    socket.on('disconnect', function () {
-      onDisconnect(socket);
-      console.info('[%s] DISCONNECTED', socket.address);
-    });
-
-    // Call onConnect.
-    onConnect(socket);
-    console.info('[%s] CONNECTED', socket.address);
+  //------------SOCKET ON MSG END----------------------
   });
 };
