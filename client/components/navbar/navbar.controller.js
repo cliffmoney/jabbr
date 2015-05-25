@@ -3,8 +3,6 @@
 angular.module('jabbrApp')
   .controller('NavbarCtrl', function ($scope, $state, $location, Auth) {
     $scope.menu = [{
-      'title': 'Home',
-      'link': '/'
     }];
 
     $scope.isCollapsed = true;
