@@ -27,12 +27,21 @@ module.exports = function (socketio) {
         }
       });
     });
-  // -----------SOCKET ON DISCONNECT END----------------
+  // -----------SOCKET ON DISCONNECT END----------------------
 
-  //------------SOCKET ON INIT START--------------------
+  //------------SOCKET ON CREATE ROOM START-------------------
+
+    socket.on('createRoom', function(data){
+      currentRoom = (data || {}).roomid || uuid.v4();
+      console.log("Created Room: " + currentRoom);
+      rooms[currentRoom] = [socket];
+      id = userIds[currentRoom] = 0;
+      socket.emit("newRoom", {roomid:currentRoom, 'id': id})
+    });
+  //------------SOCKET ON CREATE ROOM END---------------------
+  //------------SOCKET ON JOINROOM START----------------------
     socket.on('joinRoom', function(data){
-      console.log('Joining Room: '+ data.roomid);
-      currentRoom = (data.roomid || {}).room || uuid.v4();
+      currentRoom = data.roomid;
       userIds[currentRoom] += 1;
       id = userIds[currentRoom];
       socket.emit('enterRoom', {'roomid': currentRoom, 'id':id})
@@ -40,51 +49,13 @@ module.exports = function (socketio) {
       room.forEach(function(s){
         s.emit('peer.connected',{'id':id});
       });
+      room[id] = socket;
+      console.log('Peer connected to room', currentRoom, 'with #', id);
     });
 
-    socket.on('createRoom', function(data){
-      currentRoom = (data.roomid || {}).room || uuid.v4();
-      console.log("Created Room: " + currentRoom);
-      rooms[currentRoom] = [socket];
-      id = userIds[currentRoom] = 0;
-      socket.emit("newRoom", {roomid:currentRoom, 'id': id})
-    });
+  //------------SOCKET ON JOINROOM END-----------------------
 
-    // socket.on('init', function (data) {
-    //     console.log('Initiating Room Creation');
-    //     currentRoom = (data || {}).room || uuid.v4();
-    //     var room = rooms[currentRoom];
-    //     console.log('The new room is: ' + room);
-    //     if (!data) {
-    //       console.log("Hello");
-    //       rooms[currentRoom] = [socket];
-    //       id = userIds[currentRoom] = 0;
-    //       var roomInfo = {};
-    //       roomInfo.currentRoom = currentRoom;
-    //       roomInfo.id = id;
-    //       socket.emit("newRoom", roomInfo);
-    //       console.log('Room created, with #', currentRoom);
-    //     } else {
-    //       if (!room) {
-    //         console.log("NO ROOM! :(")
-    //         return;
-    //       }
-    //       userIds[currentRoom] += 1;
-    //       id = userIds[currentRoom];
-    //       var roomInfo = {};
-    //       roomInfo.currentRoom = currentRoom;
-    //       roomInfo.id = id;
-    //       socket.emit("newRoom", roomInfo);
-    //       room.forEach(function (s) {
-    //         s.emit('peer.connected', { id: id });
-    //       });
-    //       room[id] = socket;
-    //       console.log('Peer connected to room', currentRoom, 'with #', id);
-    //     }
-    //   });
-  //------------SOCKET ON INIT END----------------------
-
-  //------------SOCKET ON MSG START--------------------
+  //------------SOCKET ON MSG START--------------------------
     socket.on('msg', function (data) {
       var to = parseInt(data.to, 10);
       console.log('Two variables: ' + rooms[currentRoom] + 'and' + rooms[currentRoom][to]);
@@ -95,6 +66,6 @@ module.exports = function (socketio) {
         console.warn('Invalid user');
       }
     });
-  //------------SOCKET ON MSG END----------------------
+  //------------SOCKET ON MSG END----------------------------
   });
 };
