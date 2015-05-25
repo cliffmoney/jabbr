@@ -94,6 +94,9 @@ angular.module('jabbrApp')
     }
 
     var api = {
+      checkRoom: function(r){
+        socket.emit('checkRoom', {roomid: r})
+      },
       joinRoom: function (r) {
         if (!connected) {
           socket.emit('joinRoom', { roomid: r });

@@ -1,8 +1,10 @@
 'use strict';
 
 angular.module('jabbrApp')
-  .controller('RightPanelCtrl', function ($scope, $location, Auth, User, $http) {
+  .controller('RightPanelCtrl', function ($scope, $location, Auth, User, $http,JabbrSocket) {
+    $scope.socket = JabbrSocket;
     $scope.meetups = [];
+
 
     // get all open video chat rooms (meetups)
     $scope.getMeetups = function() {
@@ -17,7 +19,12 @@ angular.module('jabbrApp')
 
     // go to the room clicked on by the user
     $scope.enterRoom = function(room) {
-      $location.path('/room/' + room);
-    }
+      $scope.socket.emit('checkRoom', {user: $scope.currentUser._id, roomid: room});
+      $scope.socket.on('openRoom', function(data){
+        $state.go('roomId',{roomId: room});
+      });
+      $scoope.socket.on('roomError', function(data){});
+    };
     $scope.getMeetups();
+
   });
