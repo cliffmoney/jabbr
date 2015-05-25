@@ -32,17 +32,18 @@ module.exports = function (socketio) {
   //------------SOCKET ON INIT START--------------------
     socket.on('joinRoom', function(data){
       console.log('Joining Room: '+ data.roomid);
-      currentRoom = data.roomid;
+      currentRoom = (data.roomid || {}).room || uuid.v4();
       userIds[currentRoom] += 1;
+      id = userIds[currentRoom];
       socket.emit('enterRoom', {'roomid': currentRoom, 'id':id})
       var room = rooms[currentRoom];
-      currentRoom.forEach(function(s){
+      room.forEach(function(s){
         s.emit('peer.connected',{'id':id});
       });
     });
 
     socket.on('createRoom', function(data){
-      currentRoom = uuid.v4();
+      currentRoom = (data.roomid || {}).room || uuid.v4();
       console.log("Created Room: " + currentRoom);
       rooms[currentRoom] = [socket];
       id = userIds[currentRoom] = 0;
