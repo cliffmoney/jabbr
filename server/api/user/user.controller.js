@@ -6,7 +6,7 @@ var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var Q = require('q');
-
+var uuid = require('node-uuid');
 var validationError = function(res, err) {
   return res.json(422, err);
 };
@@ -161,7 +161,7 @@ exports.getUserRecordings = function(req, res, next) {
           }
         });
       };
-      renaming();  
+      renaming();
       Q.all(promises)
       .then(function(value){
         console.log('RECORDINGS: ' + recordings);
@@ -180,16 +180,16 @@ exports.getUserRecordings = function(req, res, next) {
 
 
 /**
- * Creates an invitation from one user to another 
+ * Creates an invitation from one user to another
  */
  exports.createInvite = function(req, res, next) {
   var userId = req.user._id;
   var invitedId = req.body.invited;
   var invitedName = req.body.invitedName;
   var inviterName = req.body.inviterName;
-  User.findByIdAndUpdate(userId, 
+  User.findByIdAndUpdate(userId,
     {$push: {"invitations": {
-      text: req.body.text, 
+      text: req.body.text,
       invitedId: invitedId,
       inviterId: userId,
       invitedName: invitedName,
@@ -201,12 +201,12 @@ exports.getUserRecordings = function(req, res, next) {
       if (!user) return res.json(500);
       User.findByIdAndUpdate(invitedId,
        {$push: {"invitations": {
-        text: req.body.text, 
+        text: req.body.text,
         invitedId: invitedId,
         inviterId: userId,
         invitedName: invitedName,
         inviterName: inviterName
-       }}}, 
+       }}},
        {safe: true},
        function(err, user) {
         if (err) return next(err);
@@ -241,17 +241,17 @@ exports.updateInvite = function(req, res, next) {
   var inviteId = req.body.inviteId;
   var inviterId = req.body.inviterId;
   var invitedId = req.body.invitedId;
-  var roomId = 1123214124; // do something here to create a unique room id for webRTC
+  var roomId = uuid.v4();
   User.findById(inviterId, function(err, user) {
     if (err) return next(err);
     if (!user) return res.json(500);
     for(var i = 0; i < user.invitations.length; i++) {
       if(user.invitations[i]._id = inviteId) {
-        user.invitations[i].room = roomId; 
+        user.invitations[i].room = roomId;
       }
     }
     user.save(function(err, user) {
-      User.findById(invitedId, function(err, user) {
+     User.findById(invitedId, function(err, user) {
         if (err) return next(err);
         if (!user) return res.json(500);
         for(var i = 0; i < user.invitations.length; i++) {
