@@ -21,6 +21,7 @@ angular.module('jabbrApp')
           $state.go('room', {roomId: roomId}, {location: true});
         });
       } else {
+        console.log("Attemping to join: " + $stateParams.roomId);
         Room.joinRoom($stateParams.roomId);
       }
     }, function () {
