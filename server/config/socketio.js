@@ -62,7 +62,7 @@ module.exports = function (socketio) {
     };
   //------------SOCKET ON CREATE ROOM END---------------------
   //------------SOCKET ON JOINROOM START----------------------
-    socket.on('joinRoom')(function(data){
+    socket.on('joinRoom',function(data){
       currentRoom = data.roomid;
       userIds[currentRoom] += 1;
       id = userIds[currentRoom];
@@ -73,7 +73,7 @@ module.exports = function (socketio) {
       });
       room[id] = socket;
       console.log('Peer connected to room', currentRoom, 'with #', id);
-    };
+    });
 
   //------------SOCKET ON JOINROOM END-----------------------
 
