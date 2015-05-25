@@ -32,21 +32,21 @@ module.exports = function (socketio) {
   //------------SOCKET ON INIT START--------------------
     socket.on('joinRoom', function(data){
       console.log('Joining Room: '+ data.roomid);
-      var room = data.roomid;
-      userIds[room] += 1;
-      socket.emit('enterRoom', {'roomid': room, 'id':id})
-      currentRoom = rooms[room];
+      currentRoom = data.roomid;
+      userIds[currentRoom] += 1;
+      socket.emit('enterRoom', {'roomid': currentRoom, 'id':id})
+      var room = rooms[currentRoom];
       currentRoom.forEach(function(s){
         s.emit('peer.connected',{'id':id});
       });
     });
 
     socket.on('createRoom', function(data){
-      var room = uuid.v4();
-      console.log("Created Room: " + room);
-      rooms[room] = [socket];
-      id = userIds[room] = 0;
-      socket.emit("newRoom", {roomid:room, 'id': id})
+      currentRoom = uuid.v4();
+      console.log("Created Room: " + currentRoom);
+      rooms[currentRoom] = [socket];
+      id = userIds[currentRoom] = 0;
+      socket.emit("newRoom", {roomid:currentRoom, 'id': id})
     });
 
     // socket.on('init', function (data) {
@@ -86,6 +86,7 @@ module.exports = function (socketio) {
   //------------SOCKET ON MSG START--------------------
     socket.on('msg', function (data) {
       var to = parseInt(data.to, 10);
+      console.log('Two variables: ' + rooms[currentRoom] + 'and' + rooms[currentRoom][to]);
       if (rooms[currentRoom] && rooms[currentRoom][to]) {
         console.log('Redirecting message to', to, 'by', data.by);
         rooms[currentRoom][to].emit('msg', data);
