@@ -73,7 +73,7 @@ module.exports = function (socketio) {
       });
       room[id] = socket;
       console.log('Peer connected to room', currentRoom, 'with #', id);
-    };
+    });
 
   //------------SOCKET ON JOINROOM END-----------------------
 
