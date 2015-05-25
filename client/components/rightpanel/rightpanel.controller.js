@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jabbrApp')
-  .controller('RightPanelCtrl', function ($scope, $location, Auth, User, $http,JabbrSocket) {
+  .controller('RightPanelCtrl', function ($scope, $location, Auth, User, $http,JabbrSocket, $state) {
     $scope.socket = JabbrSocket;
     $scope.meetups = [];
 
@@ -10,6 +10,7 @@ angular.module('jabbrApp')
     $scope.getMeetups = function() {
       $http.get('/api/users/meetups')
         .success(function(data, status) {
+          console.log(data.meetups);
           $scope.meetups = data.meetups;
         })
         .error(function(error) {
@@ -23,7 +24,7 @@ angular.module('jabbrApp')
       $scope.socket.on('openRoom', function(data){
         $state.go('roomId',{roomId: room});
       });
-      $scoope.socket.on('roomError', function(data){});
+      $scope.socket.on('roomError', function(data){});
     };
     $scope.getMeetups();
 
