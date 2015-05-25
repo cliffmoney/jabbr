@@ -38,7 +38,7 @@ module.exports = function (socketio) {
         if(err || !user){socket.emit('roomError',err)}
         else{
           var isInvited = false;
-          for(var i = 0; user.invitations.length; i++){
+          for(var i = 0; i < user.invitations.length; i++){
             if(user.invitations[i].room === roomid ){
               isInvited = true;
             }

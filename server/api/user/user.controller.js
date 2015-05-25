@@ -251,6 +251,7 @@ exports.updateInvite = function(req, res, next) {
       }
     }
     user.save(function(err, user) {
+      console.log(user);
      User.findById(invitedId, function(err, user) {
         if (err) return next(err);
         if (!user) return res.json(500);
@@ -260,6 +261,7 @@ exports.updateInvite = function(req, res, next) {
           }
         }
         user.save(function(err, user) {
+          console.log(user);
           res.send(201);
         });
       });
