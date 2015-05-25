@@ -34,6 +34,7 @@ Thing.find({}).remove(function() {
 User.find({}).remove(function() {
   User.create({
     provider: 'local',
+    pic: '',
     name: 'Test User',
     email: 'test@test.com',
     password: 'test',
@@ -41,6 +42,7 @@ User.find({}).remove(function() {
     languageLearning: 'English'
   }, {
     provider: 'local',
+    pic: 'https://avatars2.githubusercontent.com/u/6611549',
     name: 'Angela',
     email: 'angela@gmail.com',
     password: '123',
@@ -48,6 +50,7 @@ User.find({}).remove(function() {
     languageLearning: 'Spanish'
   }, {
     provider: 'local',
+    pic: 'https://avatars3.githubusercontent.com/u/1560627',
     name: 'Bill',
     email: 'bill@gmail.com',
     password: '123',
@@ -55,6 +58,7 @@ User.find({}).remove(function() {
     languageLearning: 'Spanish'
   }, {
     provider: 'local',
+    pic: 'https://avatars0.githubusercontent.com/u/9545110',
     name: 'Brandon',
     email: 'brandon@gmail.com',
     password: '123',
@@ -62,6 +66,7 @@ User.find({}).remove(function() {
     languageLearning: 'Arabic'
   }, {
     provider: 'local',
+    pic: 'https://avatars1.githubusercontent.com/u/10258460',
     name: 'Jeff',
     email: 'jeff@gmail.com',
     password: '123',
@@ -69,6 +74,7 @@ User.find({}).remove(function() {
     languageLearning: 'Chinese'
   }, {
     provider: 'local',
+    pic: '',
     role: 'admin',
     name: 'Admin',
     email: 'admin@admin.com',

@@ -2,7 +2,7 @@
 <h1>Recordings</h1>
 <div class='row' ng-repeat="recording in userRecordings">
   <div class='col-md-3'>
-  Creator: {{recording.creator}}
+  Partner: {{recording.partner}}
   </div>
   <div class='col-md-3'>
   Date: {{ parseDate(recording.date) }}<br>
@@ -10,8 +10,7 @@
   <audio controls ng-src="{{recording.url}}"></audio>
   </div>
   <div class='col-md-3'>
-  Partner: {{recording.partner}}<br>
-  Creator: {{recording.creator}}<br><br><br><br><br>
+  <p>placeholder text</p>
   </div>
 </div>
 </div>

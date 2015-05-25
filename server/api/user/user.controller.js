@@ -5,6 +5,7 @@ var Recording = require('../recording/recording.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
+var Q = require('q');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -130,18 +131,53 @@ exports.changeUserPreferences = function(req, res, next) {
 /**
  * Gets user recordings
  */
- exports.getUserRecordings = function(req, res, next) {
-  var userId = req.user._id;
-  User.findById(userId, function(err, user) {
-    if (err) return next(err);
-    if (!user) return res.json(500);
-    Recording.find({ $or: [ { creator: user.email }, { partner: user.email } ] }, 'url creator partner date',
-      function(err, recordings) {
-        if(err) return next(err);
+ // TODO: use q promise library
+
+
+
+exports.getUserRecordings = function(req, res, next) {
+  Recording.find({ $or: [ { creator: req.user.email }, { partner: req.user.email } ] }, 'url creator partner date',
+    function(err, recordings) {
+      // modify recordings, then res.json & error handling
+      var promises = [];
+      var renaming = function(){
+        recordings.forEach(function(rec){
+          if (req.user.email === rec.partner) {
+            promises.push(
+              User.findOne({ email: rec.creator }, function(err, doc){
+                console.log(doc.name);
+                rec.partner = doc.name;
+              }).exec()
+            );
+
+          } else {
+            promises.push(
+              User.findOne({ email: rec.partner }, function(err, doc){
+                console.log(doc.name);
+                rec.partner = doc.name;
+              }).exec()
+            );
+
+          }
+        });
+      };
+      renaming();  
+      Q.all(promises)
+      .then(function(value){
+        console.log('RECORDINGS: ' + recordings);
+        console.log('EMAIL: ' + req.user.email);
         res.json({recordings: recordings});
-    });
-  });
- };
+      })
+      .catch(function(err){
+        return next(err);
+      })
+      .done();
+
+    }
+  );
+};
+
+
 
 /**
  * Creates an invitation from one user to another 
