@@ -139,33 +139,33 @@ exports.getUserRecordings = function(req, res, next) {
   Recording.find({ $or: [ { creator: req.user.email }, { partner: req.user.email } ] }, 'url creator partner date',
     function(err, recordings) {
       // modify recordings, then res.json & error handling
-
+      var promises = [];
       var renaming = function(){
-        // generate new array 
-        var promises = [];
         recordings.forEach(function(rec){
           if (req.user.email === rec.partner) {
-            promises.push(User.findOne({ email: rec.creator }, function(err, doc){
-              console.log(doc.name);
-              rec.partner = doc.name;
-            }));
+            promises.push(
+              User.findOne({ email: rec.creator }, function(err, doc){
+                console.log(doc.name);
+                rec.partner = doc.name;
+              }).exec()
+            );
+
           } else {
-            promises.push(User.findOne({ email: rec.partner }, function(err, doc){
-              console.log(doc.name);
-              rec.partner = doc.name;
-            }));
+            promises.push(
+              User.findOne({ email: rec.partner }, function(err, doc){
+                console.log(doc.name);
+                rec.partner = doc.name;
+              }).exec()
+            );
+
           }
         });
-        // return array of promises
-        return promises;
-      }  
-
-      return Q.fcall(renaming)
+      };
+      renaming();  
+      Q.all(promises)
       .then(function(value){
-      // .all(function(value){
         console.log('RECORDINGS: ' + recordings);
         console.log('EMAIL: ' + req.user.email);
-        // if(err) return next(err);
         res.json({recordings: recordings});
       })
       .catch(function(err){
