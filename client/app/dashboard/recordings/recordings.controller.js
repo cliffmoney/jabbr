@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jabbrApp')
-  .controller('RecordingsCtrl', function ($scope, Auth, User) {
+  .controller('RecordingsCtrl', function ($scope, Auth, User, $stateParams) {
     $scope.userRecordings = [];
 
     $scope.getUserRecordings = function() {
