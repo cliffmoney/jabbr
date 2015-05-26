@@ -50,8 +50,6 @@ module.exports = function (socketio) {
           else {socket.emit('roomError',err)}
         }
       });
-      //if room doesnt exist && user has invitation
-      createRoom(data);
     })
     var createRoom = function(data){
       currentRoom = data.roomid || uuid.v4();
