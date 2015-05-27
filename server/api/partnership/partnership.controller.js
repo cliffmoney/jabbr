@@ -5,6 +5,7 @@ var Partnership = require('./partnership.model');
 var Message = require('../message/message.model');
 var mongoose = require('mongoose');
 
+
 // Get list of partnerships
 exports.index = function(req, res) {
   Partnership.find(function (err, partnerships) {

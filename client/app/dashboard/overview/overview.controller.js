@@ -16,8 +16,8 @@ angular.module('jabbrApp')
 
     // get request for all messages for now, will refactor to fetch 5-10 most recent
     $http.get('/api/users/' + $scope.currentUser._id + '/messages')
-      .success(function(data, status) {
-        $scope.isAccepted = true;
+      .success(function(messages, status) {
+        $scope.messages = messages;
       }).error(function(error) {
         console.log(error);
       });

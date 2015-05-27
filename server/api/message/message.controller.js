@@ -2,14 +2,15 @@
 
 var _ = require('lodash');
 var Message = require('./message.model');
+var mongoose = require('mongoose');
 
 // Get list of messages that the user is a recipient of
 exports.index = function(req, res) {
   console.log('getting messages');
-  Message.find({to: req.user._id})
+  Message.find({to: mongoose.Types.ObjectId(req.user._id)})
     .populate('from', 'to')
     .exec(function (err, messages) {
-      
+      console.log(messages);
       if(err) { return handleError(res, err); }
       return res.json(200, messages);
     });
