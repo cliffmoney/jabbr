@@ -23,7 +23,7 @@ angular.module('jabbrApp')
       });
     
     $scope.acceptRequest = function(request) {
-      $http.put('/api/users/' + $scope.currentUser._id + '/partnerships')
+      $http.put('/api/users/' + $scope.currentUser._id + '/partnerships/' + request._partnership)
         .success(function(data, status) {
           $scope.isAccepted = true;
         }).error(function(error) {

@@ -46,11 +46,9 @@ exports.create = function(req, res) {
       if(err) { return handleError(res, err); }
       // now update the message to reference the partnership. this is awful code, will change later
       Message.findById(message._id, function(err, message) {
-        console.log(message);
         message._partnership = partnership._id;
         message.save(function (err) {
           if (err) return handleError(err);
-          console.log(message);
           return res.json(201, partnership);
         });
       });
@@ -64,9 +62,12 @@ exports.update = function(req, res) {
   Partnership.findById(req.params.id, function (err, partnership) {
     if (err) { return handleError(res, err); }
     if(!partnership) { return res.send(404); }
-    var updated = _.merge(partnership, req.body);
-    updated.save(function (err) {
+    console.log(partnership);
+    partnership.confirmed = true;
+    partnership.room_id = uuid.v4();
+    partnership.save(function (err) {
       if (err) { return handleError(res, err); }
+      console.log(partnership);
       return res.json(200, partnership);
     });
   });

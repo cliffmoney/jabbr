@@ -6,17 +6,17 @@ angular.module('jabbrApp')
     $scope.meetups = [];
 
 
-    // get all open video chat rooms (meetups)
-    // $scope.getMeetups = function() {
-    //   $http.get('/api/users/meetups')
-    //     .success(function(data, status) {
-    //       console.log(data.meetups);
-    //       $scope.meetups = data.meetups;
-    //     })
-    //     .error(function(error) {
-    //       console.log(error);
-    //     });
-    // };
+    // get all rooms that belong to partnerships
+    $scope.getMeetups = function() {
+      $http.get('/api/users/' + $scope.currentUser._idmeetups')
+        .success(function(data, status) {
+          console.log(data.meetups);
+          $scope.meetups = data.meetups;
+        })
+        .error(function(error) {
+          console.log(error);
+        });
+    };
 
     // go to the room clicked on by the user
     $scope.enterRoom = function(room) {

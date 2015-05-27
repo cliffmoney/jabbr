@@ -11,7 +11,7 @@
   </div>
   <div class='col-md-3'>
     <button ng-show="message.type === 'normal'"><a ng-click='viewMessage(message)'>View</a></button>
-    <button ng-show="message.type === 'partnerRequest'"><a ng-click='acceptRequest()'>Accept Request</a></button>
+    <button ng-show="message.type === 'partnerRequest'"><a ng-click='acceptRequest(message)'>Accept Request</a></button>
     <p ng-show="isAccepted">Friend Request Successful</p>
   </div>
 </div>
