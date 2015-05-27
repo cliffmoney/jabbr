@@ -4,6 +4,7 @@ var _ = require('lodash');
 var Partnership = require('./partnership.model');
 var Message = require('../message/message.model');
 var mongoose = require('mongoose');
+var uuid = require('node-uuid');
 
 
 // Get list of partnerships
@@ -43,7 +44,16 @@ exports.create = function(req, res) {
         messages: [message._id]
       }, function(err, partnership) {
       if(err) { return handleError(res, err); }
-      return res.json(201, partnership);
+      // now update the message to reference the partnership. this is awful code, will change later
+      Message.findById(message._id, function(err, message) {
+        console.log(message);
+        message._partnership = partnership._id;
+        message.save(function (err) {
+          if (err) return handleError(err);
+          console.log(message);
+          return res.json(201, partnership);
+        });
+      });
     });
   });
 };

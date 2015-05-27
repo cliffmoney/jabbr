@@ -6,7 +6,6 @@ var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var Q = require('q');
-var uuid = require('node-uuid');
 var validationError = function(res, err) {
   return res.json(422, err);
 };

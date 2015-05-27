@@ -21,7 +21,15 @@ angular.module('jabbrApp')
       }).error(function(error) {
         console.log(error);
       });
-
+    
+    $scope.acceptRequest = function(request) {
+      $http.put('/api/users/' + $scope.currentUser._id + '/partnerships')
+        .success(function(data, status) {
+          $scope.isAccepted = true;
+        }).error(function(error) {
+          console.log(error);
+        })
+    }
     $scope.viewProfile = function(partner) {
       $state.go('profile', { userId: partner._id });
     };
