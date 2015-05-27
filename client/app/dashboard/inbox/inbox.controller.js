@@ -13,6 +13,7 @@ angular.module('jabbrApp')
       });
 
     $scope.acceptInvite = function(invite) {
+      console.log("Invite: " + invite)
       $http.put('api/users/invitations', {
           inviteId: invite._id,
           invitedId: invite.invitedId,

@@ -1,8 +1,9 @@
 // SOCKET IO CONFIGURATION
 
 'use strict';
-var User = require('../api/user/user.model');
-var uuid = require('node-uuid'),
+var User = require('../api/user/user.model'),
+    uuid = require('node-uuid'),
+    fs = require("fs"),
     rooms = {},
     userIds = {};
 
@@ -73,5 +74,34 @@ module.exports = function (socketio) {
       }
     });
   //------------SOCKET ON MSG END----------------------------
+
+  //------------SOCKET ON AUDIO START------------------------
+    socket.on('audio', function(audio){
+      var fileName = uuid.v4();
+      writeToDisk(audio.audio.dataURL, fileName + '.wav');
+      socket.emit('savedFile', fileName + '.wav');
+    })
+
+  //------------SOCKET ON AUDIO END--------------------------
   });
 };
+
+function writeToDisk(dataURL, fileName) {
+    var fileExtension = fileName.split('.').pop(),
+        fileRootNameWithBase = '../uploads/' + fileName,
+        filePath = fileRootNameWithBase,
+        fileID = 2,
+        fileBuffer;
+
+    // @todo return the new filename to client
+    while (fs.existsSync(filePath)) {
+        filePath = fileRootNameWithBase + '(' + fileID + ').' + fileExtension;
+        fileID += 1;
+    }
+
+    dataURL = dataURL.split(',').pop();
+    fileBuffer = new Buffer(dataURL, 'base64');
+    fs.writeFileSync(filePath, fileBuffer);
+
+    console.log('filePath', filePath);
+}
