@@ -6,6 +6,8 @@ var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var Q = require('q');
+var mongoose = require('mongoose');
+
 var validationError = function(res, err) {
   return res.json(422, err);
 };
@@ -40,7 +42,6 @@ exports.create = function (req, res, next) {
  */
 exports.show = function (req, res, next) {
   var userId = req.params.id;
-
   User.findById(userId, function (err, user) {
     if (err) return next(err);
     if (!user) return res.send(401);
