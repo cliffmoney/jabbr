@@ -14,6 +14,7 @@ router.put('/preferences', auth.isAuthenticated(), controller.changeUserPreferen
 router.get('/suggestedPartners', auth.isAuthenticated(), controller.getSuggestedPartners);
 router.get('/:id/profile', auth.isAuthenticated(), controller.getProfile);
 router.get('/userRecordings', auth.isAuthenticated(), controller.getUserRecordings);
+router.get('/oneRecording', auth.isAuthenticated(), controller.getOneRecording);
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);

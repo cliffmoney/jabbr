@@ -35,6 +35,13 @@ angular.module('jabbrApp')
         params: {
           id:'userRecordings'
         }
+      },
+      getOneRecording: {
+        method: 'GET',
+        params: {
+          id:'oneRecording'
+          // controller:'oneRecording'
+        }
       }
     });
   });
