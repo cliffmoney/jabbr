@@ -2,13 +2,13 @@
 
 angular.module('jabbrApp')
   .controller('OverviewCtrl', function ($scope, $state, User, Session, $location) {
-    $scope.suggestedPartners = [];
+    $scope.suggestedPartners = []; 
+    $scope.messages = [];
 
-    $scope.getSuggestedPartners = function() {
-      User.getSuggestedPartners(function(res) {
-        $scope.suggestedPartners = res.partners;
-      });
-    };
+  
+    User.getSuggestedPartners(function(res) {
+      $scope.suggestedPartners = res.partners;
+    });
 
     $scope.getSuggestedPartners();
 

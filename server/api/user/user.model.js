@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
-var Message = require('../message/message.model.js')
+var Message = require('../message/message.model')
 
 var UserSchema = new Schema({
   name: String,
@@ -103,11 +103,9 @@ UserSchema
 
     if (!validatePresenceOf(this.hashedPassword) && authTypes.indexOf(this.provider) === -1)
       next(new Error('Invalid password'));
-    else {
-      Message.
+    else 
       next();
-    }
-  });
+ });
 
 /**
  * Methods

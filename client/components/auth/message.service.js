@@ -4,10 +4,15 @@
 
 angular.module('jabbrApp')
   .factory('Message', function ($resource) {
-    return $resource('/api/users/:id/messages', {
+    return $resource('/api/users/:id/messages/:controller', {
       id: '@_id'
     },
     {
-      
+      fiveMostRecent: function() {
+        method: 'GET',
+        params: {
+          controller: 'recent'
+        }
+      }
     });
   });
