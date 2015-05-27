@@ -17,6 +17,6 @@ angular.module('jabbrApp')
   
 
     $scope.viewProfile = function(partner) {
-      $state.go('profile', { profileId: partner._id });
+      $state.go('profile', { userId: partner._id });
     };
   });

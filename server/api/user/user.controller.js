@@ -96,6 +96,21 @@ exports.me = function(req, res, next) {
 };
 
 /**
+ * Gets a user's profile information by id
+*/
+exports.getProfile = function(req, res, next) {
+  User.findOne({
+    _id: req.params.id
+  }, '-salt -hashedPassword', function(err, user) {
+    if(err) return next(err);
+    if(!user) return res.json(401);
+    res.json(user);
+  }
+  )
+};
+
+
+/**
  * Changes user language preferences
  */
 exports.changeUserPreferences = function(req, res, next) {

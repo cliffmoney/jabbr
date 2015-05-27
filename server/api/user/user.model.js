@@ -18,7 +18,8 @@ var UserSchema = new Schema({
   salt: String,
   facebook: {},
   nativeLanguage: String,
-  languageLearning: String
+  languageLearning: String,
+  pic: String
 });
 
 /**
