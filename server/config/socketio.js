@@ -31,26 +31,12 @@ module.exports = function (socketio) {
 
   //------------SOCKET ON CREATE ROOM START-------------------
     socket.on('checkRoom', function(data){
-      //user has invitation if room exists && user has invitation
-      var user = data.user;
+      // check if a room has already been created or not 
       var roomid = data.roomid;
-      User.findById(user, function(err, user) {
-        if(err || !user){socket.emit('roomError',err)}
-        else{
-          var isInvited = false;
-          for(var i = 0; i < user.invitations.length; i++){
-            if(user.invitations[i].room === roomid ){
-              isInvited = true;
-            }
-          }
-          if(isInvited){
-            if(rooms[roomid]){socket.emit('openRoom')}
-            else{createRoom(data);}
-          }
-          else {socket.emit('roomError',err)}
-        }
-      });
-    })
+      if(rooms[roomid]){socket.emit('openRoom')}
+      else{createRoom(data);}
+        
+    });
     var createRoom = function(data){
       currentRoom = data.roomid || uuid.v4();
       console.log("Created Room: " + currentRoom);

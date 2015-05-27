@@ -3,24 +3,26 @@
 angular.module('jabbrApp')
   .controller('RightPanelCtrl', function ($scope, $location, Auth, User, $http,JabbrSocket, $state) {
     $scope.socket = JabbrSocket;
-    $scope.meetups = [];
+    $scope.partnerships = [];
 
 
-    // get all rooms that belong to partnerships
-    $scope.getMeetups = function() {
-      $http.get('/api/users/' + $scope.currentUser._idmeetups')
-        .success(function(data, status) {
-          console.log(data.meetups);
-          $scope.meetups = data.meetups;
+    // get all partnerships that have a room
+    $scope.getRooms = function() {
+      $http.get('/api/users/' + $scope.currentUser._id + '/partnerships')
+        .success(function(partnerships, status) {
+          console.log(partnerships);
+          $scope.partnerships = partnerships;
         })
         .error(function(error) {
           console.log(error);
         });
     };
 
+    $scope.getRooms();
+
     // go to the room clicked on by the user
     $scope.enterRoom = function(room) {
-      $scope.socket.emit('checkRoom', {user: $scope.currentUser._id, roomid: room});
+      $scope.socket.emit('checkRoom', {roomid: room});
       $scope.socket.on('openRoom', function(data){
         $state.go('roomId',{roomId: room});
       });

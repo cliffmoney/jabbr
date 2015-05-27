@@ -7,13 +7,17 @@ var mongoose = require('mongoose');
 var uuid = require('node-uuid');
 
 
-// Get list of partnerships
+// Get list of partnerships that belong to user and have a room
 exports.index = function(req, res) {
-  Partnership.find(function (err, partnerships) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, partnerships);
+  var userId = mongoose.Types.ObjectId(req.user._id);
+  Partnership.find( {$and:[ {confirmed: true}, {$or:[ {'recipient':userId}, {'requester':userId}]}]}, 
+    function (err, partnerships) {
+      if(err) { return handleError(res, err); }
+      console.log(partnerships);
+      return res.json(200, partnerships);
   });
 };
+
 
 // Get a single partnership
 exports.show = function(req, res) {

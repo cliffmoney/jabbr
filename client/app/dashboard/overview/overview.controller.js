@@ -26,6 +26,7 @@ angular.module('jabbrApp')
       $http.put('/api/users/' + $scope.currentUser._id + '/partnerships/' + request._partnership)
         .success(function(data, status) {
           $scope.isAccepted = true;
+          $state.go($state.current, {}, {reload: true});
         }).error(function(error) {
           console.log(error);
         })
