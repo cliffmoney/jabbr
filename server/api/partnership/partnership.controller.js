@@ -2,7 +2,8 @@
 
 var _ = require('lodash');
 var Partnership = require('./partnership.model');
-var Message = require('../message/message.model')
+var Message = require('../message/message.model');
+var mongoose = require('mongoose');
 
 // Get list of partnerships
 exports.index = function(req, res) {
@@ -23,22 +24,23 @@ exports.show = function(req, res) {
 
 // Creates a new partnership in the DB.
 exports.create = function(req, res) {
+  // first convert strings into mongoose Object id's
+  var fromId = mongoose.Types.ObjectId(req.body.requester);
+  var toId = mongoose.Types.ObjectId(req.body.recipient);
   // first create a new message that gets sent to request recipient
   Message.create({
-    from: req.body.requester,
-    to: req.body.recipient,
+    from: fromId,
+    to: toId,
     type: 'partnerRequest',
     body: req.body.body
   }, function(err, message) {
-    console.log(message);
     if(err) { return handleError(res, err); }
     // now create the partnership
     Partnership.create({
-        requester: req.body.requester,
-        recipient: req.body.recipient,
+        requester: fromId,
+        recipient: toId,
         messages: [message._id]
       }, function(err, partnership) {
-      console.log(partnership);
       if(err) { return handleError(res, err); }
       return res.json(201, partnership);
     });
