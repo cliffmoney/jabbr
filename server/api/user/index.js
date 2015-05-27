@@ -12,11 +12,8 @@ router.delete('/:id', auth.hasRole('admin'), controller.destroy);
 router.get('/me', auth.isAuthenticated(), controller.me);
 router.put('/preferences', auth.isAuthenticated(), controller.changeUserPreferences);
 router.get('/suggestedPartners', auth.isAuthenticated(), controller.getSuggestedPartners);
+router.get('/:id/profile', auth.isAuthenticated, controller.getProfile)
 router.get('/userRecordings', auth.isAuthenticated(), controller.getUserRecordings);
-router.post('/invitations', auth.isAuthenticated(), controller.createInvite);
-router.get('/invitations', auth.isAuthenticated(), controller.getInvites);
-router.put('/invitations', auth.isAuthenticated(), controller.updateInvite);
-router.get('/meetups', auth.isAuthenticated(), controller.getMeetups);
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);

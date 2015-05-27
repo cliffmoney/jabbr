@@ -53,8 +53,8 @@ User.find({}).remove(function() {
     provider: 'local',
     pic: '',
     role: 'admin',
-    name: 'Admin',
-    email: 'admin@admin.com',
+    name: 'The Jabbr Team',
+    email: 'admin@jabbr.com',
     password: 'admin'
   }, function() {
       console.log('finished populating users');

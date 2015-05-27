@@ -1,3 +1,20 @@
+<h3>Messages</h3>
+<div class='row' ng-repeat="message in messages">
+  <div class='col-md-3'>
+    From: {{message.from}}
+  </div>
+  <div class='col-md-3'>
+    {{message.body}}
+  </div>
+  <div class='col-md-3'>
+    {{message.timestamp}}
+  </div>
+  <div class='col-md-3'>
+    <button ng-show="message.type === 'normal'"><a ng-click='viewMessage(message)'>View</a></button>
+    <button ng-show="message.type === 'partnerRequest'"><a ng-click='acceptRequest(message)'>Accept Request</a></button>
+    <p ng-show="isAccepted">Friend Request Successful</p>
+  </div>
+</div>
 <h3>Suggested Language Partners</h3>
 <div class='row' ng-repeat="partner in suggestedPartners">
   <div class='col-md-3'>
@@ -10,6 +27,6 @@
     Learning: {{partner.languageLearning}}
   </div>
   <div class='col-md-3'>
-    <button><a ng-click='messagePartner(partner)'>Message</a></button>
+    <button><a ng-click='viewProfile(partner)'>View Profile</a></button>
   </div>
 </div>

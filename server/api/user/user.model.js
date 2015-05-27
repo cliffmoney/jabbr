@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
+var Message = require('../message/message.model')
 
 var UserSchema = new Schema({
   name: String,
@@ -18,7 +19,7 @@ var UserSchema = new Schema({
   facebook: {},
   nativeLanguage: String,
   languageLearning: String,
-  invitations: [{text: String, invitedId: String, inviterId: String, room: String, invitedName: String, inviterName: String}]
+  pic: String
 });
 
 /**
@@ -103,9 +104,9 @@ UserSchema
 
     if (!validatePresenceOf(this.hashedPassword) && authTypes.indexOf(this.provider) === -1)
       next(new Error('Invalid password'));
-    else
+    else 
       next();
-  });
+ });
 
 /**
  * Methods
