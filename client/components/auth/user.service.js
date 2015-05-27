@@ -18,16 +18,10 @@ angular.module('jabbrApp')
           id:'me'
         }
       },
-      getMeetups: {
+      getProfile: {
         method: 'GET',
         params: {
-          controller:'meetups'
-        }
-      },
-      getSuggestedPartners: {
-        method: 'GET',
-        params: {
-          id:'suggestedPartners'
+          controller:'profile'
         }
       },
       getUserRecordings: {

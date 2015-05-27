@@ -10,14 +10,13 @@ angular.module('jabbrApp')
       $scope.suggestedPartners = res.partners;
     });
 
-    Message.fiveMostRecent({id: $scope.currentUser._id}, function(data) {
-      $scope.messages = data.messages;
-    });
+    // Message.fiveMostRecent({id: $scope.currentUser._id}, function(data) {
+    //   $scope.messages = data.messages;
+    // });
 
   
 
-    $scope.messagePartner = function(partner) {
-      Session.setCurrentlyMessaging(partner);
-      $state.go('messager');
+    $scope.viewProfile = function(partner) {
+      $state.go('profile', { profileId: partner._id });
     };
   });
