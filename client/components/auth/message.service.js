@@ -8,7 +8,7 @@ angular.module('jabbrApp')
       id: '@_id'
     },
     {
-      fiveMostRecent: function() {
+      fiveMostRecent: {
         method: 'GET',
         params: {
           controller: 'recent'

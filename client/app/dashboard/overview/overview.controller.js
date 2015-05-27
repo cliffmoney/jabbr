@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jabbrApp')
-  .controller('OverviewCtrl', function ($scope, $state, User, Session, $location) {
+  .controller('OverviewCtrl', function ($scope, $state, User, Session, Message) {
     $scope.suggestedPartners = []; 
     $scope.messages = [];
 
@@ -10,7 +10,11 @@ angular.module('jabbrApp')
       $scope.suggestedPartners = res.partners;
     });
 
-    $scope.getSuggestedPartners();
+    Message.fiveMostRecent({id: $scope.currentUser._id}, function(data) {
+      $scope.messages = data.messages;
+    });
+
+  
 
     $scope.messagePartner = function(partner) {
       Session.setCurrentlyMessaging(partner);

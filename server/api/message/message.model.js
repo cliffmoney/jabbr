@@ -9,6 +9,7 @@ var MessageSchema = new Schema({
   to: {type: Schema.ObjectId, ref: 'User'},
   timestamp: Date, 
   header: String,
+  type: String,
   _partnership: {type: Schema.ObjectId, ref: 'Partnership'}
 });
 
