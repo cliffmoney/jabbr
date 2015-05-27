@@ -1,3 +1,18 @@
+<h3>Messages</h3>
+<div class='row' ng-repeat="message in messages">
+  <div class='col-md-3'>
+    From: {{message.from}}
+  </div>
+  <div class='col-md-3'>
+    {{message.body}}
+  </div>
+  <div class='col-md-3'>
+    {{message.timestamp}}
+  </div>
+  <div class='col-md-3'>
+    <button><a ng-click='viewMessage(message)'>View</a></button>
+  </div>
+</div>
 <h3>Suggested Language Partners</h3>
 <div class='row' ng-repeat="partner in suggestedPartners">
   <div class='col-md-3'>
