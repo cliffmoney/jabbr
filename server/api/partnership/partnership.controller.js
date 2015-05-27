@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Partnership = require('./partnership.model');
+var Message = require('../message/message.model')
 
 // Get list of partnerships
 exports.index = function(req, res) {
@@ -22,9 +23,25 @@ exports.show = function(req, res) {
 
 // Creates a new partnership in the DB.
 exports.create = function(req, res) {
-  Partnership.create(req.body, function(err, partnership) {
+  // first create a new message that gets sent to request recipient
+  Message.create({
+    from: req.body.requester,
+    to: req.body.recipient,
+    type: 'partnerRequest',
+    body: req.body.body
+  }, function(err, message) {
+    console.log(message);
     if(err) { return handleError(res, err); }
-    return res.json(201, partnership);
+    // now create the partnership
+    Partnership.create({
+        requester: req.body.requester,
+        recipient: req.body.recipient,
+        messages: [message._id]
+      }, function(err, partnership) {
+      console.log(partnership);
+      if(err) { return handleError(res, err); }
+      return res.json(201, partnership);
+    });
   });
 };
 
