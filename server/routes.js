@@ -9,10 +9,9 @@ var errors = require('./components/errors');
 module.exports = function(app) {
 
   // Insert routes below
-  app.use('/api/messages', require('./api/message'));
-  app.use('/api/partnerships', require('./api/partnership'));
+  app.use('/api/users/:id/messages', require('./api/message'));
+  app.use('/api/users/:id/partnerships', require('./api/partnership'));
   app.use('/api/recordings', require('./api/recording'));
-  app.use('/api/things', require('./api/thing'));
   app.use('/api/users', require('./api/user'));
 
   app.use('/auth', require('./auth'));
