@@ -8,9 +8,8 @@ var mongoose = require('mongoose');
 exports.index = function(req, res) {
   console.log('getting messages');
   Message.find({to: mongoose.Types.ObjectId(req.user._id)})
-    .populate('from', 'to')
+    .populate('from to')
     .exec(function (err, messages) {
-      console.log(messages);
       if(err) { return handleError(res, err); }
       return res.json(200, messages);
     });

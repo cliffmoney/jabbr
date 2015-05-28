@@ -47,6 +47,7 @@ exports.create = function(req, res) {
         recipient: toId,
         messages: [message._id]
       }, function(err, partnership) {
+        console.log(partnership);
       if(err) { return handleError(res, err); }
       // now update the message to reference the partnership. this is awful code, will change later
       Message.findById(message._id, function(err, message) {
