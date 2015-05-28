@@ -20,7 +20,8 @@ var UserSchema = new Schema({
   nativeLanguage: String,
   languageLearning: String,
   pic: String,
-  intro: String
+  intro: String,
+  country: String
 });
 
 /**

@@ -6,7 +6,10 @@
   <h3>{{userProfile.name}}</h3>
   </div>
 </div>
+<h4>From: {{userProfile.country}}</h4>
 <h4>Learning: {{userProfile.languageLearning}}</h4>
 <h4>Speaks: {{userProfile.nativeLanguage}}</h4>
+<h4>Introduction</h4>
+<p>{{userProfile.intro}}</p>
 <button ng-hide='successfulRequest'><a ng-click='partnerRequest()'>Request As Language Partner</a></button>
 <p ng-hide='!successfulRequest'>Request Pending</p>
