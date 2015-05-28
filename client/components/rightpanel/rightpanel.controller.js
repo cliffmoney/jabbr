@@ -10,7 +10,12 @@ angular.module('jabbrApp')
     $scope.getRooms = function() {
       $http.get('/api/users/' + $scope.currentUser._id + '/partnerships')
         .success(function(partnerships, status) {
-          console.log(partnerships);
+          for(var i = 0; i < partnerships.length; i++) {
+            if($scope.currentUser._id === partnerships[i].requester._id)
+              partnerships[i].partnerName = partnerships[i].requester.name
+            else
+              partnerships[i].partnerName = partnerships[i].recipient.name;
+          }
           $scope.partnerships = partnerships;
         })
         .error(function(error) {

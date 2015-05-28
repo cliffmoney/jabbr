@@ -4,7 +4,7 @@
         <ul class="nav nav-stacked nav-sidebar">
             <li ng-repeat="partnership in partnerships" class="meetup">
               <a ng-click="enterRoom(partnership.room_id)">
-                {{partnership.requester}} and {{partnership.recipient}}
+                You and {{partnership.partnerName}}
               </a>
             </li>
         </ul>
