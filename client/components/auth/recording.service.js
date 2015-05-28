@@ -20,16 +20,17 @@ angular.module('jabbrApp')
       },
       getOneRecording: {
         method: 'GET',
+        // isArray: true,
         params: {
           id:'oneRecording'
         }
       },
-      show: {
-        method: 'GET',
-        isArray: true,
-        params: {
+      // show: {
+      //   method: 'GET',
+      //   isArray: true,
+      //   params: {
 
-        }
-      }
+      //   }
+      // }
     });
   });

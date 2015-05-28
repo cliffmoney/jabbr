@@ -19,17 +19,7 @@ angular.module('jabbrApp')
 
     $scope.getUserRecordings();
     // ==========
-    $scope.getOneRecording = function() {
-      Recording.show(function(res) {
-        console.log(res);
-        console.log(123);
-        // console.log(res.recording);
-        $scope.oneRecording = res.recording;
-      });
-    };
 
-    $scope.getOneRecording();
-    // ===========
 
     $scope.parseDate = function(unixDate) {
       var foo = new Date(unixDate);
@@ -45,13 +35,13 @@ angular.module('jabbrApp')
     $scope.foobar = 'barfoo';
     
     // ==========
-
+    // use $stateParams.recordingId
     $scope.getOneRecording = function() {
-      Recording.show(function(res) {
+      Recording.getOneRecording({ id: $stateParams.recordingId }, function(res) {
         console.log(res);
         console.log(123);
         // console.log(res.recording);
-        $scope.oneRecording = res.recording;
+        $scope.oneRecording = res;
       });
     };
 

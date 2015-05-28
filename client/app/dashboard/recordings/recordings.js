@@ -15,6 +15,6 @@ angular.module('jabbrApp')
         url: '/recordings/:recordingId',
         parent: 'dashboard',
         templateUrl: 'app/dashboard/recordings/recording/recording.html',
-        controller: 'RecordingsCtrl'
+        controller: 'RecordingCtrl'
       });
   });
