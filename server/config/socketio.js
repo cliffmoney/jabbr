@@ -3,10 +3,10 @@
 'use strict';
 var User = require('../api/user/user.model'),
     uuid = require('node-uuid'),
-    fs = require("fs"),
     rooms = {},
     userIds = {};
-
+//audio stuff
+var saveRecording = require('../api/recording/recording');
 
 module.exports = function (socketio) {
 
@@ -32,11 +32,11 @@ module.exports = function (socketio) {
 
   //------------SOCKET ON CREATE ROOM START-------------------
     socket.on('checkRoom', function(data){
-      // check if a room has already been created or not 
+      // check if a room has already been created or not
       var roomid = data.roomid;
       if(rooms[roomid]){socket.emit('openRoom')}
       else{createRoom(data);}
-        
+
     });
     var createRoom = function(data){
       currentRoom = data.roomid || uuid.v4();
@@ -78,30 +78,17 @@ module.exports = function (socketio) {
   //------------SOCKET ON AUDIO START------------------------
     socket.on('audio', function(audio){
       var fileName = uuid.v4();
-      writeToDisk(audio.audio.dataURL, fileName + '.wav');
-      socket.emit('savedFile', fileName + '.wav');
-    })
+      console.log(fileName);
+      saveRecording({
+        audio : audio.audio.dataURL,
+        filename : fileName + '.wav'
+      },
+      function(filename){
+        socket.emit('savedFile', fileName + '.wav');
+      });
+    });
 
   //------------SOCKET ON AUDIO END--------------------------
   });
 };
 
-function writeToDisk(dataURL, fileName) {
-    var fileExtension = fileName.split('.').pop(),
-        fileRootNameWithBase = '../uploads/' + fileName,
-        filePath = fileRootNameWithBase,
-        fileID = 2,
-        fileBuffer;
-
-    // @todo return the new filename to client
-    while (fs.existsSync(filePath)) {
-        filePath = fileRootNameWithBase + '(' + fileID + ').' + fileExtension;
-        fileID += 1;
-    }
-
-    dataURL = dataURL.split(',').pop();
-    fileBuffer = new Buffer(dataURL, 'base64');
-    fs.writeFileSync(filePath, fileBuffer);
-
-    console.log('filePath', filePath);
-}
