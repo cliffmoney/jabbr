@@ -192,6 +192,119 @@ exports.getUserRecordings = function(req, res, next) {
   );
 };
 
+/**
+ * Creates an invitation from one user to another
+ */
+ exports.createInvite = function(req, res, next) {
+  var userId = req.user._id;
+  var invitedId = req.body.invited;
+  var invitedName = req.body.invitedName;
+  var inviterName = req.body.inviterName;
+  User.findByIdAndUpdate(userId,
+    {$push: {"invitations": {  //Create an invitation model
+      text: req.body.text,
+      invitedId: invitedId,
+      inviterId: userId,
+      invitedName: invitedName,
+      inviterName: inviterName
+    }}},
+    {safe: true},
+    function(err, user) {
+      if (err) return next(err);
+      if (!user) return res.json(500);
+      User.findByIdAndUpdate(invitedId,
+       {$push: {"invitations": {//191 and 203 are not the same invitations
+        text: req.body.text,
+        invitedId: invitedId,
+        inviterId: userId,
+        invitedName: invitedName,
+        inviterName: inviterName
+       }}},
+       {safe: true},
+       function(err, user) {
+        if (err) return next(err);
+        if (!user) return res.json(500);
+        res.send(200);
+      });
+  });
+ };
+
+/**
+ * Gets all invites that were sent to the logged in user from other users
+ */
+ exports.getInvites = function(req, res, next) {
+  var userId = req.user._id;
+  User.findById(userId, function(err, user) {
+    if (err) return next(err);
+    if (!user) return res.json(500);
+    var invites = [];
+    for(var i = 0; i < user.invitations.length; i++) {
+      if(user.invitations[i].invitedId === userId ) { //why is this necessary?
+        invites.push(user.invitations[i]);
+      }
+    }
+    res.json({invitations: user.invitations});
+  });
+};
+
+/**
+ * Gets all invites that were sent to the logged in user from other users
+ */
+exports.updateInvite = function(req, res, next) {
+  var inviteId = req.body.inviteId;
+  var inviterId = req.body.inviterId;
+  var invitedId = req.body.invitedId;
+  var roomId = uuid.v4();
+  User.findById(inviterId, function(err, user) {
+    if (err) return next(err);
+    if (!user) return res.json(500);
+    console.log("Adding RoomID")
+    for(var i = 0; i < user.invitations.length; i++) {
+      if(user.invitations[i]._id.equals(inviteId)) {
+        user.invitations[i].room = roomId;
+      }
+    }
+    user.save(function(err, user) {
+     // console.log(user);
+     User.findById(invitedId, function(err, user) {
+        if (err) return next(err);
+        if (!user) return res.json(500);
+        for(var i = 0; i < user.invitations.length; i++) {
+          console.log(user.invitations[i]._id);
+          console.log(inviteId);
+          if(user.invitations[i]._id.equals(inviteId)) {
+            console.log("creating room")
+            user.invitations[i].room = roomId;
+          }
+        }
+        user.save(function(err, user) {
+          // console.log(user);
+          res.send(201);
+        });
+      });
+    });
+  });
+};
+
+/**
+ * Get the user meetups that have been agreed to and have a room assigned
+ */
+
+ exports.getMeetups = function(req, res, next) {
+  var userId = req.user._id;
+  User.findById(userId, function(err, user) {
+    if(err) return next(err);
+    if (!user) return res.json(500);
+    var activeMeetups = [] // each meetup (invitation) that has a room will be pushed here
+    for(var i = 0; i < user.invitations.length; i++) {
+      if(user.invitations[i].room) {
+        activeMeetups.push(user.invitations[i]);
+      }
+    }
+    console.log(activeMeetups)
+    res.json({meetups: activeMeetups});
+  });
+ };
 
 /**
  * Authentication callback

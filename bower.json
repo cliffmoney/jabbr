@@ -15,7 +15,8 @@
     "font-awesome": ">=4.1.0",
     "lodash": "~2.4.1",
     "angular-ui-router": "~0.2.10",
-    "eventEmitter": "~4.2.11"
+    "eventEmitter": "~4.2.11",
+    "recordrtc": "*"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",

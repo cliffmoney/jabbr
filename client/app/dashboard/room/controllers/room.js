@@ -1,18 +1,20 @@
 'use strict';
 
 angular.module('jabbrApp')
-  .controller('RoomCtrl', function ($sce, VideoStream, $location, $stateParams, $scope, Room, $state) {
+  .controller('RoomCtrl', function ($sce, VideoStream, $location, $stateParams, $scope, Room, $state, JabbrSocket) {
 
     if (!window.RTCPeerConnection || !navigator.getUserMedia) {
       $scope.error = 'WebRTC is not supported by your browser. You can try the app with Chrome and Firefox.';
       return;
     }
 
-    var stream;
+    var socket = JabbrSocket;
+    var stream, recordAudio;
 
     VideoStream.get()
     .then(function (s) {
       stream = s;
+      recordAudio = RecordRTC(stream);
       Room.init(stream);
       stream = URL.createObjectURL(stream);
       if (!$stateParams.roomId) {
@@ -27,6 +29,7 @@ angular.module('jabbrApp')
     }, function () {
       $scope.error = 'No audio/video permissions. Please refresh your browser and allow the audio/video capturing.';
     });
+
     $scope.peers = [];
     Room.on('peer.stream', function (peer) {
       console.log('Client connected, adding new stream');
@@ -42,7 +45,36 @@ angular.module('jabbrApp')
       });
     });
 
+    $scope.startDisabled = false;
+    $scope.stopDisabled = true;
+
     $scope.getLocalVideo = function () {
       return $sce.trustAsResourceUrl(stream);
     };
+
+    $scope.startRecording = function() {
+      $scope.startDisabled = true;
+      $scope.stopDisabled = false;
+      recordAudio.startRecording();
+    };
+
+    $scope.stopRecording = function() {
+      $scope.startDisabled = false;
+      $scope.stopDisabled = true;
+      recordAudio.stopRecording(function() {
+         // get audio data-URL
+         recordAudio.getDataURL(function(audioDataURL) {
+             var files = {
+                 audio: {
+                     type: recordAudio.getBlob().type || 'audio/wav',
+                     dataURL: audioDataURL
+                 }
+             };
+             socket.emit('audio', files);
+          });
+      });
+    };
+    socket.on('savedAudio', function(fileName){
+      console.log('Saved File' + fileName);
+    })
   });

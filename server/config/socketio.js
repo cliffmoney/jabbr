@@ -1,11 +1,12 @@
 // SOCKET IO CONFIGURATION
 
 'use strict';
-var User = require('../api/user/user.model');
-var uuid = require('node-uuid'),
+var User = require('../api/user/user.model'),
+    uuid = require('node-uuid'),
     rooms = {},
     userIds = {};
-
+//audio stuff
+var saveRecording = require('../api/recording/recording');
 
 module.exports = function (socketio) {
 
@@ -31,11 +32,11 @@ module.exports = function (socketio) {
 
   //------------SOCKET ON CREATE ROOM START-------------------
     socket.on('checkRoom', function(data){
-      // check if a room has already been created or not 
+      // check if a room has already been created or not
       var roomid = data.roomid;
       if(rooms[roomid]){socket.emit('openRoom')}
       else{createRoom(data);}
-        
+
     });
     var createRoom = function(data){
       currentRoom = data.roomid || uuid.v4();
@@ -73,5 +74,21 @@ module.exports = function (socketio) {
       }
     });
   //------------SOCKET ON MSG END----------------------------
+
+  //------------SOCKET ON AUDIO START------------------------
+    socket.on('audio', function(audio){
+      var fileName = uuid.v4();
+      console.log(fileName);
+      saveRecording({
+        audio : audio.audio.dataURL,
+        filename : fileName + '.wav'
+      },
+      function(filename){
+        socket.emit('savedFile', fileName + '.wav');
+      });
+    });
+
+  //------------SOCKET ON AUDIO END--------------------------
   });
 };
+
