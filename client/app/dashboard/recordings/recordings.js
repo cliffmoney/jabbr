@@ -12,7 +12,7 @@ angular.module('jabbrApp')
       // attempt below at making a recording view work
     // $stateProvider
       .state('recording', {
-        url: '/recording/:recordingId',
+        url: '/recordings/:recordingId',
         parent: 'dashboard',
         templateUrl: 'app/dashboard/recordings/recording/recording.html',
         controller: 'RecordingsCtrl'

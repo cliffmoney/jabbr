@@ -22,7 +22,13 @@ angular.module('jabbrApp')
         method: 'GET',
         params: {
           id:'oneRecording'
-          // controller:'oneRecording'
+        }
+      },
+      show: {
+        method: 'GET',
+        isArray: true,
+        params: {
+
         }
       }
     });

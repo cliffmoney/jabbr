@@ -6,6 +6,9 @@ var auth = require('../../auth/auth.service');
 
 var router = express.Router();
 
+router.get('/userRecordings', auth.isAuthenticated(), controller.getUserRecordings);
+router.get('/oneRecording', auth.isAuthenticated(), controller.getOneRecording);
+
 router.get('/', controller.index);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);
