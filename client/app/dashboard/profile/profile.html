@@ -1,6 +1,12 @@
-<h3>{{userProfile.name}}</h3>
-<img ng-src='{{userProfile.pic}}'/>
+<div class="row">
+  <div class="col-md-2">
+    <img class="profile-pic" ng-src='{{userProfile.pic}}'/>
+  </div>
+  <div class="col-md-10">
+  <h3>{{userProfile.name}}</h3>
+  </div>
+</div>
 <h4>Learning: {{userProfile.languageLearning}}</h4>
 <h4>Speaks: {{userProfile.nativeLanguage}}</h4>
-<button><a ng-click='partnerRequest()'>Request As Language Partner</a></button>
-<p ng-hide='!successfulRequest'>Request Successfull</p>
+<button ng-hide='successfulRequest'><a ng-click='partnerRequest()'>Request As Language Partner</a></button>
+<p ng-hide='!successfulRequest'>Request Pending</p>
