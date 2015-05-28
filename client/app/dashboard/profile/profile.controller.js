@@ -14,15 +14,14 @@ angular.module('jabbrApp')
       }).error(function(error) {
         console.log(error);
       });
-    }
+    };
+  
+    $http.get('/api/users/' + $stateParams.userId + '/profile')
+      .success(function(profile, status) {
+        console.log(profile);
+        $scope.userProfile = profile;
+      }).error(function(error) {
 
-    // User.getProfile({id: $stateParams.userId},
-    //   function(profile) {
-    //     $scope.userProfile = profile;
-    //     console.log($scope.userProfile);
-    //   }, function(error) {
-    //     console.log(error);
-    //   }
-    // );
-
+      });
+      
   });
