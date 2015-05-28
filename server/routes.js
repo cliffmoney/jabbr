@@ -11,12 +11,14 @@ module.exports = function(app) {
   // Insert routes below
   app.use('/api/users/:id/messages', require('./api/message'));
   app.use('/api/users/:id/partnerships', require('./api/partnership'));
+  // if something starts with api/recordings, use subrouter
   app.use('/api/recordings', require('./api/recording'));
   app.use('/api/users', require('./api/user'));
 
   app.use('/auth', require('./auth'));
 
   // All undefined asset or api routes should return a 404
+  // regex is below
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')
    .get(errors[404]);
 

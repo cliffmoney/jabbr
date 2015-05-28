@@ -29,12 +29,6 @@ angular.module('jabbrApp')
         params: {
           controller: 'profile'
         }
-      },
-      getUserRecordings: {
-        method: 'GET',
-        params: {
-          id:'userRecordings'
-        }
       }
     });
   });

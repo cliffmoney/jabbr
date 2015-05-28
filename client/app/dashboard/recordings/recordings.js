@@ -8,5 +8,13 @@ angular.module('jabbrApp')
         parent: 'dashboard',
         templateUrl: 'app/dashboard/recordings/recordings.html',
         controller: 'RecordingsCtrl'
+      })//;
+      // attempt below at making a recording view work
+    // $stateProvider
+      .state('recording', {
+        url: '/recordings/:recordingId',
+        parent: 'dashboard',
+        templateUrl: 'app/dashboard/recordings/recording/recording.html',
+        controller: 'RecordingCtrl'
       });
   });

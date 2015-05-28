@@ -146,51 +146,99 @@ exports.changeUserPreferences = function(req, res, next) {
 /**
  * Gets user recordings
  */
- // TODO: use q promise library
+
+// exports.getUserRecordings = function(req, res, next) {
+//   Recording.find({ $or: [ { creator: req.user.email }, { partner: req.user.email } ] }, 'url creator partner date',
+//     function(err, recordings) {
+//       // modify recordings, then res.json & error handling
+//       var promises = [];
+//       var renaming = function(){
+//         recordings.forEach(function(rec){
+//           if (req.user.email === rec.partner) {
+//             promises.push(
+//               User.findOne({ email: rec.creator }, function(err, doc){
+//                 // console.log(doc.name);
+//                 rec.partner = doc.name;
+//               }).exec()
+//             );
+
+//           } else {
+//             promises.push(
+//               User.findOne({ email: rec.partner }, function(err, doc){
+//                 // console.log(doc.name);
+//                 rec.partner = doc.name;
+//               }).exec()
+//             );
 
 
+//           }
+//         });
+//       };
+//       renaming();  
+//       Q.all(promises)
+//       .then(function(value){
+//         // console.log('RECORDINGS: ' + recordings);
+//         // console.log('EMAIL: ' + req.user.email);
+//         res.json({recordings: recordings});
+//       })
+//       .catch(function(err){
+//         return next(err);
+//       })
+//       .done();
 
-exports.getUserRecordings = function(req, res, next) {
-  Recording.find({ $or: [ { creator: req.user.email }, { partner: req.user.email } ] }, 'url creator partner date',
-    function(err, recordings) {
-      // modify recordings, then res.json & error handling
-      var promises = [];
-      var renaming = function(){
-        recordings.forEach(function(rec){
-          if (req.user.email === rec.partner) {
-            promises.push(
-              User.findOne({ email: rec.creator }, function(err, doc){
-                console.log(doc.name);
-                rec.partner = doc.name;
-              }).exec()
-            );
+//     }
+//   );
+// };
 
-          } else {
-            promises.push(
-              User.findOne({ email: rec.partner }, function(err, doc){
-                console.log(doc.name);
-                rec.partner = doc.name;
-              }).exec()
-            );
 
-          }
-        });
-      };
-      renaming();
-      Q.all(promises)
-      .then(function(value){
-        console.log('RECORDINGS: ' + recordings);
-        console.log('EMAIL: ' + req.user.email);
-        res.json({recordings: recordings});
-      })
-      .catch(function(err){
-        return next(err);
-      })
-      .done();
+// get single recording
+// TODO: unbreak this
 
-    }
-  );
-};
+// exports.getOneRecording = function(req, res, next) {
+//   // console.log('REQ: ' + Object.keys(req));
+//   // console.log('REQ: ' + Object.keys(req.route.stack));
+//   // console.log('REQ: ' + JSON.stringify(req.params));
+//   // Recording.find({ $or: [ { creator: req.user.email }, { partner: req.user.email } ] }, 'url creator partner date',
+//   Recording.findOne({  }, 'url creator partner date',
+//     function(err, rec) {
+//       // modify recordings, then res.json & error handling
+//       var promises = [];
+//       // var renaming = function(){
+//       //   recordings.forEach(function(rec){
+//           if (req.user.email === rec.partner) {
+//             promises.push(
+//               User.findOne({ email: rec.creator }, function(err, doc){
+//                 // console.log(doc.name);
+//                 rec.partner = doc.name;
+//               }).exec()
+//             );
+
+//           } else {
+//             promises.push(
+//               User.findOne({ email: rec.partner }, function(err, doc){
+//                 // console.log(doc.name);
+//                 rec.partner = doc.name;
+//               }).exec()
+//             );
+
+//           }
+//         // });
+//       // };
+//       // renaming();  
+//       Q.all(promises)
+//       .then(function(value){
+//         // console.log('RECORDINGS: ' + rec);
+//         // console.log('EMAIL: ' + req.user.email);
+//         res.json({recording: rec});
+//       })
+//       .catch(function(err){
+//         return next(err);
+//       })
+//       .done();
+
+//     }
+//   );
+// };
 
 
 /**
