@@ -12,9 +12,9 @@ angular.module('jabbrApp')
         .success(function(partnerships, status) {
           for(var i = 0; i < partnerships.length; i++) {
             if($scope.currentUser._id === partnerships[i].requester._id)
-              partnerships[i].partnerName = partnerships[i].requester.name
+              partnerships[i].partnerName = partnerships[i].recipient.name
             else
-              partnerships[i].partnerName = partnerships[i].recipient.name;
+              partnerships[i].partnerName = partnerships[i].requester.name;
           }
           $scope.partnerships = partnerships;
         })
