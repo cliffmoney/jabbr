@@ -78,10 +78,11 @@ module.exports = function (socketio) {
   //------------SOCKET ON AUDIO START------------------------
     socket.on('audio', function(audio){
       var fileName = uuid.v4();
-      console.log(fileName);
+      console.log(audio.user.user._id);
       saveRecording({
         audio : audio.audio.dataURL,
-        filename : fileName + '.wav'
+        filename : fileName + '.wav',
+        userId: audio.user.user._id
       },
       function(filename){
         socket.emit('savedFile', fileName + '.wav');
