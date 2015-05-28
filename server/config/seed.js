@@ -16,7 +16,9 @@ User.find({}).remove(function() {
     email: 'test@test.com',
     password: 'test',
     nativeLanguage: 'Arabic',
-    languageLearning: 'English'
+    languageLearning: 'English',
+    intro: 'I spent one year in my youth in Des Moines, Iowa. It was best year of my life but I forget much English. I want to practice my English with people so I can speak better when I return to the states.',
+    country: 'Lebanon'
   }, {
     provider: 'local',
     pic: 'https://avatars2.githubusercontent.com/u/6611549',
@@ -24,7 +26,9 @@ User.find({}).remove(function() {
     email: 'angela@gmail.com',
     password: '123',
     nativeLanguage: 'Chinese',
-    languageLearning: 'Spanish'
+    languageLearning: 'Spanish',
+    intro: 'I just took a trip to Barcelona with my husband and realized the Spanish I learned in high school just wasn\'t good enough. I\'d love to learn more!',
+    country: 'China'
   }, {
     provider: 'local',
     pic: 'https://avatars3.githubusercontent.com/u/1560627',
@@ -32,7 +36,9 @@ User.find({}).remove(function() {
     email: 'bill@gmail.com',
     password: '123',
     nativeLanguage: 'English',
-    languageLearning: 'Spanish'
+    languageLearning: 'Spanish',
+    intro: 'I just accepted a job in Guadalajara working for a software company. But I know almost no Spanish. I can teach American English to anyone who wants to learn',
+    country: 'USA'
   }, {
     provider: 'local',
     pic: 'https://avatars0.githubusercontent.com/u/9545110',
@@ -40,7 +46,9 @@ User.find({}).remove(function() {
     email: 'brandon@gmail.com',
     password: '123',
     nativeLanguage: 'English',
-    languageLearning: 'Arabic'
+    languageLearning: 'Arabic',
+    intro: 'I spent one year in Egypt in 2010 and learned how to speak Egyptian Arabic. But I love the language and want to learn more dialects and more phrases.',
+    country: 'USA'
   }, {
     provider: 'local',
     pic: 'https://avatars1.githubusercontent.com/u/10258460',
@@ -48,7 +56,9 @@ User.find({}).remove(function() {
     email: 'jeff@gmail.com',
     password: '123',
     nativeLanguage: 'Spanish',
-    languageLearning: 'Chinese'
+    languageLearning: 'Chinese',
+    intro: 'I\'ve always thought the Chinese character system was super cool, and I\'ve learned how to write basic Chinese. But now I want to learn some everyday spoken Chinese.',
+    country: 'Peru'
   }, {
     provider: 'local',
     pic: '',

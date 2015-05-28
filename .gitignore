@@ -9,3 +9,4 @@ dist
 /server/config/local.env.js
 .floo
 .flooignore
+/client/components/socket/jabbrSocket.js

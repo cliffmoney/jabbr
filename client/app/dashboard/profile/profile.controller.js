@@ -4,6 +4,7 @@ angular.module('jabbrApp')
   .controller('ProfileCtrl', function ($scope, $stateParams, User, $http) {
     $scope.userProfile = {};
 
+    
     $scope.partnerRequest = function() {
       $http.post('/api/users/' + $scope.currentUser._id + '/partnerships', {
         requester: $scope.currentUser._id,

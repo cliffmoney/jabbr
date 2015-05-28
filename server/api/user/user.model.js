@@ -19,7 +19,9 @@ var UserSchema = new Schema({
   facebook: {},
   nativeLanguage: String,
   languageLearning: String,
-  pic: String
+  pic: String,
+  intro: String,
+  country: String
 });
 
 /**
