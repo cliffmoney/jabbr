@@ -30,9 +30,7 @@ exports.create = function (req, res, next) {
   var newUser = new User(req.body);
   newUser.provider = 'local';
   newUser.role = 'user';
-  console.log(newUser);
   newUser.save(function(err, user) {
-    console.log("saving");
     if (err) return validationError(res, err);
     var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });
     res.json({ token: token });
@@ -145,7 +143,6 @@ exports.changeUserPreferences = function(req, res, next) {
     User.find({ 'languagesSpeaking.language' : {'$in': languageNames } }, 'name languagesLearning nativeLanguages languagesSpeaking',
       function(err, partners) {
         if(err) return next(err);
-        console.log(partners);
         res.json({partners: partners});
     });
   });

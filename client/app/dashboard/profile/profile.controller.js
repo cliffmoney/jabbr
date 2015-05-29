@@ -6,7 +6,7 @@ angular.module('jabbrApp')
 
     
     $scope.partnerRequest = function() {
-      $http.post('/api/users/' + $scope.currentUser._id + '/partnerships', {
+      $http.post('/api/partnerships', {
         requester: $scope.currentUser._id,
         recipient: $stateParams.userId,
         body: "You have a new language partner request!"
@@ -17,7 +17,7 @@ angular.module('jabbrApp')
       });
     };
   
-    $scope.userProfile = User.getProfile({id: $scope.currentUser._id});
+    $scope.userProfile = User.getProfile({id: $stateParams.userId});
     // $http.get('/api/users/' + $stateParams.userId + '/profile')
     //   .success(function(profile, status) {
     //     console.log(profile);
