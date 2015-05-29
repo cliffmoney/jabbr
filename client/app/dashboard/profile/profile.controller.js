@@ -17,12 +17,13 @@ angular.module('jabbrApp')
       });
     };
   
-    $http.get('/api/users/' + $stateParams.userId + '/profile')
-      .success(function(profile, status) {
-        console.log(profile);
-        $scope.userProfile = profile;
-      }).error(function(error) {
+    $scope.userProfile = User.getProfile({id: $scope.currentUser._id});
+    // $http.get('/api/users/' + $stateParams.userId + '/profile')
+    //   .success(function(profile, status) {
+    //     console.log(profile);
+    //     $scope.userProfile = profile;
+    //   }).error(function(error) {
 
-      });
+    //   });
       
   });

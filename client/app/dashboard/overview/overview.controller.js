@@ -7,6 +7,7 @@ angular.module('jabbrApp')
 
   
     User.getSuggestedPartners(function(res) {
+      console.log(res.partners);
       $scope.suggestedPartners = res.partners;
     });
 
