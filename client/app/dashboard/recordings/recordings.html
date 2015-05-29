@@ -2,7 +2,7 @@
 <h1>Recordings</h1>
 <div class='col-md-6'>
   <div ng-repeat='recording in recordingsURL'>
-    <audio controls src="recording"></audio>
+    <audio controls ng-src="{{recording}}"></audio>
   <div>
 </div>
 <!-- <div class='row' ng-repeat="recording in userRecordings">
