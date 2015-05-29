@@ -9,6 +9,7 @@ var errors = require('./components/errors');
 module.exports = function(app) {
 
   // Insert routes below
+  app.use('/api/audioComments', require('./api/audioComment'));
   app.use('/api/users/:id/messages', require('./api/message'));
   app.use('/api/partnerships', require('./api/partnership'));
   // if something starts with api/recordings, use subrouter
