@@ -18,7 +18,6 @@ module.exports = function(recording, cb){
     fileBuffer = new Buffer(dataURL, 'base64');
     fs.writeFile(filePath, fileBuffer, function(err){
       if (err) console.log(err);
-      console.log('filePath', filePath);
 
       var gfs = Grid(conn.db);
       writestream = gfs.createWriteStream({
@@ -37,4 +36,4 @@ module.exports = function(recording, cb){
           })
       });
     });
-}
+};

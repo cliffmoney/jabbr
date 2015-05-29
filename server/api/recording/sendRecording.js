@@ -8,10 +8,20 @@ var mongoose = require('mongoose'),
     Grid.mongo = mongoose.mongo;
 
 
-    module.exports = function(username, cb){
+    module.exports = function(userId, cb){
       var gfs = Grid(conn.db);
-      var readStream = gfs.createReadStream({
-         filename:"925cd4fb-729d-4b7c-bae7-c2175a1e33f1.wav"
+      var streams = [];
+      gfs.files.find({ metadata: {userId: "5568b68d6cd8d2cd4fde2e62"} }).toArray(function (err, files) {
+          if (err) {
+               throw (err);
+          }
+          files.forEach(function (file){
+            var readStream = gfs.createReadStream({
+               filename: file.filename
+            });
+            streams.push(readStream);
+          });
+          cb(streams);
       });
-      cb(readStream);
     }
+

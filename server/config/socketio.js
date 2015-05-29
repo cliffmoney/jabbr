@@ -80,7 +80,6 @@ module.exports = function (socketio) {
   //------------SOCKET ON AUDIO START------------------------
     socket.on('audio', function(audio){
       var fileName = uuid.v4();
-      console.log(audio.user.user._id);
       saveRecording({
         audio : audio.audio.dataURL,
         filename : fileName + '.wav',
@@ -90,22 +89,24 @@ module.exports = function (socketio) {
           socket.emit('savedFile', fileName + '.wav');
         });
     });
+  //------------SOCKET ON AUDIO END--------------------------
 
-    ss(socket).on('getRecording', function(blurgh,data){
-      console.log("Getting Recording")
-      var username = null;
-      sendRecording(username,
-        function(wavStream){
-          wavStream.on('error', function (err) {
-            console.log('An error occurred!', err);
-            throw err;
+
+    ss(socket).on('getRecording', function(userId){
+      sendRecording(userId,
+        function (wavStreams) {
+          wavStreams.forEach( function(eachStream) {
+            eachStream.on('error', function (err) {
+              console.log('An error occurred!', err);
+              throw err;
+            });
+            var stream = ss.createStream();
+            ss(socket).emit('sendRecording', stream);
+            eachStream.pipe(stream);
           });
-          var stream = ss.createStream();
-          ss(socket).emit('sendRecording', stream);
-          wavStream.pipe(stream);
+        });
       });
     });
-  //------------SOCKET ON AUDIO END--------------------------
-  });
+
 };
 
