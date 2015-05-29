@@ -31,6 +31,11 @@ var UserSchema = new Schema({
   country: String
 });
 
+// Custom indexes
+
+UserSchema.index({'languagesLearning.language': 1});
+UserSchema.index({'languagesSpeaking.language': 1});
+
 /**
  * Virtuals
  */
