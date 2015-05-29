@@ -10,3 +10,4 @@ dist
 .floo
 .flooignore
 /client/components/socket/jabbrSocket.js
+.DS_Store
