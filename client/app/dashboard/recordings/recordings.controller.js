@@ -8,15 +8,17 @@ angular.module('jabbrApp')
     $scope.recordingsURL = [];
     var socket = JabbrSocket;
     var currentUser = Auth.getCurrentUser();
-    
-    ss(socket).removeAllListeners("sendRecording"); 
+
+    ss(socket).removeAllListeners("sendRecording");
 
     ss(socket).on("sendRecording", function(recording){
       recording.pipe(blobStream())
       .on('finish', function(){
-        var url = this.toBlobURL();
-        $scope.recordingsURL.push(url);
-        console.log($scope.recordingsURL);
+        $scope.$apply(function(){
+          var url = this.toBlobURL();
+          $scope.recordingsURL.push(url);
+          console.log($scope.recordingsURL);
+        }.bind(this));
        })
     });
 
