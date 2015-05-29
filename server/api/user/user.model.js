@@ -6,6 +6,7 @@ var crypto = require('crypto');
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
 var Message = require('../message/message.model')
 
+
 var UserSchema = new Schema({
   name: String,
   email: { type: String, lowercase: true },
@@ -17,10 +18,15 @@ var UserSchema = new Schema({
   provider: String,
   salt: String,
   facebook: {},
-  nativeLanguage: String,
-  languageLearning: String,
+  nativeLanguages: [String],
+  recordings: [{type: Schema.ObjectId, ref: 'Recording'}],
+  partnerships: [{type: Schema.ObjectId, ref: 'Partnership'}],
+  messages: [{type: Schema.ObjectId, ref: 'Message'}],
+  languagesLearning: [language: String, ability: Number],
+  languagesSpeaking: [language: String, ability: Number],
   pic: String,
   intro: String,
+  help: String,
   country: String
 });
 
@@ -44,7 +50,14 @@ UserSchema
   .get(function() {
     return {
       'name': this.name,
-      'role': this.role
+      'role': this.role,
+      'nativeLanguages': this.nativeLanguages,
+      'learns': this.learns,
+      'speaks': this.speaks,
+      'pic': this.pic,
+      'intro': this.intro,
+      'help': this.help,
+      'country': this.country
     };
   });
 

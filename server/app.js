@@ -18,6 +18,7 @@ var config = require('./config/environment');
 
 // Database Setup
 	var mongoose = require('mongoose');
+	mongoose.set('debug', true);
 	mongoose.connect(config.mongo.uri, config.mongo.options);
 	if(config.seedDB) { require('./config/seed'); }
 
