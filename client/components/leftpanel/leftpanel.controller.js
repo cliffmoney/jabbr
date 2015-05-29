@@ -18,7 +18,7 @@ angular.module('jabbrApp')
         'state': 'inbox'
       }, {
         'title': 'My Profile',
-        'state': 'profile'
+        'state': 'myprofile'
       }, {
         'title': 'My Preferences',
         'state': 'preferences'
