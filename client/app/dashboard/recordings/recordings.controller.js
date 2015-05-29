@@ -5,21 +5,20 @@ angular.module('jabbrApp')
                                           User, $stateParams, JabbrSocket) {
     $scope.userRecordings = [];
     $scope.oneRecording = undefined;
-    $scope.recording = "HELLO";
-    $scope.test = "Hello Again"
+    $scope.recordingsURL = [];
     var socket = JabbrSocket;
-
-    ss(socket).once("sendRecording", function(recording){
+    var currentUser = Auth.getCurrentUser();
+ 
+    ss(socket).on("sendRecording", function(recording){
       recording.pipe(blobStream())
       .on('finish', function(){
         var url = this.toBlobURL();
-        $scope.recording = url;
-        $scope.test = "YO YO YO"
-        console.log(url)
-      })
+        $scope.recordingsURL.push(url);
+        console.log($scope.recordingsURL);
+       })
     });
 
-    ss(socket).emit("getRecording", null);
+    ss(socket).emit("getRecording", currentUser._id);
 
     // ==========
 
