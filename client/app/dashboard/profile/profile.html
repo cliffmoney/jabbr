@@ -11,5 +11,5 @@
 <h4>Speaks: <span ng-repeat='language in userProfile.languagesSpeaking'> {{language.language}}: {{language.ability}} </span></h4>
 <h4>Introduction</h4>
 <p>{{userProfile.intro}}</p>
-<button ng-hide='successfulRequest'><a ng-click='partnerRequest()'>Request As Language Partner</a></button>
+<button class="btn btn-md btn-primary" ng-click='partnerRequest()' ng-hide='successfulRequest'>Partner Request</button>
 <p ng-hide='!successfulRequest'>Request Pending</p>
