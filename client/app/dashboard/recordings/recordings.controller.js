@@ -1,39 +1,53 @@
 'use strict';
 
 angular.module('jabbrApp')
-  .controller('RecordingsCtrl', function ($scope, Auth, Recording, 
-                                          User, $stateParams) {
+  .controller('RecordingsCtrl', function ($scope, $sce, Auth, Recording,
+                                          User, $stateParams, JabbrSocket) {
     $scope.userRecordings = [];
     $scope.oneRecording = undefined;
-    $scope.foobar = 'barfoo';
-    
+    $scope.recording = "HELLO";
+    $scope.test = "Hello Again"
+    var socket = JabbrSocket;
+
+    ss(socket).once("sendRecording", function(recording){
+      recording.pipe(blobStream())
+      .on('finish', function(){
+        var url = this.toBlobURL();
+        $scope.recording = url;
+        $scope.test = "YO YO YO"
+        console.log(url)
+      })
+    });
+
+    ss(socket).emit("getRecording", null);
+
     // ==========
 
-    $scope.getUserRecordings = function() {
-      Recording.getUserRecordings(function(res) {
-        // console.log(res.recordings);
-        console.log(456);
-        $scope.userRecordings = res.recordings;
-      });
-    };
+    // $scope.getUserRecordings = function() {
+    //   Recording.getUserRecordings(function(res) {
+    //     // console.log(res.recordings);
+    //     console.log(456);
+    //     $scope.userRecordings = res.recordings;
+    //   });
+    // };
 
-    $scope.getUserRecordings();
-    // ==========
+    // $scope.getUserRecordings();
+    // // ==========
 
 
-    $scope.parseDate = function(unixDate) {
-      var foo = new Date(unixDate);
-      return foo.toDateString();
-    };
+    // $scope.parseDate = function(unixDate) {
+    //   var foo = new Date(unixDate);
+    //   return foo.toDateString();
+    // };
 
 
   })
-  .controller('RecordingCtrl', function ($scope, Auth, Recording, 
+  .controller('RecordingCtrl', function ($scope, Auth, Recording,
                                          $stateParams) {
     $scope.userRecordings = [];
     $scope.oneRecording = undefined;
     $scope.foobar = 'barfoo';
-    
+
     // ==========
     // use $stateParams.recordingId
     $scope.getOneRecording = function() {

@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
     path = require("path"),
     fs = require('fs'),
     Grid = require('gridfs-stream');
-Grid.mongo = mongoose.mongo;
+    Grid.mongo = mongoose.mongo;
 
 module.exports = function(recording, cb){
     var fileExtension = recording.filename.split('.').pop(),
