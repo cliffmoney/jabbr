@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jabbrApp')
-  .controller('RoomCtrl', function ($sce, VideoStream, $location, $stateParams, $scope, Room, $state, JabbrSocket) {
+  .controller('RoomCtrl', function ($sce, VideoStream, $location, $stateParams, $scope, Room, $state, JabbrSocket, Auth) {
 
     if (!window.RTCPeerConnection || !navigator.getUserMedia) {
       $scope.error = 'WebRTC is not supported by your browser. You can try the app with Chrome and Firefox.';
@@ -68,6 +68,9 @@ angular.module('jabbrApp')
                  audio: {
                      type: recordAudio.getBlob().type || 'audio/wav',
                      dataURL: audioDataURL
+                 },
+                 user: {
+                   user: Auth.getCurrentUser()
                  }
              };
              socket.emit('audio', files);

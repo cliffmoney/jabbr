@@ -23,7 +23,10 @@ module.exports = function(recording, cb){
       var gfs = Grid(conn.db);
       writestream = gfs.createWriteStream({
           filename: recording.filename,
-          content_type: 'audio/wave'
+          content_type: 'audio/wave',
+          metadata: {
+            userId: recording.userId
+          }
       });
       fs.createReadStream(filePath).pipe(writestream);
       writestream.on('close', function (file) {
