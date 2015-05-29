@@ -13,7 +13,7 @@ angular.module('jabbrApp', [
   'ui.bootstrap'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider,
-                    $httpProvider, $sceDelegateProvider,JabbrSocketProvider) {
+                    $httpProvider,$sceProvider, $sceDelegateProvider,JabbrSocketProvider) {
     $urlRouterProvider.when('/dashboard', '/dashboard/overview', '/room', '/room/:roomId');
     $urlRouterProvider.otherwise('/');
 
@@ -26,16 +26,18 @@ angular.module('jabbrApp', [
 
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
-    $sceDelegateProvider.resourceUrlWhitelist([
-      // Allow same origin resource loads.
-      'self',
-      // Allow loading from outer templates domain.
-      'https://s3-us-west-1.amazonaws.com/hr-mytunes/data/**',
-      'https://avatars3.githubusercontent.com/**',
-      'https://avatars2.githubusercontent.com/**',
-      'https://avatars1.githubusercontent.com/**',
-      'https://avatars0.githubusercontent.com/**',
-    ]);
+    $sceProvider.enabled(false)
+    // $sceDelegateProvider.resourceUrlWhitelist([
+    //   // Allow same origin resource loads.
+    //   'self',
+    //   // Allow loading from outer templates domain.
+    //   'https://s3-us-west-1.amazonaws.com/hr-mytunes/data/**',
+    //   'https://avatars3.githubusercontent.com/**',
+    //   'https://avatars2.githubusercontent.com/**',
+    //   'https://avatars1.githubusercontent.com/**',
+    //   'https://avatars0.githubusercontent.com/**',
+    //   'http://localhost:9000/**'
+    // ]);
   })
 
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {

@@ -6,7 +6,9 @@ var User = require('../api/user/user.model'),
     rooms = {},
     userIds = {};
 //audio stuff
+var ss = require('socket.io-stream');
 var saveRecording = require('../api/recording/recording');
+var sendRecording = require('../api/recording/sendRecording')
 
 module.exports = function (socketio) {
 
@@ -84,11 +86,25 @@ module.exports = function (socketio) {
         filename : fileName + '.wav',
         userId: audio.user.user._id
       },
-      function(filename){
-        socket.emit('savedFile', fileName + '.wav');
-      });
+        function(filename){
+          socket.emit('savedFile', fileName + '.wav');
+        });
     });
 
+    ss(socket).on('getRecording', function(blurgh,data){
+      console.log("Getting Recording")
+      var username = null;
+      sendRecording(username,
+        function(wavStream){
+          wavStream.on('error', function (err) {
+            console.log('An error occurred!', err);
+            throw err;
+          });
+          var stream = ss.createStream();
+          ss(socket).emit('sendRecording', stream);
+          wavStream.pipe(stream);
+      });
+    });
   //------------SOCKET ON AUDIO END--------------------------
   });
 };
