@@ -8,7 +8,9 @@ angular.module('jabbrApp')
     $scope.recordingsURL = [];
     var socket = JabbrSocket;
     var currentUser = Auth.getCurrentUser();
- 
+    
+    ss(socket).removeAllListeners("sendRecording"); 
+
     ss(socket).on("sendRecording", function(recording){
       recording.pipe(blobStream())
       .on('finish', function(){

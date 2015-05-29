@@ -1,9 +1,9 @@
 <div class="col-md-12">
 <h1>Recordings</h1>
 <div class='col-md-6'>
-  {{recording}}
-  {{test}}
-  <audio controls src="{{recording}}"></audio>
+  <div ng-repeat='recording in recordingsURL'>
+    <audio controls src="recording"></audio>
+  <div>
 </div>
 <!-- <div class='row' ng-repeat="recording in userRecordings">
   <div class='col-md-1'>
