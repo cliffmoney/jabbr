@@ -80,14 +80,18 @@ module.exports = function (socketio) {
   //------------SOCKET ON AUDIO START------------------------
     socket.on('audio', function(audio){
       var fileName = uuid.v4();
-      saveRecording({
-        audio : audio.audio.dataURL,
-        filename : fileName + '.wav',
-        userId: audio.user.user.email
-      },
-        function(filename){
-          socket.emit('savedFile', fileName + '.wav');
-        });
+      if (!!audio.peerAudio) {
+
+      } else {
+        saveRecording({
+          audio : audio.selfAudio.dataURL,
+          filename : fileName + '.wav',
+          userId: audio.user.user.email
+        },
+          function(filename){
+            socket.emit('savedFile', fileName + '.wav');
+          });
+      }
     });
   //------------SOCKET ON AUDIO END--------------------------
 

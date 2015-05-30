@@ -17,7 +17,6 @@ angular.module('jabbrApp')
         $scope.$apply(function(){
           var url = this.toBlobURL();
           $scope.recordingsURL.push(url);
-          console.log($scope.recordingsURL);
         }.bind(this));
        })
     });
