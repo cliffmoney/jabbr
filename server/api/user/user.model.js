@@ -19,6 +19,7 @@ var UserSchema = new Schema({
   salt: String,
   facebook: {},
   nativeLanguages: [String],
+  partners: [{type: Schema.ObjectId, ref: 'User'}],
   recordings: [{type: Schema.ObjectId, ref: 'Recording'}],
   partnerships: [{type: Schema.ObjectId, ref: 'Partnership'}],
   messages: [{type: Schema.ObjectId, ref: 'Message'}],
