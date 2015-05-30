@@ -92,7 +92,7 @@ module.exports = function (socketio) {
       saveRecording.writeToDisk(file);
       if (audio.peerAudio.dataURL) {
         //merge two files
-        saveRecording.merge(socket, fileName);
+        saveRecording.merge(socket, fileName, file.userId);
       } else {
         socket.emit('merged', fileName + ".wav");
       }

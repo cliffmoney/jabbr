@@ -62,14 +62,14 @@ var saveToGridFS = function(filename, userId) {
 };
 
 //merge two files into one file and deletes original two files
-var merge = function(socket, fileName, cb) {
+var merge = function(socket, fileName, userId) {
     var FFmpeg = require('fluent-ffmpeg');
 
     var audioFile = path.join(__dirname, 'uploads', fileName + '.wav'),
         peerAudioFile = path.join(__dirname, 'uploads', fileName + '(1).wav'),
         mergedFile = path.join(__dirname, 'uploads', fileName + '-merged.wav');
 
-    new FFmpeg({
+    var command = new FFmpeg({
             source: audioFile
         })
         .addInput(peerAudioFile)
@@ -79,18 +79,18 @@ var merge = function(socket, fileName, cb) {
         .on('end', function () {
             socket.emit('merged', fileName + '-merged.wav');
             console.log('Merging finished !');
-
             // removing both audio files
             fs.unlink(audioFile);
             fs.unlink(peerAudioFile);
+            //save to GridFS and delete file
+            saveToGridFS(fileName+'-merged.wav', userId);
+
         })
         .save(mergedFile);
-        //this is saveToGridFS
 };
 
 module.exports = {
   writeToDisk: writeToDisk,
-  merge: merge,
-  saveToGridFS: saveToGridFS
+  merge: merge
 }
 
