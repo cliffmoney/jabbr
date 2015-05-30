@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var Partnership = require('./partnership.model');
 var Message = require('../message/message.model');
+var User = require('../user/user.model');
 var mongoose = require('mongoose');
 var uuid = require('node-uuid');
 
@@ -81,6 +82,42 @@ exports.update = function(req, res) {
     }
   });
 };
+
+// confirms a pending partnership
+exports.confirm = function(req, res) {
+  
+  Partnership.findById(req.params.id, function (err, partnership) {
+    if (err) { return handleError(res, err); }
+    if(!partnership) { return res.send(404); }
+    // if partnership is confirmed and has a room id, do nothing so that room id is protected
+    if(partnership.confirmed === false) {
+      partnership.confirmed = true;
+      partnership.room_id = uuid.v4();
+      partnership.save(function (err) {
+        if (err) { return handleError(res, err); }
+        // save partner id's to both users of the partnership
+        User.findByIdAndUpdate(partnership.requester,
+          {$push : {partners: partnership.recipient}},
+          {safe: true},
+          function(err, user) {
+            console.log(user);
+            User.findByIdAndUpdate(partnership.recipient,
+              {$push : {partners: partnership.requester}},
+              {safe: true},
+              function(err, user) {
+                console.log(user);
+                return res.json(200, partnership);
+              }
+            );
+          }
+        );
+      });
+    } else {
+      console.log('room not created again');
+      return res.json(404);
+    }
+  });
+}
 
 // Deletes a partnership from the DB.
 exports.destroy = function(req, res) {

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jabbrApp')
-  .controller('OverviewCtrl', function ($scope, $state, User, Session, Message, $http) {
+  .controller('OverviewCtrl', function ($scope, $state, User, Session, Message, $http, Partnership) {
     $scope.suggestedPartners = []; 
     $scope.messages = [];
 
@@ -24,13 +24,9 @@ angular.module('jabbrApp')
       });
     
     $scope.acceptRequest = function(request) {
-      $http.put('/api/partnerships/' + request._partnership)
-        .success(function(data, status) {
-          $scope.isAccepted = true;
-          $state.go($state.current, {}, {reload: true});
-        }).error(function(error) {
-          console.log(error);
-        })
+      Partnership.confirm({id: request._partnership}, {}, function(partnership) {
+        $state.go($state.current, {}, {reload: true});
+      });
     }
     $scope.viewProfile = function(partner) {
       $state.go('profile', { userId: partner._id });

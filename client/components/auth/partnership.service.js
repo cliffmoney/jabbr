@@ -4,10 +4,15 @@
 
 angular.module('jabbrApp')
   .factory('Partnership', function ($resource) {
-    return $resource('/api/users/:id/partnership', {
+    return $resource('/api/partnerships/:id/:controller', {
       id: '@_id'
     },
     {
-      
+      confirm: {
+        method: 'PUT',
+        params: {
+          controller: 'confirm'
+        }
+      }
     });
   });
