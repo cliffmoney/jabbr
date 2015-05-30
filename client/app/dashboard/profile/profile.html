@@ -1,15 +1,46 @@
-<div class="row">
-  <div class="col-md-2">
-    <img class="profile-pic" ng-src='{{userProfile.pic}}'/>
+<div class="col-centered col-md-11">
+  <div class="row">
+    <div class='col-centered col-md-6 profile-heading'>
+      <div class='row'>
+        <div class="col-md-6">
+          <img class="profile-pic img-responsive img-circle" ng-src='{{userProfile.pic}}'/>
+        </div>
+        <div class="col-md-6 profile-text">
+          <h1>{{userProfile.name}}</br><span>From {{userProfile.country}}</span></h1>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="col-md-10">
-  <h3>{{userProfile.name}}</h3>
+  <div class="row profile-body">
+    <div class='col-md-6'>
+      <div class='language-box'>
+        <h4>Speaks</h4>
+        <div class='row' ng-repeat='language in userProfile.languagesSpeaking'>
+          <div class='col-md-6 text-center'>
+            {{language.language}}
+          </div>
+          <div class='col-md-6 text-center'>
+            {{language.ability}} 
+          </div>
+        </div>
+      </div>
+      <div class='language-box'>
+        <h4>Learning</h4> 
+        <div class='row' ng-repeat='language in userProfile.languagesLearning'>
+          <div class='col-md-6 text-center'>
+            {{language.language}}
+          </div>
+          <div class='col-md-6 text-center'>
+            {{language.ability}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='col-md-6'>
+      <button class="btn btn-md btn-primary center-block" ng-click='partnerRequest()' ng-hide='successfulRequest'>Partner Request</button>
+      <p ng-hide='!successfulRequest'>Request Pending</p>
+      <h4>Introduction</h4>
+      <p>{{userProfile.intro}}</p>
+    </div>
   </div>
 </div>
-<h4>From: {{userProfile.country}}</h4>
-<h4>Learning: <span ng-repeat='language in userProfile.languagesLearning'> {{language.language}}: {{language.ability}} </span></h4>
-<h4>Speaks: <span ng-repeat='language in userProfile.languagesSpeaking'> {{language.language}}: {{language.ability}} </span></h4>
-<h4>Introduction</h4>
-<p>{{userProfile.intro}}</p>
-<button class="btn btn-md btn-primary" ng-click='partnerRequest()' ng-hide='successfulRequest'>Partner Request</button>
-<p ng-hide='!successfulRequest'>Request Pending</p>

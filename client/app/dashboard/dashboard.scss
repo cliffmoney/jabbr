@@ -1,8 +1,9 @@
 .dashboard {
-  position: relative
-}
+  position: relative;
 
-.dashboard {
+  .col-md-8 {
+    padding-top: 30px;
+  }
 
   .sidePanel {
     background-color: $dashboard-primary;
