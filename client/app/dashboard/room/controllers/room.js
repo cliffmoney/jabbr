@@ -59,20 +59,54 @@ angular.module('jabbrApp')
       $scope.startDisabled = true;
       $scope.stopDisabled = false;
       recordAudio.startRecording();
-      recordPeerAudio.startRecording();
+      recordPeerAudio && recordPeerAudio.startRecording();
     };
 
     $scope.stopRecording = function() {
       $scope.startDisabled = false;
       $scope.stopDisabled = true;
-      recordAudio.stopRecording(function() {
+
+      //if peer exists, record both streams
+      //stop self's audio recording
+      recordPeerAudio && recordAudio.stopRecording(function() {
+        //stop peer's audio recording
+        recordPeerAudio.stopRecording(function() {
+          //get self's audio data-URL
+          recordAudio.getDataURL(function (audioDataURL) {
+            //get peer's audio data-URL
+            recordPeerAudio.getDataURL(function (peerAudioURL) {
+              var files = {
+                selfAudio: {
+                  type: recordAudio.getBlob().type || 'audio/wav',
+                  dataURL: audioDataURL
+                },
+                peerAudio: {
+                  type: recordPeerAudio.getBlob().type || 'audio/wav',
+                  dataURL: peerAudioURL
+                },
+                user: {
+                  user: Auth.getCurrentUser()
+                }
+              };
+              console.log(files);
+
+              socket.emit('audio', files);
+            });
+
+          });
+        });
+      });
+
+      //if no peer, record self only
+      !recordPeerAudio && recordAudio.stopRecording(function() {
          // get audio data-URL
          recordAudio.getDataURL(function(audioDataURL) {
              var files = {
-                 audio: {
+                 selfAudio: {
                      type: recordAudio.getBlob().type || 'audio/wav',
                      dataURL: audioDataURL
                  },
+                 peerAudio: {},
                  user: {
                    user: Auth.getCurrentUser()
                  }
@@ -80,23 +114,11 @@ angular.module('jabbrApp')
              socket.emit('audio', files);
           });
       });
-      recordPeerAudio.stopRecording(function() {
-         // get audio data-URL
-         recordPeerAudio.getDataURL(function(audioDataURL) {
-             var files = {
-                 audio: {
-                     type: recordPeerAudio.getBlob().type || 'audio/wav',
-                     dataURL: audioDataURL
-                 },
-                 user: {
-                   user: {email: "YOUR PARTNER"}
-                 }
-             };
-             socket.emit('audio', files);
-          });
-      });
+    
     };
-    socket.on('savedAudio', function(fileName){
-      console.log('Saved File' + fileName);
-    })
+
+    socket.on("merged", function(filename) {
+      console.log(filename + " successfully saved to database");
+    });
+
   });
