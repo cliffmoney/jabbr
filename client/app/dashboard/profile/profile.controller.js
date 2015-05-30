@@ -17,7 +17,11 @@ angular.module('jabbrApp')
       });
     };
   
-    $scope.userProfile = User.getProfile({id: $stateParams.userId});
+    $scope.userProfile = User.getProfile({id: $stateParams.userId}, function(profile) {
+      if(!profile.pic) {
+        profile.pic = '../../../images/smiley.svg';
+      }
+    });
     // $http.get('/api/users/' + $stateParams.userId + '/profile')
     //   .success(function(profile, status) {
     //     console.log(profile);

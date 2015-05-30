@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-md-2">
+    <img class="profile-pic" ng-src='{{myProfile.pic}}'/>
+  </div>
+  <div class="col-md-10">
+  <h3>{{myProfile.name}}</h3>
+  </div>
+</div>
+<h4>From: {{myProfile.country}}</h4>
+<h4>Learning: <span ng-repeat='language in myProfile.languagesLearning'> {{language.language}}: {{language.ability}} </span></h4>
+<h4>Speaks: <span ng-repeat='language in myProfile.languagesSpeaking'> {{language.language}}: {{language.ability}} </span></h4>
+<h4>Introduction</h4>
+<p>{{myProfile.intro}}</p>
