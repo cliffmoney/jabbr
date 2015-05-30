@@ -31,7 +31,7 @@ module.exports = function(recording, cb){
       writestream.on('close', function (file) {
           // do something with `file`
           fs.unlink(filePath,function(err){
-            console.log(file.filename + ' Written To DB' + recording.userId);
+            console.log(file.filename + ' Written To DB by ' + recording.userId);
             cb(recording.filename);
           })
       });
