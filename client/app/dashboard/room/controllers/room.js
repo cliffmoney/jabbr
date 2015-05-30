@@ -106,6 +106,7 @@ angular.module('jabbrApp')
                      type: recordAudio.getBlob().type || 'audio/wav',
                      dataURL: audioDataURL
                  },
+                 peerAudio: {},
                  user: {
                    user: Auth.getCurrentUser()
                  }
@@ -116,8 +117,8 @@ angular.module('jabbrApp')
     
     };
 
-    socket.on('savedAudio', function(fileName){
-      console.log('Saved File' + fileName);
+    socket.on("merged", function(filename) {
+      console.log(filename + " successfully saved to database");
     });
 
   });

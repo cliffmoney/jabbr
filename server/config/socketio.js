@@ -80,30 +80,21 @@ module.exports = function (socketio) {
   //------------SOCKET ON AUDIO START------------------------
     socket.on('audio', function(audio){
       var fileName = uuid.v4();
-
-      saveRecording.writeToDisk({
-        audio : audio.selfAudio.dataURL,
-        filename : fileName + '.wav',
+      //peerAudio is undefined if no peer stream
+      var file = {
+        selfAudio : audio.selfAudio.dataURL,
+        peerAudio: audio.peerAudio.dataURL,
+        fileName : fileName + ".wav",
+        peerFileName: fileName + "(1).wav",
         userId: audio.user.user.email
-      },
-        function(filename){
-          socket.emit('savedAudio', fileName + '.wav');
-        }
-      );
-
-      if (audio.peerAudio) {
-        saveRecording.writeToDisk({
-          audio : audio.peerAudio.dataURL,
-          filename : fileName + '(1).wav',
-          userId: audio.user.user.email
-        },
-          function(filename){
-            socket.emit('savedAudio', 'PEER AUDIO '+ fileName + '.wav');
-          }
-        );
-        saveRecording.merge(socket,fileName);
+      };
+      //writeToDisk will handle if peer stream exists logic
+      saveRecording.writeToDisk(file);
+      if (audio.peerAudio.dataURL) {
+        //merge two files
+        saveRecording.merge(socket, fileName);
       } else {
-        socket.emit('merged', fileName + '.wav');
+        socket.emit('merged', fileName + ".wav");
       }
 
     });
