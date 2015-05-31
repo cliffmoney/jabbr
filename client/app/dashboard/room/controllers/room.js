@@ -31,22 +31,20 @@ angular.module('jabbrApp')
       $scope.error = 'No audio/video permissions. Please refresh your browser and allow the audio/video capturing.';
     });
 
-    $scope.peers = [];
+    $scope.peer = {};
     $scope.partner = '';
     Room.on('peer.stream', function (peer) {
       console.log('Client connected, adding new stream');
-      $scope.peers.push({
+      $scope.peer = {
         id: peer.id,
         stream: URL.createObjectURL(peer.stream)
-      });
+      };
       recordPeerAudio = RecordRTC(peer.stream);
       $scope.partner = Session.getCurrentlyMessaging();
     });
     Room.on('peer.disconnected', function (peer) {
       console.log('Client disconnected, removing stream');
-      $scope.peers = $scope.peers.filter(function (p) {
-        return p.id !== peer.id;
-      });
+      $scope.peer = {}; // peer's video disappears
     });
 
     $scope.startDisabled = false;
