@@ -26,6 +26,13 @@ angular.module('jabbrApp')
       },
       getProfile: {
         method: 'GET',
+      },
+      getPartners: {
+        method: 'GET',
+        params: {
+          controller: 'partners'
+        },
+        isArray: true
       }
     });
   });

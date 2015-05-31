@@ -7,23 +7,25 @@ angular.module('jabbrApp')
 
 
     // get all partnerships that have a room
-    $scope.getRooms = function() {
-      $http.get('/api/partnerships')
-        .success(function(partnerships, status) {
-          for(var i = 0; i < partnerships.length; i++) {
-            if($scope.currentUser._id === partnerships[i].requester._id)
-              partnerships[i].partnerName = partnerships[i].recipient.name;
-            else
-              partnerships[i].partnerName = partnerships[i].requester.name;
-          }
-          $scope.partnerships = partnerships;
-        })
-        .error(function(error) {
-          console.log(error);
-        });
-    };
-
-    $scope.getRooms();
+    // $scope.getRooms = function() {
+    //   $http.get('/api/partnerships')
+    //     .success(function(partnerships, status) {
+    //       for(var i = 0; i < partnerships.length; i++) {
+    //         if($scope.currentUser._id === partnerships[i].requester._id)
+    //           partnerships[i].partnerName = partnerships[i].recipient.name;
+    //         else
+    //           partnerships[i].partnerName = partnerships[i].requester.name;
+    //       }
+    //       $scope.partnerships = partnerships;
+    //     })
+    //     .error(function(error) {
+    //       console.log(error);
+    //     });
+    // };
+    console.log($scope.currentUser._id);
+    $scope.partners = User.getPartners({id: $scope.currentUser._id}, function(partners) {
+      console.log(partners);
+    })
 
     // go to the room clicked on by the user
     $scope.enterRoom = function(room) {
