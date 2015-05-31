@@ -23,9 +23,9 @@ angular.module('jabbrApp')
     //     });
     // };
     console.log($scope.currentUser._id);
-    $scope.partners = User.getPartners({id: $scope.currentUser._id}, function(partners) {
-      console.log(partners);
-    })
+    // $scope.partners = User.getPartners({id: $scope.currentUser._id}, function(partners) {
+    //   console.log(partners);
+    // })
 
     // go to the room clicked on by the user
     $scope.enterRoom = function(room) {
