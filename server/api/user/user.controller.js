@@ -2,6 +2,7 @@
 
 var User = require('./user.model');
 var Recording = require('../recording/recording.model');
+var Partnership = require('../partnership/partnership.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
@@ -147,6 +148,11 @@ exports.changeUserPreferences = function(req, res, next) {
     });
   });
  };
+
+ exports.getPartners = function(req, res, next) {
+  var userId = req.user._id;
+
+ }
 
 /**
  * Gets user recordings

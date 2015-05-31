@@ -12,3 +12,6 @@ var PartnershipSchema = new Schema({
 });
 
 module.exports = mongoose.model('Partnership', PartnershipSchema);
+
+PartnershipSchema.index({'requester': 1});
+PartnershipSchema.index({'recipient': 1});
