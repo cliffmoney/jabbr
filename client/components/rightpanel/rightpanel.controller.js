@@ -3,21 +3,23 @@
 angular.module('jabbrApp')
   .controller('RightPanelCtrl', function ($scope, $location, Auth, User, $http,JabbrSocket, $state) {
     $scope.socket = JabbrSocket;
-    $scope.partnerships = [];
+
+    $scope.partners = User.getPartners({id: $scope.currentUser._id});
 
 
-    $scope.partners = User.getPartners({id: $scope.currentUser._id}, function(partners) {
-       console.log(partners);
-    });
+    // upon clicking a partner, user gets taken to an overview of the partnership
 
-    // go to the room clicked on by the user
-    $scope.enterRoom = function(room) {
-      $scope.socket.emit('checkRoom', {roomid: room});
-      $scope.socket.on('openRoom', function(data){
-        $state.go('roomId',{roomId: room});
-      });
-      $scope.socket.on('roomError', function(data){});
+    $scope.seePartnership = function(partner) {
+      $state.go('partnership', {partnershipId: partner.partnershipId});
     };
+
+    // $scope.seePartnership = function(partner) {
+    //   $scope.socket.emit('checkRoom', {roomid: room});
+    //   $scope.socket.on('openRoom', function(data){
+    //     $state.go('roomId',{roomId: room});
+    //   });
+    //   $scope.socket.on('roomError', function(data){});
+    // };
     
 
   });
