@@ -1,10 +1,10 @@
 <div ng-controller="RightPanelCtrl">
-  <h4>My Rooms</h4>
+  <h4>Partners</h4>
   <div class="nav">
         <ul class="nav nav-stacked nav-sidebar">
-            <li ng-repeat="partnership in partnerships" class="meetup">
+            <li ng-repeat="partner in partners">
               <a ng-click="enterRoom(partnership.room_id)">
-                You and {{partnership.partnerName}}
+                {{partner.user.name}}
               </a>
             </li>
         </ul>

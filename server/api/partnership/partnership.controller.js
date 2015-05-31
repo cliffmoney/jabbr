@@ -99,12 +99,10 @@ exports.confirm = function(req, res) {
           {$push : {partners: partnership.recipient, partnerships: partnership._id}},
           {safe: true},
           function(err, user) {
-            console.log(user);
             User.findByIdAndUpdate(partnership.recipient,
               {$push : {partners: partnership.requester, partnerships: partnership._id}},
               {safe: true},
               function(err, user) {
-                console.log(user);
                 return res.json(200, partnership);
               });
           });
