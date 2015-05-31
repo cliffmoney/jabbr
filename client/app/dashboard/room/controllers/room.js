@@ -17,6 +17,7 @@ angular.module('jabbrApp')
       recordAudio = RecordRTC(stream);
       Room.init(stream);
       stream = URL.createObjectURL(stream);
+      console.log("This is the object URL: " + stream);
       if (!$stateParams.roomId) {
         Room.createRoom()
         .then(function (roomId) {
