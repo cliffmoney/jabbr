@@ -1,5 +1,7 @@
 <div class="col-md-12">
+  <h1>You and {{partnership.partner.name}}</h1>
   <div ng-repeat='message in partnership.messages'>
     {{message.body}}
   </div>
+  <button class="btn btn-md btn-primary" ng-click='enterRoom(partnership.room_id)'>Enter Room</button>
 </div>
