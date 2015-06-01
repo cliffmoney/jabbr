@@ -4,7 +4,7 @@ angular.module('jabbrApp')
   .controller('RightPanelCtrl', function ($scope, User, $state, $interval) {
 
     var getPartners = function() {
-      $scope.partners = User.getPartners({id: $scope.currentUser._id});
+      $scope.partners = User.getPartners({id: $scope.currentUser._id}, function(partners) {});
     };
 
     getPartners();  // get partners when controller first loads 
@@ -19,7 +19,7 @@ angular.module('jabbrApp')
       // stops any running interval to avoid two intervals running at the same time
       $scope.stop(); 
       // store the interval promise
-      promise = $interval(getPartners, 8000);
+      promise = $interval(getPartners, 100000); // every minute check for new partners
     };
 
     // stops the interval
