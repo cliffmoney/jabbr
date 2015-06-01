@@ -2,7 +2,7 @@
   <h4>Partners</h4>
   <div class="nav">
     <ul class="nav nav-stacked nav-sidebar">
-      <li ng-repeat="partner in partners">
+      <li ng-repeat="partner in partners | orderBy: 'user.name'">
         <a ng-click="seePartnership(partner.partnershipId)">
           <div class="row">
             <div class="col-md-6 partner-text-col">
