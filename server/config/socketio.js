@@ -24,7 +24,7 @@ module.exports = function (socketio) {
         return;
       }
       delete rooms[currentRoom][rooms[currentRoom].indexOf(socket)];
-      rooms[currentRoom].forEach(function (socket) {
+     rooms[currentRoom].forEach(function (socket) {
         if (socket) {
           socket.emit('peer.disconnected', { id: id });
         }
@@ -35,24 +35,32 @@ module.exports = function (socketio) {
   //------------SOCKET ON CREATE ROOM START-------------------
     socket.on('checkRoom', function(data){
       // check if a room has already been created or not
+      console.log('checking roomid ' + data.roomid);
       var roomid = data.roomid;
-      if(rooms[roomid]){socket.emit('openRoom')}
+      if(rooms[roomid]){
+        console.log('found the room');
+        socket.emit('openRoom', {roomid: roomid})
+      }
       else{createRoom(data);}
 
     });
     var createRoom = function(data){
       currentRoom = data.roomid || uuid.v4();
       console.log("Created Room: " + currentRoom);
-      rooms[currentRoom] = [socket];
-      id = userIds[currentRoom] = 0;
+      rooms[currentRoom] = [];
       socket.emit("openRoom", {roomid:currentRoom, 'id': id})
     };
   //------------SOCKET ON CREATE ROOM END---------------------
   //------------SOCKET ON JOINROOM START----------------------
     socket.on('joinRoom',function(data){
+      console.log(data.roomid);
       currentRoom = data.roomid;
-      userIds[currentRoom] += 1;
-      id = userIds[currentRoom];
+      if(userIds[currentRoom] === undefined) {
+        id = userIds[currentRoom] = 0;  // first user of room assign id of zero
+      } else {  // increment id number by one for every 
+        userIds[currentRoom] += 1;
+        id = userIds[currentRoom];
+      }
       socket.emit('enterRoom', {'roomid': currentRoom, 'id':id})
       var room = rooms[currentRoom];
       room.forEach(function(s){
@@ -61,9 +69,21 @@ module.exports = function (socketio) {
       room[id] = socket;
       console.log('Peer connected to room', currentRoom, 'with #', id);
     });
-
   //------------SOCKET ON JOINROOM END-----------------------
-
+  //------------SOCKET ON LEAVEROOM START----------------------
+    socket.on('leaveRoom', function(data) {
+      if (!currentRoom || !rooms[currentRoom]) {
+        return;
+      }
+      delete rooms[currentRoom][rooms[currentRoom].indexOf(socket)];
+      socket.disconnect();
+      rooms[currentRoom].forEach(function (socket) {
+        if (socket) {
+          socket.emit('peer.disconnected', { id: id });
+        }
+      });
+    });
+  //------------SOCKET ON LEAVEROOM START----------------------
   //------------SOCKET ON MSG START--------------------------
     socket.on('msg', function (data) {
       var to = parseInt(data.to, 10);

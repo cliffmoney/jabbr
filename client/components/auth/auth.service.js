@@ -25,9 +25,10 @@ angular.module('jabbrApp')
         }).
         success(function(data) {
           $cookieStore.put('token', data.token);
-          currentUser = User.get();
-          deferred.resolve(data);
-          return cb();
+          currentUser = User.get(function() {
+            deferred.resolve(data);
+            return cb();
+          });
         }).
         error(function(err) {
           this.logout();
@@ -58,16 +59,21 @@ angular.module('jabbrApp')
       createUser: function(user, callback) {
         var cb = callback || angular.noop;
 
-        return User.save(user,
-          function(data) {
+        var deferred = $q.defer();
+        User.save(user,
+          function (data) {
             $cookieStore.put('token', data.token);
-            currentUser = User.get();
-            return cb(user);
+            currentUser = User.get(function () {
+              deferred.resolve(data);
+              return cb(currentUser);
+            });
           },
-          function(err) {
+          function (err) {
             this.logout();
             return cb(err);
-          }.bind(this)).$promise;
+            deferred.reject(err);
+          });
+        return deferred.promise;
       },
 
       /**

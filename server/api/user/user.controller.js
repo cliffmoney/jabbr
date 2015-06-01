@@ -2,6 +2,7 @@
 
 var User = require('./user.model');
 var Recording = require('../recording/recording.model');
+var Partnership = require('../partnership/partnership.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
@@ -148,6 +149,41 @@ exports.changeUserPreferences = function(req, res, next) {
   });
  };
 
+
+/*** retrieves an array of all the user's partners. 
+ each object in the array includes select data about 
+ the partner and the id of the associated partnership 
+ */
+exports.getPartners = function(req, res, next) {
+  var userId = mongoose.Types.ObjectId(req.user._id); // explicity convert string to ObjectId type
+  User.findById(userId, function(err, user) {
+    if (err) { return handleError(res, err); }
+    if (!user) { return res.json(500); }
+    var partners = [];
+    // use partnerships array of found user to retrieve all user's partnerships
+    Partnership.find({ '_id' : {'$in': user.partnerships }}).
+      populate('recipient requester', // populate with select info 
+        'name languagesLearning nativeLanguages languagesSpeaking pic country')
+      .exec(function(err, partnerships) {
+        if (err) { return handleError(res, err) };
+        partnerships.forEach(function(partnership) {
+          if(partnership.requester._id.equals(userId)) { // comparison using native ObjectId type
+            partners.push({
+              partnershipId: partnership._id,
+              user: partnership.recipient
+            });
+          } else {
+            partners.push({
+              partnershipId: partnership._id,
+              user: partnership.requester
+            });
+          }
+        });
+        res.json(partners);
+      });
+  });
+};
+
 /**
  * Gets user recordings
  */
@@ -252,3 +288,7 @@ exports.changeUserPreferences = function(req, res, next) {
 exports.authCallback = function(req, res, next) {
   res.redirect('/');
 };
+
+function handleError(res, err) {
+  return res.send(500, err);
+}
