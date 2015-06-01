@@ -75,6 +75,10 @@ angular.module('jabbrApp')
       }
     }
 
+    function closeConnection(id) {
+      var pc = getPeerConnection(id);
+      pc.close();
+    }
     // var socket = Io.connect(config.SIGNALIG_SERVER_URL),
     //     connected = false;
 
@@ -83,6 +87,7 @@ angular.module('jabbrApp')
         makeOffer(params.id);
       });
       socket.on('peer.disconnected', function (data) {
+        closeConnection(data.id);
         api.trigger('peer.disconnected', [data]);
         if (!$rootScope.$$digest) {
           $rootScope.$apply();
@@ -105,6 +110,9 @@ angular.module('jabbrApp')
             roomId = roomInfo.roomid;
             connected = true;
           });
+          socket.on('roomError', function(error) {
+            console.log(error.message);
+          })
         }
       },
       createRoom: function () {
@@ -129,6 +137,11 @@ angular.module('jabbrApp')
       },
       init: function (s) {
         stream = s;
+      },
+      leaveRoom: function() {
+        currentId = undefined;
+        roomId = undefined;
+        connected = false;
       }
     };
     EventEmitter.call(api);

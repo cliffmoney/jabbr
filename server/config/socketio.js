@@ -53,10 +53,11 @@ module.exports = function (socketio) {
   //------------SOCKET ON CREATE ROOM END---------------------
   //------------SOCKET ON JOINROOM START----------------------
     socket.on('joinRoom',function(data){
+      console.log(data.roomid);
       currentRoom = data.roomid;
       if(userIds[currentRoom] === undefined) {
         id = userIds[currentRoom] = 0;  // first user of room assign id of zero
-      } else {  // increment id number by one for the next user
+      } else {  // increment id number by one for every 
         userIds[currentRoom] += 1;
         id = userIds[currentRoom];
       }
@@ -68,9 +69,21 @@ module.exports = function (socketio) {
       room[id] = socket;
       console.log('Peer connected to room', currentRoom, 'with #', id);
     });
-
   //------------SOCKET ON JOINROOM END-----------------------
-
+  //------------SOCKET ON LEAVEROOM START----------------------
+    socket.on('leaveRoom', function(data) {
+      if (!currentRoom || !rooms[currentRoom]) {
+        return;
+      }
+      delete rooms[currentRoom][rooms[currentRoom].indexOf(socket)];
+      socket.disconnect();
+      rooms[currentRoom].forEach(function (socket) {
+        if (socket) {
+          socket.emit('peer.disconnected', { id: id });
+        }
+      });
+    });
+  //------------SOCKET ON LEAVEROOM START----------------------
   //------------SOCKET ON MSG START--------------------------
     socket.on('msg', function (data) {
       var to = parseInt(data.to, 10);
