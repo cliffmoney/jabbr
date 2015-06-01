@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jabbrApp')
-  .controller('OverviewCtrl', function ($scope, $state, User, Session, Message, $http, Partnership) {
+  .controller('OverviewCtrl', function ($scope, $state, User, Message, $http, Partnership, $interval) {
     $scope.suggestedPartners = []; 
     $scope.messages = [];
 
@@ -16,6 +16,7 @@ angular.module('jabbrApp')
     // });
 
     // get request for all messages for now, will refactor to fetch 5-10 most recent
+    
     $http.get('/api/users/' + $scope.currentUser._id + '/messages')
       .success(function(messages, status) {
         $scope.messages = messages;
