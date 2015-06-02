@@ -115,6 +115,7 @@ exports.confirm = function(req, res) {
       partnership.room_id = uuid.v4();
       partnership.save(function (err, partnership) {
         if (err) { return handleError(res, err); }
+        partnership.sendConfirmation(); // sends a confirmation message to the requester
         // save reciprocal partner ids and partnership ids to both user documents
         User.findByIdAndUpdate(partnership.requester,
           {$push : {partners: partnership.recipient, partnerships: partnership._id}},

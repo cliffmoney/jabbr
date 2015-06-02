@@ -25,7 +25,7 @@ var UserSchema = new Schema({
   messages: [{type: Schema.ObjectId, ref: 'Message'}],
   languagesLearning: [{language: String, ability: Number}],
   languagesSpeaking: [{language: String, ability: Number}],
-  pic: String,
+  pic: {type: String, default: '../../../images/smiley.svg'},
   intro: String,
   help: String,
   country: String

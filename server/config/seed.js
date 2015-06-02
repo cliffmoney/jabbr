@@ -11,7 +11,6 @@ var Recording = require('../api/recording/recording.model');
 User.find({}).remove(function() {
   User.create({
     provider: 'local',
-    pic: '',
     name: 'Test User',
     email: 'test@test.com',
     password: 'test',

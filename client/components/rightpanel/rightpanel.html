@@ -1,12 +1,19 @@
 <div ng-controller="RightPanelCtrl">
   <h4>Partners</h4>
   <div class="nav">
-        <ul class="nav nav-stacked nav-sidebar">
-            <li ng-repeat="partner in partners">
-              <a ng-click="seePartnership(partner.partnershipId)">
-                {{partner.user.name}}
-              </a>
-            </li>
-        </ul>
+    <ul class="nav nav-stacked nav-sidebar">
+      <li ng-repeat="partner in partners | orderBy: 'user.name'">
+        <a ng-click="seePartnership(partner.partnershipId)">
+          <div class="row">
+            <div class="col-md-6 partner-text-col">
+              {{partner.user.name}} </br> <span>from {{partner.user.country}}</span>
+            </div>
+            <div class="col-md-6">
+              <img class='img-responsive pull-right' ng-src='{{partner.user.pic}}' />
+            </div>
+          </div>
+        </a>
+      </li>
+    </ul>
   </div>
 </div>
