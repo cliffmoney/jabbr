@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 exports.index = function(req, res) {
   Message.find({to: mongoose.Types.ObjectId(req.user._id)})
     .populate('from to')
-    .sort('-timestamp') // sort by timestamp
+    .sort('timestamp') // sort by timestamp
     .exec(function (err, messages) {
       if(err) { return handleError(res, err); }
       return res.json(200, messages);
