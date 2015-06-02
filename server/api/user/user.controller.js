@@ -141,7 +141,11 @@ exports.changeUserPreferences = function(req, res, next) {
     for(var i = 0; i < user.languagesLearning.length; i++) {
       languageNames.push(user.languagesLearning[i].language);
     }
-    User.find({ 'languagesSpeaking.language' : {'$in': languageNames } }, 'name languagesLearning nativeLanguages languagesSpeaking',
+    // retrieves all users that speak the same language the user is learning 
+    // and aren't already partners with the user
+    User.find({'$and': [{ 'languagesSpeaking.language' : {'$in': languageNames } }
+       , { '_id' : {'$nin': user.partners}}]}, 
+      'name languagesLearning nativeLanguages languagesSpeaking',
       function(err, partners) {
         if(err) return next(err);
         res.json({partners: partners});
