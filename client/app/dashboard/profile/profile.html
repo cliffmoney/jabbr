@@ -37,8 +37,9 @@
       </div>
     </div>
     <div class='col-md-6'>
-      <button class="btn btn-md btn-primary center-block" ng-click='partnerRequest()' ng-hide='successfulRequest'>Partner Request</button>
+      <button class="btn btn-md btn-primary center-block" ng-click='partnerRequest()' ng-hide='successfulRequest || isPartner'>Partner Request</button>
       <p ng-hide='!successfulRequest'>Request Pending</p>
+      <p ng-show='isPartner'>You are partners with {{userProfile.name}}</p>
       <h4>Introduction</h4>
       <p>{{userProfile.intro}}</p>
     </div>

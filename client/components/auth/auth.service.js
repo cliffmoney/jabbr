@@ -133,6 +133,20 @@ angular.module('jabbrApp')
       },
 
       /**
+       * Check if logged in user is a partner with another user
+       */
+      isPartnerWith: function(partnerId) {
+        var isPartner = false;
+        for(var i = 0; i < currentUser.partners.length; i++) {
+          if(currentUser.partners[i] == partnerId) {
+            isPartner = true;
+            break;
+          }
+        }
+        return isPartner;
+      },
+
+      /**
        * Check if a user is an admin
        *
        * @return {Boolean}
