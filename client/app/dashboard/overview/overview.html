@@ -1,12 +1,15 @@
 <h3>Messages</h3>
 <div class='row' ng-repeat="message in messages">
-  <div class='col-md-3'>
-    From: {{message.from.name}}
+  <div class='col-md-6' ng-show="message.type === 'normal'">
+    You have a new message from {{message.from.name}}!
   </div>
-  <div class='col-md-3'>
-    {{message.body}}
+  <div class='col-md-6' ng-show="message.type === 'partnerRequest'">
+    You have a new partner request from {{message.from.name}}!
   </div>
-  <div class='col-md-3'>
+  <div class='col-md-6' ng-show="message.type === 'requestAccept'">
+    Your partner request for {{message.from.name}} has been accepted!
+  </div>
+  <div class='col-md-3' ng-bind="message.timestamp | date:'MM/dd/yyyy hh:mma'">
     {{message.timestamp}}
   </div>
   <div class='col-md-3'>

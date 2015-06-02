@@ -16,7 +16,7 @@ PartnershipSchema.methods = {
   sendConfirmation: function() {
     var partnership = this; // to save context for updating later
     Message.create({
-      type: 'PartnerRequest',
+      type: 'requestAccept',
       from: partnership.recipient,
       to: partnership.requester
     }, function(err, message) {

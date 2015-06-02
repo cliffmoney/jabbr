@@ -7,7 +7,7 @@ var MessageSchema = new Schema({
   body: String, 
   from: {type: Schema.ObjectId, ref: 'User'},
   to: {type: Schema.ObjectId, ref: 'User'},
-  timestamp: Date, 
+  timestamp: {type: Date, default: Date.now()},
   type: String,
   _partnership: {type: Schema.ObjectId, ref: 'Partnership'}
 });
