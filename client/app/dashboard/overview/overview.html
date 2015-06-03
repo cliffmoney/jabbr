@@ -1,15 +1,18 @@
 <h3 class='text-center'>Find a New Language Partner</h3>
-<div class='row' ng-repeat="partner in suggestedPartners">
+<div class='row text-center partner-list-header'>
+    <div class='col-md-3'><h4>Name</h4></div>
+    <div class='col-md-3'><h4>Native Languages</h4></div>
+    <div class='col-md-3'><h4>Learning</h4></div>
+</div>
+<div class='row suggestion' ng-repeat="partner in suggestedPartners">
   <div class='col-md-3'>
-    Name: {{partner.name}}
+    <h4>{{partner.name}}</h4>
   </div>
   <div class='col-md-3'>
-    Native Languages: 
-    <span ng-repeat='nativeLanguage in partner.nativeLanguages'> {{nativeLanguage}} </span>
+    <h4><span ng-repeat='nativeLanguage in partner.nativeLanguages'> {{nativeLanguage}} </span></h4>
   </div>
   <div class='col-md-3'>
-    Learning: 
-    <span ng-repeat='language in partner.languagesLearning'> {{language.language}} </span>
+    <h4><span ng-repeat='language in partner.languagesLearning'> {{language.language}} </span></h4>
   </div>
   <div class='col-md-3'>
     <button class="btn btn-md btn-primary" ng-click='viewProfile(partner)'>View Profile</button>
@@ -32,12 +35,29 @@
       </a>
     </div>
   </div>
-  <div class="row" ng-show = 'messageFormOpen'>
+  <div class="row message-content" ng-show = 'messageFormOpen'>
     <div class='col-md-6'>
       <p>{{message.body}}</p>
     </div>
     <div class='col-md-6'>
-      <a class="btn btn-default btn-lg btn-register">Respond</a>
+        <form class="form" name="acceptForm" ng-submit="acceptRequest(acceptForm, message)" ng-show='message.type === "partnerRequest"' novalidate>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea type="text" name="acceptText" class="form-control" ng-model="acceptText" required></textarea>
+          </div>
+          <div class="form-group has-error">
+            <p class="help-block" ng-show="acceptForm.acceptText.$error.required && submitted">
+              Please include a message in your partner acceptance
+            </p>
+            <p class="help-block">{{ errors.other }}</p>
+          </div>
+          <button class="btn btn-inverse btn-md btn-login" type="submit">
+            Accept
+          </button>
+          <a class="btn btn-default btn-md btn-register" ng-click='viewProfile(message.from)'>
+            View Profile
+          </a>
+        </form>
     </div>
   </div>
 </div>
