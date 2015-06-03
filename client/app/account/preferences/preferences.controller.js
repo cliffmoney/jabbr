@@ -26,6 +26,17 @@ angular.module('jabbrApp')
         $location.path('/');
       });
     };
+    var init = function() {
+      var url = 'https://www.googleapis.com/language/translate/v2/languages?key='
+      $http.get('/someUrl').
+        success(function(data, status, headers, config) {
+          console.log(data);
+        }).
+        error(function(data, status, headers, config) {
+          console.log('Error getting list of supported languages')
+        });
+    }
 
+    init();
 
   });

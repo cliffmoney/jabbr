@@ -77,10 +77,3 @@ angular.module('jabbrApp', [
       });
     });
   });
-
-
-
- angular.module('jabbrApp')
-  .constant('config', {
-      SIGNALIG_SERVER_URL: undefined
-  });
