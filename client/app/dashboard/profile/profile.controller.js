@@ -3,20 +3,26 @@
 angular.module('jabbrApp')
   .controller('ProfileCtrl', function ($scope, $stateParams, User, $http, Auth) {
     $scope.userProfile = {};
+    $scope.requestFormOpen = false; // determines appearance of request form
     $scope.isPartner;  // determines if a request button gets displayed
     $scope.notRespondedTo; // true if you haven't accepted this user's partnership request
     $scope.waitingOn; // true if this user hasn't accepted your partnership request
-    
-    $scope.partnerRequest = function() {
-      $http.post('/api/partnerships', {
-        requester: $scope.currentUser._id,
-        recipient: $stateParams.userId,
-        body: "You have a new language partner request!"
-      }).success(function(data, status) {
-        $scope.waitingOn = true;
-      }).error(function(error) {
-        console.log(error);
-      });
+    $scope.submitted = false; // for form
+
+    $scope.sendRequest = function(form) {
+      $scope.submitted = true;
+      if(form.$valid) {
+        $http.post('/api/partnerships', {
+          requester: $scope.currentUser._id,
+          recipient: $stateParams.userId,
+          body: $scope.requestText
+        }).success(function(data, status) {
+          $scope.waitingOn = true;
+          $scope.requestFormOpen = false;
+        }).error(function(error) {
+          console.log(error);
+        });
+      }
     };
 
 

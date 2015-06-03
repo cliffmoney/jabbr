@@ -1,6 +1,6 @@
 <div class="col-centered col-md-11">
   <div class="row">
-    <div class='col-centered col-md-6 profile-heading'>
+    <div class='col-md-6 profile-heading'>
       <div class='row'>
         <div class="col-md-6">
           <img class="profile-pic img-responsive img-circle" ng-src='{{userProfile.pic}}'/>
@@ -10,38 +10,61 @@
         </div>
       </div>
     </div>
+    <div class='col-md-6'>
+      <div class='request-notifier' ng-hide='isPartner || notRespondedTo || waitingOn || requestFormOpen'>
+        <h4 class='text-center'>Send a partner request to {{userProfile.name}}</h4>
+        <button class="btn btn-md btn-primary center-block" ng-click='requestFormOpen = !requestFormOpen'>Request</button>
+      </div>
+      <form class="form" name="requestForm" ng-submit="sendRequest(requestForm)" ng-show='requestFormOpen' novalidate>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea type="text" name="requestText" class="form-control" ng-model="requestText" required></textarea>
+          </div>
+          <div class="form-group has-error">
+            <p class="help-block" ng-show="requestForm.requestText.$error.required && submitted">
+              Please include a message in your partner request
+            </p>
+            <p class="help-block">{{ errors.other }}</p>
+          </div>
+          <button class="btn btn-inverse btn-lg btn-login" type="submit">
+            Send
+          </button>
+          <a class="btn btn-default btn-lg btn-register" ng-click='requestFormOpen = !requestFormOpen'>
+            Cancel
+          </a>
+      </form>
+      <h4 class='text-center' ng-show='notRespondedTo'>{{userProfile.name}} is waiting to be partners with you!</h4>
+      <button class="btn btn-md btn-primary center-block" ng-click='acceptRequest()' ng-show='notRespondedTo'>Accept Request</button>
+      <h4 class='text-center' ng-show='waitingOn'>Your partner request for {{userProfile.name}} is pending</h4>
+      <h4 class='text-center' ng-show='isPartner'>You are partners with {{userProfile.name}}</h4>
+    </div>
   </div>
   <div class="row profile-body">
     <div class='col-md-6'>
       <div class='language-box'>
-        <h4>Speaks</h4>
+        <h4 class='language-box-heading'>Speaks</h4>
         <div class='row' ng-repeat='language in userProfile.languagesSpeaking'>
           <div class='col-md-6 text-center'>
-            {{language.language}}
+            <h4>{{language.language}}</h4>
           </div>
-          <div class='col-md-6 text-center'>
-            {{language.ability}} 
+          <div class='col-md-6 text-left'>
+            <i class="fa fa-star fa-2x" ng-repeat='n in [] | range: language.ability'></i>
           </div>
         </div>
       </div>
       <div class='language-box'>
-        <h4>Learning</h4> 
+        <h4 class='language-box-heading'>Learning</h4> 
         <div class='row' ng-repeat='language in userProfile.languagesLearning'>
           <div class='col-md-6 text-center'>
-            {{language.language}}
+            <h4>{{language.language}}</h4>
           </div>
-          <div class='col-md-6 text-center'>
-            {{language.ability}}
+          <div class='col-md-6 text-left'>
+            <i class="fa fa-star fa-2x" ng-repeat='n in [] | range: language.ability'></i>
           </div>
         </div>
       </div>
     </div>
     <div class='col-md-6'>
-      <button class="btn btn-md btn-primary center-block" ng-click='partnerRequest()' ng-hide='isPartner || notRespondedTo || waitingOn'>Partner Request</button>
-      <p ng-show='notRespondedTo'>{{userProfile.name}} is waiting to be partners with you!</p>
-      <button class="btn btn-md btn-primary center-block" ng-click='acceptRequest()' ng-show='notRespondedTo'>Accept Request</button>
-      <p ng-show='waitingOn'>Request Pending</p>
-      <p ng-show='isPartner'>You are partners with {{userProfile.name}}</p>
       <h4>Introduction</h4>
       <p>{{userProfile.intro}}</p>
     </div>
