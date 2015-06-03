@@ -18,3 +18,10 @@
 .user-panel button {
   margin-bottom: 15px;
 }
+
+.conversation {
+  width: 600px;
+  height: 100px;
+  overflow: auto;
+  border: 1px solid;
+}
