@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jabbrApp')
-  .controller('RoomCtrl', function ($sce, VideoStream, $location, $stateParams, $scope, Room, $state, JabbrSocket, Auth, Session) {
+  .controller('RoomCtrl', function ($sce, VideoStream, $location, $stateParams, $scope, Room, $state, JabbrSocket, Auth, Session, Translate) {
 
     if (!window.RTCPeerConnection || !navigator.getUserMedia) {
       $scope.error = 'WebRTC is not supported by your browser. You can try the app with Chrome and Firefox.';
@@ -21,7 +21,7 @@ angular.module('jabbrApp')
       if (!$stateParams.roomId) {
         Room.createRoom()
         .then(function (roomId) {
-          $state.go('room', {roomId: roomId}, {location: true});
+          $state.go('roomId', {roomId: roomId}, {location: true});
         });
       } else {
         console.log("Attemping to join: " + $stateParams.roomId);
@@ -125,11 +125,21 @@ angular.module('jabbrApp')
   $scope.msg = "";
   $scope.sendMsg = function() {
     if ($scope.msg !== "") {
-      Room.sendMsg($scope.msg, $stateParams.roomId);
-      this.msg = "";
+      Translate.translate($scope.msg).then(function(translated) {
+       var data = {
+         t: translated,
+         o: $scope.msg
+       }
+       Room.sendMsg(data, $stateParams.roomId);
+       $scope.msg = "";
+      });
+
+
     }
+    
   };
   socket.on('updateChat', function(message) {
-    $('#msgs').append('<li>' + message + '</li>');
+    $('#msgs').append('<li>Translated: ' + message.t + '</li>');
+    $('#msgs').append('<li>Original: ' + message.o + '</li>');
   });
 });

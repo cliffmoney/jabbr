@@ -79,8 +79,6 @@ angular.module('jabbrApp')
       var pc = getPeerConnection(id);
       pc.close();
     }
-    // var socket = Io.connect(config.SIGNALIG_SERVER_URL),
-    //     connected = false;
 
     function addHandlers(socket) {
       socket.on('peer.connected', function (params) {
@@ -121,8 +119,8 @@ angular.module('jabbrApp')
       createRoom: function () {
         var d = $q.defer();
         console.log('creating Room');
-        socket.emit('createRoom', null);
-        socket.on('newRoom', function(roomInfo){
+        socket.emit('checkRoom', {});
+        socket.on('openRoom', function(roomInfo){
           roomId = roomInfo.roomid;
           var id = roomInfo.id;
           d.resolve(roomId);
