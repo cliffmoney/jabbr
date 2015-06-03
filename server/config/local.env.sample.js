@@ -13,5 +13,5 @@ module.exports = {
   FACEBOOK_SECRET:  'secret',
 
   // Control debug level for modules using visionmedia/debug
-  DEBUG: '',
+  DEBUG: ''
 };
