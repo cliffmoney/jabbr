@@ -15,8 +15,12 @@ angular.module('jabbrApp')
 
     $scope.acceptRequest = function(form, request) {
       $scope.submitted = true;
+      console.log(request.response);
       if(form.$valid) {
-        Partnership.confirm({id: request._partnership}, {}, function(partnership) {
+        console.log($scope.acceptText);
+        Partnership.confirm({id: request._partnership}, {
+            text: $scope.acceptText
+          }, function(partnership) {
           $state.go($state.current, {}, {reload: true}); // reloads right panel to show new partner
         });
       }

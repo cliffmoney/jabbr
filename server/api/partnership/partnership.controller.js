@@ -116,6 +116,8 @@ exports.update = function(req, res) {
 
 // confirms a pending partnership
 exports.confirm = function(req, res) {
+  var text = req.body.text; 
+  console.log(text);// text of the accept message
   Partnership.findById(req.params.id, function (err, partnership) {
     if (err) { return handleError(res, err); }
     if(!partnership) { return res.send(404); }
@@ -125,7 +127,7 @@ exports.confirm = function(req, res) {
       partnership.room_id = uuid.v4();
       partnership.save(function (err, partnership) {
         if (err) { return handleError(res, err); }
-        partnership.sendConfirmation(); // sends a confirmation message to the requester
+        partnership.sendConfirmation(text); // sends a confirmation message to the requester
         // save reciprocal partner ids and partnership ids to both user documents
         User.findByIdAndUpdate(partnership.requester,
           {$push : {partners: partnership.recipient, partnerships: partnership._id},

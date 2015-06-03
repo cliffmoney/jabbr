@@ -31,7 +31,7 @@
     </div>
     <div class='col-md-3'>
       <a class="btn btn-primary btn-md" ng-click='messageFormOpen = !messageFormOpen'>
-        <span ng-show="message.type ==='normal'">See Message</span><span ng-show="message.type === 'partnerRequest'">See Request</span>
+        <span ng-show="message.type ==='normal' || message.type === 'requestAccept'">See Message</span><span ng-show="message.type === 'partnerRequest'">See Request</span>
       </a>
     </div>
   </div>
@@ -43,7 +43,7 @@
         <form class="form" name="acceptForm" ng-submit="acceptRequest(acceptForm, message)" ng-show='message.type === "partnerRequest"' novalidate>
           <div class="form-group">
             <label>Message</label>
-            <textarea type="text" name="acceptText" class="form-control" ng-model="acceptText" required></textarea>
+            <textarea type="text" name="acceptText" class="form-control" ng-model="message.response" required></textarea>
           </div>
           <div class="form-group has-error">
             <p class="help-block" ng-show="acceptForm.acceptText.$error.required && submitted">
