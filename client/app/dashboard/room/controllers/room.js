@@ -119,5 +119,17 @@ angular.module('jabbrApp')
     socket.on("merged", function(filename) {
       console.log(filename + " successfully saved to database");
     });
-
+  
+  //-----chat stuff-----//
+  $scope.me = Auth.getCurrentUser();
+  $scope.msg = "";
+  $scope.sendMsg = function() {
+    if ($scope.msg !== "") {
+      Room.sendMsg($scope.msg, $stateParams.roomId);
+      this.msg = "";
+    }
+  };
+  socket.on('updateChat', function(message) {
+    $('#msgs').append('<li>' + message + '</li>');
   });
+});

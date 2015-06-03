@@ -99,6 +99,9 @@ angular.module('jabbrApp')
     }
 
     var api = {
+      sendMsg: function(message, roomid) {
+        socket.emit('chat', {currentRoom: roomid, msg: message})
+      },
       checkRoom: function(r){
         socket.emit('checkRoom', {roomid: r})
       },
@@ -127,12 +130,6 @@ angular.module('jabbrApp')
           currentId = id;
           connected = true;
         });
-        //   console.log("Server has created Room")
-        //   d.resolve(roomid);
-        //   roomId = roomid;
-        //   currentId = id;
-        //   connected = true;
-        // });
         return d.promise;
       },
       init: function (s) {

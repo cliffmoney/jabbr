@@ -96,7 +96,21 @@ module.exports = function (socketio) {
       }
     });
   //------------SOCKET ON MSG END----------------------------
-
+  //------------SOCKET ON CHAT START------------------------
+    socket.on('chat', function (data) {
+      if(rooms[data.currentRoom]) {
+        rooms[data.currentRoom].forEach(function (socket) {
+          if(socket) {
+            socket.emit('updateChat', data.msg);
+          } else {
+            console.log('no peer connections found in this room');
+          }
+        });
+      } else {
+        console.warn('Not in a valid room');
+      }  
+    });
+  //------------SOCKET ON CHAT END-----------------------
   //------------SOCKET ON AUDIO START------------------------
     socket.on('audio', function(audio){
       var fileName = uuid.v4();
