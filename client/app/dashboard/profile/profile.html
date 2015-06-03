@@ -37,8 +37,10 @@
       </div>
     </div>
     <div class='col-md-6'>
-      <button class="btn btn-md btn-primary center-block" ng-click='partnerRequest()' ng-hide='successfulRequest || isPartner'>Partner Request</button>
-      <p ng-hide='!successfulRequest'>Request Pending</p>
+      <button class="btn btn-md btn-primary center-block" ng-click='partnerRequest()' ng-hide='isPartner || notRespondedTo || waitingOn'>Partner Request</button>
+      <p ng-show='notRespondedTo'>{{userProfile.name}} is waiting to be partners with you!</p>
+      <button class="btn btn-md btn-primary center-block" ng-click='acceptRequest()' ng-show='notRespondedTo'>Accept Request</button>
+      <p ng-show='waitingOn'>Request Pending</p>
       <p ng-show='isPartner'>You are partners with {{userProfile.name}}</p>
       <h4>Introduction</h4>
       <p>{{userProfile.intro}}</p>

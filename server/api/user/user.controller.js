@@ -188,6 +188,22 @@ exports.getPartners = function(req, res, next) {
   });
 };
 
+/*** responds with an object that has two arrays
+that describe the user's requests that the user 
+is either waiting for or hasn't responded to 
+ */
+exports.getRequests = function(req, res, next) {
+  var userId = mongoose.Types.ObjectId(req.user._id);
+  User.findById(userId, function(err, user) {
+    if (err) { return handleError(res, err) };
+    if (!user) { return res.json(500); }
+    var requests = {};
+    requests.waitingOn = user.waitingOn;
+    requests.notRespondedTo = user.notRespondedTo;
+    res.json(requests);
+  })
+}
+
 /**
  * Gets user recordings
  */

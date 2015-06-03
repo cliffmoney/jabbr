@@ -33,6 +33,13 @@ angular.module('jabbrApp')
           controller: 'partners'
         },
         isArray: true
+      },
+
+      getRequests: {
+        method: 'GET',
+        params: {
+          controller: 'requests'
+        }
       }
     });
   });
