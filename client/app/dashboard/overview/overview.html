@@ -1,37 +1,63 @@
-<h3>Messages</h3>
-<div class='row' ng-repeat="message in messages">
-  <div class='col-md-6' ng-show="message.type === 'normal'">
-    You have a new message from {{message.from.name}}!
-  </div>
-  <div class='col-md-6' ng-show="message.type === 'partnerRequest'">
-    You have a new partner request from {{message.from.name}}!
-  </div>
-  <div class='col-md-6' ng-show="message.type === 'requestAccept'">
-    Your partner request for {{message.from.name}} has been accepted!
-  </div>
-  <div class='col-md-3' ng-bind="message.timestamp | date:'MM/dd/yyyy hh:mma'">
-    {{message.timestamp}}
-  </div>
-  <div class='col-md-3'>
-    <button ng-show="message.type === 'normal'"><a ng-click='viewMessage(message)'>View</a></button>
-    <button ng-show="message.type === 'partnerRequest'"><a ng-click='acceptRequest(message)'>Accept Request</a></button>
-    <p ng-show="isAccepted">Friend Request Successful</p>
-  </div>
+<h3 class='text-center'>Find a New Language Partner</h3>
+<div class='row text-center partner-list-header'>
+    <div class='col-md-3'><h4>Name</h4></div>
+    <div class='col-md-3'><h4>Native Languages</h4></div>
+    <div class='col-md-3'><h4>Learning</h4></div>
 </div>
-<h3>Suggested Language Partners</h3>
-<div class='row' ng-repeat="partner in suggestedPartners">
+<div class='row suggestion' ng-repeat="partner in suggestedPartners">
   <div class='col-md-3'>
-    Name: {{partner.name}}
+    <h4>{{partner.name}}</h4>
   </div>
   <div class='col-md-3'>
-    Native Languages: 
-    <span ng-repeat='nativeLanguage in partner.nativeLanguages'> {{nativeLanguage}} </span>
+    <h4><span ng-repeat='nativeLanguage in partner.nativeLanguages'> {{nativeLanguage}} </span></h4>
   </div>
   <div class='col-md-3'>
-    Learning: 
-    <span ng-repeat='language in partner.languagesLearning'> {{language.language}} </span>
+    <h4><span ng-repeat='language in partner.languagesLearning'> {{language.language}} </span></h4>
   </div>
   <div class='col-md-3'>
     <button class="btn btn-md btn-primary" ng-click='viewProfile(partner)'>View Profile</button>
+  </div>
+</div>
+<h3 class='text-center'>Messages</h3>
+<div class = 'message' ng-repeat="message in messages track by message._id">
+  <div class="row">
+    <div class='col-md-6'>
+      <h4 ng-show="message.type === 'normal'">New message from {{message.from.name}}</h4>
+      <h4 ng-show="message.type === 'requestAccept'">{{message.from.name}} has accepted your partner request!</h4>
+      <h4 ng-show="message.type === 'partnerRequest'">New partner request from {{message.from.name}}</h4>
+    </div>
+    <div class='col-md-3'>
+      <h4 ng-bind="message.timestamp | date:'MM/dd/yyyy hh:mma'">{{message.timestamp}}</h4>
+    </div>
+    <div class='col-md-3'>
+      <a class="btn btn-primary btn-md" ng-click='messageFormOpen = !messageFormOpen'>
+        <span ng-show="message.type ==='normal' || message.type === 'requestAccept'">See Message</span><span ng-show="message.type === 'partnerRequest'">See Request</span>
+      </a>
+    </div>
+  </div>
+  <div class="row message-content" ng-show = 'messageFormOpen'>
+    <div class='col-md-6'>
+      <p>{{message.body}}</p>
+    </div>
+    <div class='col-md-6'>
+        <form class="form" name="acceptForm" ng-submit="acceptRequest(acceptForm, message)" ng-show='message.type === "partnerRequest"' novalidate>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea type="text" name="acceptText" class="form-control" ng-model="message.response" required></textarea>
+          </div>
+          <div class="form-group has-error">
+            <p class="help-block" ng-show="acceptForm.acceptText.$error.required && submitted">
+              Please include a message in your partner acceptance
+            </p>
+            <p class="help-block">{{ errors.other }}</p>
+          </div>
+          <button class="btn btn-inverse btn-md btn-login" type="submit">
+            Accept
+          </button>
+          <a class="btn btn-default btn-md btn-register" ng-click='viewProfile(message.from)'>
+            View Profile
+          </a>
+        </form>
+    </div>
   </div>
 </div>

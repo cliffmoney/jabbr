@@ -1,0 +1,21 @@
+.message {
+  margin: 20px 0px;
+  text-align: center;
+}
+
+.suggestion {
+  text-align: center;
+  margin: 7.5px 0;
+}
+
+.message-content {
+  margin-top: 20px;
+}
+
+.partner-list-header {
+  margin-top: 20px;
+  div {
+    background-color: $brand-primary;
+    color: #fff;
+  }
+}

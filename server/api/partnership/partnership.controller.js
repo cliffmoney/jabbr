@@ -69,18 +69,28 @@ exports.create = function(req, res) {
         recipient: toId,
         messages: [message._id]
       }, function(err, partnership) {
-      if(err) { return handleError(res, err); }
-      // now update the message to reference the partnership. this is awful code, will change later
-      Message.findById(message._id, function(err, message) {
+        if(err) { return handleError(res, err); }
+        // now update the message to reference the partnership
         message._partnership = partnership._id;
         message.save(function (err) {
-
           if (err) return handleError(err);
-          return res.json(201, partnership);
+          // now push the corresponding user id to the appropriate waiting array of each user
+          User.findByIdAndUpdate(partnership.requester,
+            {$push : {waitingOn: partnership.recipient}},
+            {safe: true},
+            function(err, user) {
+              if(err) { handleError(res, err); }
+              User.findByIdAndUpdate(partnership.recipient,
+                {$push : {notRespondedTo: partnership.requester }},
+                {safe: true},
+                function(err, user) {
+                  if(err) { handleError(res, err); }
+                  return res.json(201, partnership);
+              });
+          });
         });
       });
     });
-  });
 };
 
 // Updates an existing partnership in the DB.
@@ -106,6 +116,8 @@ exports.update = function(req, res) {
 
 // confirms a pending partnership
 exports.confirm = function(req, res) {
+  var text = req.body.text; 
+  console.log(text);// text of the accept message
   Partnership.findById(req.params.id, function (err, partnership) {
     if (err) { return handleError(res, err); }
     if(!partnership) { return res.send(404); }
@@ -115,14 +127,16 @@ exports.confirm = function(req, res) {
       partnership.room_id = uuid.v4();
       partnership.save(function (err, partnership) {
         if (err) { return handleError(res, err); }
-        partnership.sendConfirmation(); // sends a confirmation message to the requester
+        partnership.sendConfirmation(text); // sends a confirmation message to the requester
         // save reciprocal partner ids and partnership ids to both user documents
         User.findByIdAndUpdate(partnership.requester,
-          {$push : {partners: partnership.recipient, partnerships: partnership._id}},
+          {$push : {partners: partnership.recipient, partnerships: partnership._id},
+           $pull : {waitingOn: partnership.recipient }},
           {safe: true},
           function(err, user) {
             User.findByIdAndUpdate(partnership.recipient,
-              {$push : {partners: partnership.requester, partnerships: partnership._id}},
+              {$push : {partners: partnership.requester, partnerships: partnership._id},
+               $pull : {notRespondedTo: partnership.requester}},
               {safe: true},
               function(err, user) {
                 return res.json(200, partnership);

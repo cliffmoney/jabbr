@@ -141,7 +141,11 @@ exports.changeUserPreferences = function(req, res, next) {
     for(var i = 0; i < user.languagesLearning.length; i++) {
       languageNames.push(user.languagesLearning[i].language);
     }
-    User.find({ 'languagesSpeaking.language' : {'$in': languageNames } }, 'name languagesLearning nativeLanguages languagesSpeaking',
+    // retrieves all users that speak the same language the user is learning 
+    // and aren't already partners with the user
+    User.find({'$and': [{ 'languagesSpeaking.language' : {'$in': languageNames } }
+       , { '_id' : {'$nin': user.partners}}]}, 
+      'name languagesLearning nativeLanguages languagesSpeaking',
       function(err, partners) {
         if(err) return next(err);
         res.json({partners: partners});
@@ -183,6 +187,22 @@ exports.getPartners = function(req, res, next) {
       });
   });
 };
+
+/*** responds with an object that has two arrays
+that describe the user's requests that the user 
+is either waiting for or hasn't responded to 
+ */
+exports.getRequests = function(req, res, next) {
+  var userId = mongoose.Types.ObjectId(req.user._id);
+  User.findById(userId, function(err, user) {
+    if (err) { return handleError(res, err) };
+    if (!user) { return res.json(500); }
+    var requests = {};
+    requests.waitingOn = user.waitingOn;
+    requests.notRespondedTo = user.notRespondedTo;
+    res.json(requests);
+  })
+}
 
 /**
  * Gets user recordings

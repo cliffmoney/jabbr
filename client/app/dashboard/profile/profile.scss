@@ -19,6 +19,10 @@
   }
 }
 
+.request-notifier {
+  margin-top: 70px;
+}
+
 .profile-body {
   margin-top: 30px;
 
@@ -26,11 +30,10 @@
     @include border-radius(20px);
     background-color: #c2aabb;
     margin-bottom: 30px;
-    padding: 10px 0 20px 0;
+    padding: 10px 20px 20px 20px;
 
-    h4 {
-      text-align:center;
-    }
+
+  
 
 
   }

@@ -19,6 +19,8 @@ var UserSchema = new Schema({
   salt: String,
   facebook: {},
   nativeLanguages: [String],
+  waitingOn: [{type: Schema.ObjectId, ref: 'User'}],
+  notRespondedTo: [{type: Schema.ObjectId, ref: 'User'}],
   partners: [{type: Schema.ObjectId, ref: 'User'}],
   recordings: [{type: Schema.ObjectId, ref: 'Recording'}],
   partnerships: [{type: Schema.ObjectId, ref: 'Partnership'}],
@@ -55,6 +57,7 @@ UserSchema
   .virtual('profile')
   .get(function() {
     return {
+      '_id' : this._id,
       'name': this.name,
       'role': this.role,
       'nativeLanguages': this.nativeLanguages,

@@ -5,6 +5,7 @@ angular.module('jabbrApp')
     
     $scope.suggestedPartners = [];
     $scope.messages = [];
+    $scope.submitted = false;
 
     User.getSuggestedPartners(function(res) {
       $scope.suggestedPartners = res.partners;
@@ -12,10 +13,17 @@ angular.module('jabbrApp')
 
     console.log($scope.suggestedPartners);
 
-    $scope.acceptRequest = function(request) {
-      Partnership.confirm({id: request._partnership}, {}, function(partnership) {
-        $state.go($state.current, {}, {reload: true}); // reloads right panel to show new partner
-      });
+    $scope.acceptRequest = function(form, request) {
+      $scope.submitted = true;
+      console.log(request.response);
+      if(form.$valid) {
+        console.log($scope.acceptText);
+        Partnership.confirm({id: request._partnership}, {
+            text: $scope.acceptText
+          }, function(partnership) {
+          $state.go($state.current, {}, {reload: true}); // reloads right panel to show new partner
+        });
+      }
     };
 
     $scope.viewProfile = function(partner) {

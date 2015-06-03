@@ -133,6 +133,46 @@ angular.module('jabbrApp')
       },
 
       /**
+       * Check if logged in user is a partner with another user
+       */
+      isPartnerWith: function(partnerId) {
+        var isPartner = false;
+        for(var i = 0; i < currentUser.partners.length; i++) {
+          if(currentUser.partners[i] === partnerId) {
+            isPartner = true;
+            break;
+          }
+        }
+        return isPartner;
+      },
+
+      /**
+       * Check if user is awaiting acceptance of a particular user
+       */
+
+       isAwaitingAcceptance: function(userId) {
+        var awaits = false;
+        for(var i = 0; i < currentUser.waitingOn.length; i++) {
+          if(currentUser.waitingOn[i] === userId) {
+            awaits = true;
+            break;
+          }
+        }
+        return awaits;
+       },
+
+       notRespondedTo: function(userId) {
+        var notRespondedTo = false;
+        for(var i = 0; i < currentUser.notRespondedTo.length; i++) {
+          if(currentUser.notRespondedTo[i] === userId) {
+            notRespondedTo = true;
+            break;
+          }
+        }
+        return notRespondedTo;
+       },
+
+      /**
        * Check if a user is an admin
        *
        * @return {Boolean}

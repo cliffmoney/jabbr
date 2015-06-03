@@ -13,12 +13,13 @@ var PartnershipSchema = new Schema({
 });
 
 PartnershipSchema.methods = {
-  sendConfirmation: function() {
+  sendConfirmation: function(text) {
     var partnership = this; // to save context for updating later
     Message.create({
       type: 'requestAccept',
       from: partnership.recipient,
-      to: partnership.requester
+      to: partnership.requester,
+      body: text
     }, function(err, message) {
       if(err) throw err;
       partnership.update({$push: {messages: message._id}}, {safe: true}, function(err, partnership) {
