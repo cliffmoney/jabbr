@@ -7,36 +7,36 @@
 </div>
 
 <div class="row">
-  <div class="col-md-9">
+  <div class="col-md-7">
     <div class="video-wrapper partner-video">
       <video-player class="col-md-4" vid-src="{{peer.stream}}"></video-player>
     </div>
   </div>
-  <div class="col-md-3 user-panel">
+  <div class="col-md-5 user-panel">
     <div class="video-wrapper user-video">
       <div class="col-md-2">
         <video ng-src="{{getLocalVideo()}}" autoplay muted></video>
       </div>
     </div>
-  </div>
-</div>
-
-<div class='row'>
-  <div class='conversation col-md-12'>
-    <ul id="msgs" class="list-unstyled"></ul>
-  </div>
-
-  <div class="form-group form-inline">
-    <form ng-submit='sendMsg()'>
-      <input type="text" class="form-control input-lg" name="msg" placeholder="Send message" ng-model='msg'>
-      <input type="submit" name="send" id="send" value="Send" class="btn btn-primary btn-lg">
-      <select ng-options="language.language for language in targetLanguages" ng-model="targetLanguage"></select>
-      <div class="btn-group">
-        <button id="start" class="btn btn-lg" ng-click="startRecording()" ng-disabled="startDisabled">Start Recording</button>
-        <button id="stop" class="btn btn-lg" ng-click="stopRecording()" ng-disabled="stopDisabled">Stop Recording</button>
+    <div class='row'>
+      <div class='conversation col-md-12'>
+        <ul id="msgs" class="list-unstyled"></ul>
       </div>
-    </form>
+
+      <div class="form-group form-inline">
+        <form ng-submit='sendMsg()'>
+          <input type="text" class="form-control input-lg" name="msg" placeholder="Send message" ng-model='msg'>
+          <input type="submit" name="send" id="send" value="Send" class="btn btn-primary btn-lg">
+          <select ng-options="language.language for language in targetLanguages" ng-model="targetLanguage"></select>
+          <div class="btn-group">
+            <button id="start" class="btn btn-lg" ng-click="startRecording()" ng-disabled="startDisabled">Start Recording</button>
+            <button id="stop" class="btn btn-lg" ng-click="stopRecording()" ng-disabled="stopDisabled">Stop Recording</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
+
     
 

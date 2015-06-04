@@ -1,11 +1,11 @@
 <div class="container-fluid dashboard">
   <div class="row">
-    <div class="col-md-2 sidePanel leftPanel">
+    <div class="col-md-2 sidePanel leftPanel" ng-class="{hideLeft: $state.includes('roomId')}">
       <div ng-include="'components/leftpanel/leftpanel.html'"></div>
     </div>
-    <div class="col-md-8 main-content" ui-view>
+    <div class="col-md-8 main-content" ng-class="{theater: $state.includes('roomId')}" ui-view>
     </div>
-    <div class="col-md-2 sidePanel rightPanel">
+    <div class="col-md-2 sidePanel rightPanel" ng-class="{hideRight: $state.includes('roomId')}">
       <div ng-include="'components/rightpanel/rightpanel.html'"></div>
     </div>
   </div>
