@@ -2,7 +2,10 @@
 
 angular.module('jabbrApp')
 
-  .controller('PreferencesCtrl', function ($scope, Auth, $http, $location) {
+  .controller('PreferencesCtrl', function ($scope, Auth, $http, $location, Languages) {
+
+    var socket = JabbrSocket;
+
     $scope.user = {
       native: "English",
       learning: "English"
@@ -26,17 +29,4 @@ angular.module('jabbrApp')
         $location.path('/');
       });
     };
-    var init = function() {
-      var url = 'https://www.googleapis.com/language/translate/v2/languages?key='
-      $http.get('/someUrl').
-        success(function(data, status, headers, config) {
-          console.log(data);
-        }).
-        error(function(data, status, headers, config) {
-          console.log('Error getting list of supported languages')
-        });
-    }
-
-    init();
-
   });
