@@ -149,7 +149,7 @@ module.exports = function (socketio) {
           });
         });
       });
-    });
 
+  });
 };
 

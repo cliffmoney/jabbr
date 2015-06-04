@@ -12,6 +12,7 @@ module.exports = function(app) {
   app.use('/api/audioComments', require('./api/audioComment'));
   app.use('/api/users/:id/messages', require('./api/message'));
   app.use('/api/partnerships', require('./api/partnership'));
+  app.use('/api/translate', require('./api/translate'));
   // if something starts with api/recordings, use subrouter
   app.use('/api/recordings', require('./api/recording'));
   app.use('/api/users', require('./api/user'));
