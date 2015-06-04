@@ -120,7 +120,8 @@ module.exports = function (socketio) {
         peerAudio: audio.peerAudio.dataURL,
         fileName : fileName + ".wav",
         peerFileName: fileName + "_1.wav",
-        userId: audio.user.user.email
+        userId: audio.user.user.email,
+        roomId: audio.room
       };
       //writeToDisk will handle if peer stream exists logic
       saveRecording.writeToDisk(file);

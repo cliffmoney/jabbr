@@ -9,7 +9,7 @@ angular.module('jabbrApp')
     }
 
     var socket = JabbrSocket;
-    var stream, recordAudio, recordPeerAudio;
+    var stream, recordAudio, recordPeerAudio, peerEmail;
 
     VideoStream.get()
     .then(function (s) {
@@ -21,7 +21,9 @@ angular.module('jabbrApp')
       if (!$stateParams.roomId) {
         Room.createRoom()
         .then(function (roomId) {
-          $state.go('roomId', {roomId: roomId}, {location: true});
+          $state.go('room', {roomId: roomId}, {location: true});
+          console.log('roomId line 25: ');
+          console.log(location.pathname.split('/').pop());
         });
       } else {
         console.log("Attemping to join: " + $stateParams.roomId);
@@ -41,6 +43,13 @@ angular.module('jabbrApp')
       };
       recordPeerAudio = RecordRTC(peer.stream);
       $scope.partner = Session.getCurrentlyMessaging();
+
+      console.log('roomId line 47: ');
+      console.log(location.pathname.split('/').pop());
+      console.log('scope peer: ');
+      console.log($scope.peer);
+      
+
     });
     Room.on('peer.disconnected', function (peer) {
       console.log('Client disconnected, removing stream');
@@ -82,7 +91,9 @@ angular.module('jabbrApp')
                 },
                 user: {
                   user: Auth.getCurrentUser()
-                }
+                  // TODO: add peer email
+                },
+                room: location.pathname.split('/').pop()
               };
               socket.emit('audio', files);
             });

@@ -1,11 +1,6 @@
 <div class="col-md-12">
 <h1>Recordings</h1>
-<div class='col-md-6'>
-  <div ng-repeat='recording in recordingsURL'>
-    <audio controls ng-src="{{recording}}"></audio>
-  <div>
-</div>
-<!-- <div class='row' ng-repeat="recording in userRecordings">
+<div class='row' ng-repeat="recording in userRecordings">
   <div class='col-md-1'>
     <img src="https://avatars3.githubusercontent.com/u/1560627" width="100">
   </div>
@@ -16,9 +11,9 @@
   <div class='col-md-6'>
     <a ng-href="dashboard/recordings/{{recording._id}}">details</a>
     <audio controls ng-src="{{recording.url}}"></audio>
-  </div> -->
+  </div>
   <!-- <div class='col-md-3'>
   <p>placeholder text</p>
   </div> -->
 </div>
-<!-- </div> -->
+</div>

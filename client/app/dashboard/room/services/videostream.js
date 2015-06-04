@@ -9,6 +9,7 @@ angular.module('jabbrApp')
       }
       else {
         var d = $q.defer();
+        // prompt for cam / mic permissions
         navigator.getUserMedia({
           video: true,
           audio: true
@@ -20,7 +21,7 @@ angular.module('jabbrApp')
         });
         return d.promise;
       }
-    }
+    };
 
     return {
       get: get

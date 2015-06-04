@@ -59,17 +59,18 @@ exports.destroy = function(req, res) {
 
 // Get list of recordings belonging to user
 exports.getUserRecordings = function(req, res, next) {
+  console.log('req.user: ');
   console.log(req.user);
   // Recording.find({ $or: [ { creator: req.user.email }, { partner: req.user.email } ] }, 'url creator partner date',
-  Recording.find({ $or: [ { creator: req.user.email }, { partner: req.user.email } ] }, 'url creator partner date',
+  Recording.find({ $or: [ { creator: req.user._id }, { partner: req.user._id } ] }, 'url creator partner date',
     function(err, recordings) {
       // modify recordings, then res.json & error handling
       var promises = [];
       var renaming = function(){
         recordings.forEach(function(rec){
-          if (req.user.email === rec.partner) {
+          if (req.user._id === rec.partner) {
             promises.push(
-              User.findOne({ email: rec.creator }, function(err, doc){
+              User.findOne({ _id: rec.creator }, function(err, doc){
                 // console.log(doc.name);
                 rec.partner = doc.name;
               }).exec()
@@ -77,7 +78,7 @@ exports.getUserRecordings = function(req, res, next) {
 
           } else {
             promises.push(
-              User.findOne({ email: rec.partner }, function(err, doc){
+              User.findOne({ _id: rec.partner }, function(err, doc){
                 // console.log(doc.name);
                 rec.partner = doc.name;
               }).exec()
@@ -89,8 +90,8 @@ exports.getUserRecordings = function(req, res, next) {
       renaming();  
       Q.all(promises)
       .then(function(value){
-        // console.log('RECORDINGS: ' + recordings);
-        // console.log('EMAIL: ' + req.user.email);
+        console.log('RECORDINGS: ' + recordings);
+        // console.log('_id: ' + req.user._id);
         res.json({recordings: recordings});
       })
       .catch(function(err){
