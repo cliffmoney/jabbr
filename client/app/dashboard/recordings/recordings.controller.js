@@ -1,49 +1,79 @@
+
+
+
+
+
+
+
+
+
+
 'use strict';
 
 angular.module('jabbrApp')
   .controller('RecordingsCtrl', function ($scope, $sce, Auth, Recording,
                                           User, $stateParams, JabbrSocket) {
+    // TODO: query Recordings collection for 
+    //   audio associated with the current user
     $scope.userRecordings = [];
-    $scope.oneRecording = undefined;
-    $scope.recordingsURL = [];
-    var socket = JabbrSocket;
-    var currentUser = Auth.getCurrentUser();
-
-    ss(socket).removeAllListeners("sendRecording");
-
-    ss(socket).on("sendRecording", function(recording){
-      recording.pipe(blobStream())
-      .on('finish', function(){
-        $scope.$apply(function(){
-          var url = this.toBlobURL();
-          $scope.recordingsURL.push(url);
-        }.bind(this));
-       })
-    });
-
-    ss(socket).emit("getRecording", currentUser.email);
-
     // ==========
 
-    // $scope.getUserRecordings = function() {
-    //   Recording.getUserRecordings(function(res) {
-    //     // console.log(res.recordings);
-    //     console.log(456);
-    //     $scope.userRecordings = res.recordings;
-    //   });
-    // };
+    $scope.getUserRecordings = function() {
+      Recording.getUserRecordings(function(res) {
+        // console.log(res.recordings);
+        $scope.userRecordings = res.recordings;
+      });
+    };
 
-    // $scope.getUserRecordings();
-    // // ==========
+    $scope.getUserRecordings();
+    // ==========
 
 
-    // $scope.parseDate = function(unixDate) {
-    //   var foo = new Date(unixDate);
-    //   return foo.toDateString();
-    // };
+    $scope.parseDate = function(unixDate) {
+      var foo = new Date(unixDate);
+      return foo.toDateString();
+    };
+    
 
+
+
+    // $scope.recordingsURL = [];
+    // var socket = JabbrSocket;
+    // var currentUser = Auth.getCurrentUser();
+
+    // ss(socket).removeAllListeners("sendRecording");
+
+    // ss(socket).on("sendRecording", function(recording){
+    //   recording.pipe(blobStream())
+    //   .on('finish', function(){
+    //     $scope.$apply(function(){
+    //       var url = this.toBlobURL();
+    //       $scope.recordingsURL.push(url);
+    //     }.bind(this));
+    //    });
+    // });
+
+    // ss(socket).emit("getRecording", currentUser.email);
 
   })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   .controller('RecordingCtrl', function ($scope, Auth, Recording,
                                          $stateParams) {
     $scope.userRecordings = [];
