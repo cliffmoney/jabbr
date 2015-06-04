@@ -1,9 +1,9 @@
 'use strict';
 
 var express = require('express');
-var auth = require('../../auth/auth.service');
+var auth = require('../auth/auth.service');
 var request = require('request');
-var config = require('../../config/local.env.js');
+var config = require('../config/local.env.js');
 
 var router = express.Router();
 

@@ -2,7 +2,7 @@
 
 angular.module('jabbrApp')
 
-  .controller('PreferencesCtrl', function ($scope, Auth, $http, $location, Languages) {
+  .controller('PreferencesCtrl', function ($scope, Auth, $http, $location) {
 
     var socket = JabbrSocket;
 

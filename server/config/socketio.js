@@ -149,11 +149,6 @@ module.exports = function (socketio) {
           });
         });
       });
-    
-    socket.on('list', function(list) {
-     console.log(list);
-    })
-
 
   });
 };
