@@ -121,7 +121,7 @@ angular.module('jabbrApp')
     });
   
   //-----chat stuff-----//
-
+  $scope.user = Auth.getCurrentUser();
   $scope.targetLanguages = $scope.currentUser.languagesLearning;
   $scope.msg = "";
   $scope.targetLanguage = $scope.targetLanguages[0];
@@ -140,7 +140,8 @@ angular.module('jabbrApp')
       }).success(function(translation, status) {
         var data = {
           t: translation,
-          o: $scope.msg
+          o: $scope.msg,
+          user: $scope.user.name
         };
         Room.sendMsg(data, $stateParams.roomId);
         $scope.msg = "";
@@ -149,7 +150,7 @@ angular.module('jabbrApp')
 
   };
   socket.on('updateChat', function(message) {
-    $('#msgs').append('<li>Translated: ' + message.t + '</li>');
-    $('#msgs').append('<li>Original: ' + message.o + '</li>');
+    $('#msgs').append('<li>' + message.user +" : "+ message.t + '</li>');
+    $('#msgs').append('<li>' + message.user +" : (" + message.o + ')</li>');
   });
 });
