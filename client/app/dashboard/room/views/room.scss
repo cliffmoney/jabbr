@@ -11,9 +11,6 @@
   width: 600px;
   height: 450px;
 }
-.user-panel {
-  text-align: center;
-}
 
 .user-panel button {
   margin-bottom: 15px;
@@ -29,4 +26,8 @@
 
 #start {
   margin-bottom: 0;
+}
+
+li {
+  text-align: left;
 }
