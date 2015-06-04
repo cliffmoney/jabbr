@@ -47,7 +47,6 @@ angular.module('jabbrApp')
       $scope.peer = {}; // peer's video disappears
     });
 
-    $scope.startDisabled = false;
     $scope.stopDisabled = true;
 
     $scope.getLocalVideo = function () {
@@ -55,14 +54,12 @@ angular.module('jabbrApp')
     };
 
     $scope.startRecording = function() {
-      $scope.startDisabled = true;
       $scope.stopDisabled = false;
       recordAudio.startRecording();
       recordPeerAudio && recordPeerAudio.startRecording();
     };
 
     $scope.stopRecording = function() {
-      $scope.startDisabled = false;
       $scope.stopDisabled = true;
 
       //if peer exists, record both streams

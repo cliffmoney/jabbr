@@ -20,8 +20,13 @@
 }
 
 .conversation {
+  margin-botton: 10px;
   width: 400px;
   height: 100px;
   overflow: auto;
   border: 1px solid;
+}
+
+#start {
+  margin-bottom: 0;
 }
