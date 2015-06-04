@@ -7,6 +7,10 @@
     padding-right: 50px
   }
 
+  .main-content.theater {
+    width: 100%;
+  }
+
   .sidePanel {
     background-color: $dashboard-primary;
     height: 600px;
@@ -35,9 +39,14 @@
   }
 
   .leftPanel {
+    -webkit-transition: visibility linear 1.0s;
+    transition: visibility linear 1.0s;
   }
 
   .rightPanel {
+    -webkit-transition: visibility linear 1.0s;
+    transition: visibility linear 1.0s;
+
     h4 {
       font-size: 22px;
     }
@@ -66,4 +75,11 @@
     }
   }
 
+  .rightPanel.hideRight {
+    display: none;
+  }
+
+  .leftPanel.hideLeft {
+    display: none;
+  }
 }
