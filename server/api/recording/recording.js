@@ -53,28 +53,28 @@ var saveToGridFS = function(filename, userId) {
   });
   fs.createReadStream(filePath).pipe(writestream);
   writestream.on('close', function (file) {
+    console.log('saved to gridfs by' + userId);
       //removes file from folder
-      fs.unlink(filePath,function(err){
-        console.log(file.filename + ' saved To GridFS by ' + userId);
-      })
+      // fs.unlink(filePath,function(err){
+      //   console.log(file.filename + ' saved To GridFS by ' + userId);
+      // })
   });
 
 };
 
 //merge two files into one file and deletes original two files
 var merge = function(socket, fileName, userId) {
-    var FFmpeg = require('fluent-ffmpeg');
+    var ffmpeg = require('fluent-ffmpeg');
 
     var audioFile = path.join(__dirname, 'uploads', fileName + '.wav'),
-        peerAudioFile = path.join(__dirname, 'uploads', fileName + '(1).wav'),
+        peerAudioFile = path.join(__dirname, 'uploads', fileName + '_1.wav'),
         mergedFile = path.join(__dirname, 'uploads', fileName + '-merged.wav');
 
-    var command = new FFmpeg({
-            source: audioFile
-        })
-        .addInput(peerAudioFile)
+    var command = ffmpeg(audioFile)
+        .input(peerAudioFile)
+        .inputOptions('-filter_complex amix=duration=shortest:dropout_transition=1')
         .on('error', function (err) {
-            console.log(err);
+            console.log(err.message);
         })
         .on('end', function () {
             socket.emit('merged', fileName + '-merged.wav');

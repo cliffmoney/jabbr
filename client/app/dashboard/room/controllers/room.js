@@ -84,8 +84,6 @@ angular.module('jabbrApp')
                   user: Auth.getCurrentUser()
                 }
               };
-              console.log(files);
-
               socket.emit('audio', files);
             });
 
