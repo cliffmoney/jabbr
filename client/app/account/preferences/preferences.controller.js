@@ -4,13 +4,12 @@ angular.module('jabbrApp')
 
   .controller('PreferencesCtrl', function ($scope, Auth, $http, $location) {
 
-    var socket = JabbrSocket;
-
     $scope.user = {
       native: "English",
       learning: "English"
     };
     $scope.getCurrentUser = Auth.getCurrentUser;
+    
     $scope.tempLanguages = ["English","Chinese","Spanish","Arabic"];
     //save what languages user want to learn on submit
     $scope.submit = function(form) {
