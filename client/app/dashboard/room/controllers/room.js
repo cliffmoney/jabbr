@@ -7,32 +7,24 @@ angular.module('jabbrApp')
       $scope.error = 'WebRTC is not supported by your browser. You can try the app with Chrome and Firefox.';
       return;
     }
-
+    $scope.localVideo; 
     var socket = JabbrSocket;
-    var stream, recordAudio, recordPeerAudio, peerEmail;
-
-    VideoStream.get()
-    .then(function (s) {
-      stream = s;
+    var stream, streamUrl,recordAudio, recordPeerAudio;
+    console.log('RoomCtrl Digest')
+    VideoStream.once("streamReady", function(userMedia){
+      stream = userMedia;
       recordAudio = RecordRTC(stream);
-      Room.init(stream);
-      stream = URL.createObjectURL(stream);
-      console.log("This is the object URL: " + stream);
-      if (!$stateParams.roomId) {
-        Room.createRoom()
-        .then(function (roomId) {
-          $state.go('room', {roomId: roomId}, {location: true});
-          console.log('roomId line 25: ');
-          console.log(location.pathname.split('/').pop());
-        });
-      } else {
-        console.log("Attemping to join: " + $stateParams.roomId);
-        Room.joinRoom($stateParams.roomId);
-      }
-    }, function () {
-      $scope.error = 'No audio/video permissions. Please refresh your browser and allow the audio/video capturing.';
+      Room.init(stream)
+      streamUrl = URL.createObjectURL(stream);
+      $scope.$apply(function(){
+       $scope.localVideo = streamUrl
+      });
+      console.log("The blobURL is: " + streamUrl);
+      console.log("Attempting to join: " + $stateParams.roomId);
+      Room.joinRoom($stateParams.roomId);
     });
-
+    VideoStream.get();
+    
     $scope.peer = {};
     $scope.partner = '';
     Room.on('peer.stream', function (peer) {
@@ -58,9 +50,9 @@ angular.module('jabbrApp')
 
     $scope.stopDisabled = true;
 
-    $scope.getLocalVideo = function () {
-      return $sce.trustAsResourceUrl(stream);
-    };
+    // $scope.getLocalVideo = function () {
+    //   return $sce.trustAsResourceUrl(stream);
+    // };
 
     $scope.startRecording = function() {
       $scope.stopDisabled = false;

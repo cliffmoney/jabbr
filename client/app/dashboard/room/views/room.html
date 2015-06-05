@@ -9,13 +9,13 @@
 <div class="row">
   <div class="col-md-7">
     <div class="video-wrapper partner-video">
-      <video-player class="col-md-4" vid-src="{{peer.stream}}"></video-player>
+      <video class="col-md-4" ng-src="{{peer.stream}}" autoplay></video>
     </div>
   </div>
   <div class="col-md-5 user-panel">
     <div class="video-wrapper user-video">
       <div class="col-md-2">
-        <video ng-src="{{getLocalVideo()}}" autoplay muted></video>
+        <video ng-src="{{localVideo}}" autoplay muted></video>
       </div>
     </div>
     <div class='row'>
