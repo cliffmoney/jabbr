@@ -4,8 +4,9 @@ angular.module('jabbrApp')
   .controller('OverviewCtrl', function ($scope, $state, User, Message, $http, Partnership, $interval) {
     
     $scope.suggestedPartners = [];
-    $scope.messages = [];
-    $scope.submitted = false;
+    $scope.messages = []; 
+    $scope.submitted = false; // for showing errors appropriately in the form 
+    $scope.responseText = '';
 
     User.getSuggestedPartners(function(res) {
       $scope.suggestedPartners = res.partners;
@@ -13,13 +14,11 @@ angular.module('jabbrApp')
 
     console.log($scope.suggestedPartners);
 
-    $scope.acceptRequest = function(form, request) {
+    $scope.acceptRequest = function(form, partnershipId, responseText) {
       $scope.submitted = true;
-      console.log(request.response);
       if(form.$valid) {
-        console.log($scope.acceptText);
-        Partnership.confirm({id: request._partnership}, {
-            text: $scope.acceptText
+        Partnership.confirm({id: partnershipId}, {
+            text: responseText
           }, function(partnership) {
           $state.go($state.current, {}, {reload: true}); // reloads right panel to show new partner
         });

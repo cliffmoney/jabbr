@@ -40,14 +40,15 @@
       <p>{{message.body}}</p>
     </div>
     <div class='col-md-6'>
-        <form class="form" name="acceptForm" ng-submit="acceptRequest(acceptForm, message)" ng-show='message.type === "partnerRequest"' novalidate>
+        <form class="form" name="acceptForm" ng-submit="acceptRequest(acceptForm, message._partnership, responseText)" ng-show='message.type === "partnerRequest"' novalidate>
           <div class="form-group">
             <label>Message</label>
-            <textarea type="text" name="acceptText" class="form-control" ng-model="message.response" required></textarea>
+            <textarea type="text" name="acceptText" class="form-control" ng-model="acceptText" required></textarea>
           </div>
+          <p>{{acceptText}}</p>
           <div class="form-group has-error">
             <p class="help-block" ng-show="acceptForm.acceptText.$error.required && submitted">
-              Please include a message in your partner acceptance
+              Please include a message in your partner acceptance  
             </p>
             <p class="help-block">{{ errors.other }}</p>
           </div>
