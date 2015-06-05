@@ -104,7 +104,9 @@ angular.module('jabbrApp')
         socket.emit('checkRoom', {roomid: r})
       },
       joinRoom: function (r) {
+        console.log("Checking if Connected")
         if (!connected) {
+          console.log("Joining Room");
           socket.emit('joinRoom', { roomid: r });
           socket.on('enterRoom', function(roomInfo){
             currentId = roomInfo.id;
