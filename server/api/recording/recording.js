@@ -112,6 +112,29 @@ var merge = function(socket, fileName, userId) {
             // removing both audio files
             fs.unlink(audioFile);
             fs.unlink(peerAudioFile);
+            // TODO: rename filename in Mongo metadata here!
+            // RecordingModel.update({filename: fileName + '.wav'}, function(err, doc){
+            //   if (err) {
+            //     console.log(err);
+            //   } else{
+            //     doc.filename = fileName + '-merged.wav';
+            //   }
+
+            // });
+              
+            console.log(RecordingModel.findOne({filename: fileName + '.wav'}))
+            RecordingModel.update({filename: fileName + '.wav'},
+                                  { $set: { filename: fileName + '-merged.wav' }},
+                                  function(err, docs){
+                                    if (err){
+                                      console.log(err)
+                                    } else{
+                                      console.log('docs: ');
+                                      console.log(docs);
+                                    }
+
+                                  });
+
             //save to GridFS and delete file
             // saveToGridFS(fileName+'-merged.wav', userId);
 
