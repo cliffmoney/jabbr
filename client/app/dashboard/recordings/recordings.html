@@ -10,7 +10,8 @@
   </div>
   <div class='col-md-6'>
     <a ng-href="dashboard/recordings/{{recording._id}}">details</a>
-    <audio controls ng-src="{{recording.url}}"></audio>
+    <div>{{ audioUrl(recording.filename) }}</div>
+    <audio controls ng-src="{{ audioUrl(recording.filename) }}"></audio>
   </div>
   <!-- <div class='col-md-3'>
   <p>placeholder text</p>

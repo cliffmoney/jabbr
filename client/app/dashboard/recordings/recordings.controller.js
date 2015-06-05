@@ -20,7 +20,8 @@ angular.module('jabbrApp')
 
     $scope.getUserRecordings = function() {
       Recording.getUserRecordings(function(res) {
-        // console.log(res.recordings);
+        console.log('res.recordings: ');
+        console.log(res.recordings);
         $scope.userRecordings = res.recordings;
       });
     };
@@ -34,6 +35,11 @@ angular.module('jabbrApp')
       return foo.toDateString();
     };
     
+    $scope.audioUrl = function(filename) {
+      console.log('location.host: ');
+      console.log(location.host);
+      return 'http://' + location.host + '/' + filename;
+    };
 
 
 

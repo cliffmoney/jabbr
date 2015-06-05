@@ -76,7 +76,7 @@ User.find({}).remove(function() {
         User.findOne({email: 'jeff@gmail.com'}, function(err, user2){
           Recording.create(
             {
-              filename: "https://s3-us-west-1.amazonaws.com/hr-mytunes/data/04+One+In+A+Million.mp3",
+              filename: "04+One+In+A+Million.mp3",
               creator: user1._id,
               partner: user2._id,
               date: new Date('May 26, 2015').valueOf()
@@ -100,7 +100,7 @@ User.find({}).remove(function() {
         User.findOne({email: 'bill@gmail.com'}, function(err, user2){
           Recording.create(
             {
-              filename: "https://s3-us-west-1.amazonaws.com/hr-mytunes/data/04+One+In+A+Million.mp3",
+              filename: "uploadsfoldertest.mp3",
               creator: user1._id,
               partner: user2._id,
               date: new Date('May 28, 2015').valueOf()

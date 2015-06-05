@@ -62,7 +62,7 @@ exports.getUserRecordings = function(req, res, next) {
   console.log('req.user: ');
   console.log(req.user);
   // Recording.find({ $or: [ { creator: req.user.email }, { partner: req.user.email } ] }, 'url creator partner date',
-  Recording.find({ $or: [ { creator: req.user._id }, { partner: req.user._id } ] }, 'url creator partner date',
+  Recording.find({ $or: [ { creator: req.user._id }, { partner: req.user._id } ] }, 'filename creator partner date',
     function(err, recordings) {
       // modify recordings, then res.json & error handling
       var promises = [];
@@ -109,7 +109,7 @@ exports.getOneRecording = function(req, res, next) {
   // console.log('REQ: ' + Object.keys(req.route.stack));
   // console.log('REQ: ' + JSON.stringify(req.params));
   // Recording.find({ $or: [ { creator: req.user.email }, { partner: req.user.email } ] }, 'url creator partner date',
-  Recording.findOne({  }, 'url creator partner date',
+  Recording.findOne({  }, 'filename creator partner date',
     function(err, rec) {
       // modify recordings, then res.json & error handling
       var promises = [];
