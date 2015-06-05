@@ -1,7 +1,66 @@
-<div class="col-md-12">
-  <h1>You and {{partnership.partner.name}}</h1>
-  <div ng-repeat='message in partnership.messages'>
-    {{message.body}}
+<div class="col-md-11 col-centered">
+  <h1 class='text-center'>You and {{partnership.partner.name}}</h1>
+  <div class="row">
+    <div class='col-md-6 partner-col'>
+      <div class='row profile-heading'>
+        <div class="col-md-6">
+          <img class="profile-pic img-responsive img-circle" ng-src='{{partnership.partner.pic}}'/>
+        </div>
+        <div class="col-md-6 profile-text">
+          <h1><span>From {{partnership.partner.country}}</span></h1>
+        </div>
+      </div>
+      <div class='language-box'>
+        <h4 class='language-box-heading'>Speaks</h4>
+        <div class='row' ng-repeat='language in partnership.partner.languagesSpeaking'>
+          <div class='col-md-6 text-center'>
+            <h4>{{language.language}}</h4>
+          </div>
+          <div class='col-md-6 text-left'>
+            <i class="fa fa-star fa-2x" ng-repeat='n in [] | range: language.ability'></i>
+          </div>
+        </div>
+      </div>
+      <div class='language-box'>
+        <h4 class='language-box-heading'>Learning</h4> 
+        <div class='row' ng-repeat='language in partnership.partner.languagesLearning'>
+          <div class='col-md-6 text-center'>
+            <h4>{{language.language}}</h4>
+          </div>
+          <div class='col-md-6 text-left'>
+            <i class="fa fa-star fa-2x" ng-repeat='n in [] | range: language.ability'></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='col-md-6 history-col'>
+      <button class="btn btn-md btn-primary center-block" ng-click='enterRoom(partnership.room_id)'>Enter Room</button>
+      <h3 class='text-center message-header'>Messages<button class="btn btn-md btn-primary" ng-click='messageFormOpen = !messageFormOpen'>New Message</button></h3>
+      <form class="form" name="messageForm" ng-submit="sendMessage(messageForm, messageText)" ng-show='messageFormOpen' novalidate>
+          <div class="form-group">
+            <textarea type="text" name="messageText" class="form-control" ng-model="messageText" required></textarea>
+          </div>
+          <div class="form-group has-error">
+            <p class="help-block" ng-show="messageForm.messageText.$error.required && submitted">
+              Please don't send a blank message
+            </p>
+            <p class="help-block">{{ errors.other }}</p>
+          </div>
+          <button class="btn btn-inverse btn-lg btn-login" type="submit">
+            Send
+          </button>
+          <a class="btn btn-default btn-lg btn-register" ng-click='messageFormOpen = !messageFormOpen'>
+            Cancel
+          </a>
+      </form>
+      <ul class='list-group'>
+        <li class='list-group-item' ng-repeat='message in partnership.messages | orderBy : sortMessage : true'>
+          <span class="badge">{{getSenderName(message.from)}}</span>
+          {{message.body}}
+
+        </li>
+      </ul>
+    </div>
   </div>
-  <button class="btn btn-md btn-primary" ng-click='enterRoom(partnership.room_id)'>Enter Room</button>
 </div>
+      

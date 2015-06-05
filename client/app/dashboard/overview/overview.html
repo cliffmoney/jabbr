@@ -19,20 +19,18 @@
   </div>
 </div>
 <h3 class='text-center'>Messages</h3>
-<div class = 'message' ng-repeat="message in messages track by message._id">
-  <div class="row">
-    <div class='col-md-6'>
+<div class = 'message' ng-repeat="message in messages track by message._id | orderBy : sortMessage : true">
+  <div class="row" ng-click='markSeen(message); messageFormOpen = !messageFormOpen' ng-class='{seen: message.seen, unseen: !message.seen}'>
+    <div class='col-md-4'>
       <h4 ng-show="message.type === 'normal'">New message from {{message.from.name}}</h4>
       <h4 ng-show="message.type === 'requestAccept'">{{message.from.name}} has accepted your partner request!</h4>
       <h4 ng-show="message.type === 'partnerRequest'">New partner request from {{message.from.name}}</h4>
     </div>
-    <div class='col-md-3'>
-      <h4 ng-bind="message.timestamp | date:'MM/dd/yyyy hh:mma'">{{message.timestamp}}</h4>
+    <div class='col-md-5'>
+      <h4>{{message.body | limitTo:20}}</h4>
     </div>
     <div class='col-md-3'>
-      <a class="btn btn-primary btn-md" ng-click='messageFormOpen = !messageFormOpen'>
-        <span ng-show="message.type ==='normal' || message.type === 'requestAccept'">See Message</span><span ng-show="message.type === 'partnerRequest'">See Request</span>
-      </a>
+      <h4 ng-bind="message.timestamp | date:'MM/dd/yyyy hh:mma'">{{message.timestamp}}</h4>
     </div>
   </div>
   <div class="row message-content" ng-show = 'messageFormOpen'>
@@ -43,9 +41,8 @@
         <form class="form" name="acceptForm" ng-submit="acceptRequest(acceptForm, message._partnership, responseText)" ng-show='message.type === "partnerRequest"' novalidate>
           <div class="form-group">
             <label>Message</label>
-            <textarea type="text" name="acceptText" class="form-control" ng-model="acceptText" required></textarea>
+            <textarea type="text" name="acceptText" class="form-control" ng-model="responseText" required></textarea>
           </div>
-          <p>{{acceptText}}</p>
           <div class="form-group has-error">
             <p class="help-block" ng-show="acceptForm.acceptText.$error.required && submitted">
               Please include a message in your partner acceptance  
@@ -59,6 +56,9 @@
             View Profile
           </a>
         </form>
+        <button class="btn btn-default btn-large" ng-show="message.type === 'requestAccept' || message.type === 'normal'" ng-click='seePartnership(message._partnership)'>
+          Reply
+        </button>
     </div>
   </div>
 </div>

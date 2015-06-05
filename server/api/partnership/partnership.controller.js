@@ -60,7 +60,8 @@ exports.create = function(req, res) {
     from: fromId,
     to: toId,
     type: 'partnerRequest',
-    body: req.body.body
+    body: req.body.body,
+    timestamp: Date.now()
   }, function(err, message) {
     if(err) { return handleError(res, err); }
     // now create the partnership

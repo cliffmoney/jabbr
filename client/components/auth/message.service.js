@@ -4,7 +4,7 @@
 
 angular.module('jabbrApp')
   .factory('Message', function ($resource) {
-    return $resource('/api/users/:id/messages/:controller', {
+    return $resource('/api/messages/:id', {
       id: '@_id'
     },
     {
@@ -13,6 +13,9 @@ angular.module('jabbrApp')
         params: {
           controller: 'recent'
         }
+      },
+      update: {
+        method: 'PUT'
       }
     });
   });
