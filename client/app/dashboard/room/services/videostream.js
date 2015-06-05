@@ -20,5 +20,6 @@ angular.module('jabbrApp')
         console.log("There was an error loading stream")
         console.log("FIXING WITH RECURSIVE SUPER POWER")
       });
-    return videoStream;
+    };
+      return videoStream;
   });
