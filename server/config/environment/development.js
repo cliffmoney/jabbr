@@ -8,5 +8,5 @@ module.exports = {
     uri: 'mongodb://localhost/jabbr-dev'
   },
 
-  seedDB: true
+  seedDB: false
 };
