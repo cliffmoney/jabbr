@@ -11,7 +11,7 @@
 'use strict';
 
 angular.module('jabbrApp')
-  .controller('RecordingsCtrl', function ($scope, $sce, Auth, Recording,
+  .controller('RecordingsCtrl', function ($scope, $sce, $http, Auth, Recording,
                                           User, $stateParams, JabbrSocket) {
     // TODO: query Recordings collection for 
     //   audio associated with the current user
@@ -45,6 +45,45 @@ angular.module('jabbrApp')
       // console.log(location.host);
       return 'http://' + location.host + '/' + filename;
     };
+<<<<<<< HEAD
+=======
+    
+    //audio commenting stuff
+    // var id = '55721f57511d0cd025af0879';
+    // var p;
+    // var init = function() {
+    //   $http.get('/api/recordings/'+id)
+    //   .success(function(recording, status) {
+    //     p = recording.popcorn || Popcorn('#sample');
+    //   }).error(function() {
+    //     console.log('Error getting recording');
+    //   })
+    // }
+    $scope.audio = {};
+    $scope.addComment = function(form) {
+      if (form.$valid) {
+        var time = p.currentTime();
+        p.footnote({
+           start: time,
+           end: time + 2,
+           text: $scope.audio.comment,
+           target: "timeline"
+         });
+        $scope.audio.comment = '';
+        $http.put('/api/recordings/'+id, {
+          popcorn: p,
+        }).success(function(recording, status) {
+          console.log('Comment added to recording');
+        }).error(function() {
+          console.log('Error adding comment to recording');
+        });
+      }
+    };
+       
+    // ==========
+
+
+>>>>>>> working on audio commenting
     // $scope.recordingsURL = [];
     // var socket = JabbrSocket;
     // var currentUser = Auth.getCurrentUser();

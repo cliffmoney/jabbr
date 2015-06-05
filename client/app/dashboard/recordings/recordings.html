@@ -1,9 +1,14 @@
+
 <div class="col-md-12">
 <h1>Recordings</h1>
 <div class='row' ng-repeat="recording in userRecordings">
+<<<<<<< HEAD
   <div class='col-md-2'>
+=======
+<!--   <div class='col-md-1'>
+>>>>>>> working on audio commenting
     <img src="https://avatars3.githubusercontent.com/u/1560627" width="100">
-  </div>
+  </div> -->
   <div class='col-md-3'>
     {{recording.partner}}<br/>
     {{ parseDate(recording.date) }}<br/>
@@ -13,8 +18,5 @@
     <a ng-href="dashboard/recordings/{{recording._id}}">details</a>
     <audio controls ng-src="{{ audioUrl(recording.filename) }}"></audio>
   </div>
-  <!-- <div class='col-md-3'>
-  <p>placeholder text</p>
-  </div> -->
 </div>
 </div>

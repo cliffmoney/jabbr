@@ -143,6 +143,8 @@ angular.module('jabbrApp')
         };
         Room.sendMsg(data, $stateParams.roomId);
         $scope.msg = "";
+      }).error(function(translation, status) {
+        console.log("Error translating text with a status of " + status);
       });
     }
 

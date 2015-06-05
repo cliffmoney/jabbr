@@ -83,11 +83,10 @@ var saveToGridFS = function(filename, userId) {
   });
   fs.createReadStream(filePath).pipe(writestream);
   writestream.on('close', function (file) {
-    console.log('saved to gridfs by' + userId);
       //removes file from folder
-      // fs.unlink(filePath,function(err){
-      //   console.log(file.filename + ' saved To GridFS by ' + userId);
-      // })
+      fs.unlink(filePath,function(err){
+        console.log(file.filename + ' saved To GridFS by ' + userId);
+      })
   });
 
 };
