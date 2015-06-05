@@ -19,7 +19,9 @@ PartnershipSchema.methods = {
       type: 'requestAccept',
       from: partnership.recipient,
       to: partnership.requester,
-      body: text
+      body: text,
+      timestamp: Date.now(),
+      _partnership: partnership._id
     }, function(err, message) {
       if(err) throw err;
       partnership.update({$push: {messages: message._id}}, {safe: true}, function(err, partnership) {

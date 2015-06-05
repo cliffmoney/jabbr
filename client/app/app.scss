@@ -37,6 +37,14 @@ $brand-success: #43394F;
     padding: 0.2em 0;
 }
 
+/**
+ * Message Styles
+ */
+
+ .unseen {
+  background-color: #888;
+}
+
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
      -moz-border-radius: $radius;

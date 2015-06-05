@@ -4,8 +4,9 @@ angular.module('jabbrApp')
   .controller('OverviewCtrl', function ($scope, $state, User, Message, $http, Partnership, $interval) {
     
     $scope.suggestedPartners = [];
-    $scope.messages = [];
-    $scope.submitted = false;
+    $scope.messages = []; 
+    $scope.submitted = false; // for showing errors appropriately in the form 
+    $scope.responseText = '';
 
     User.getSuggestedPartners(function(res) {
       $scope.suggestedPartners = res.partners;
@@ -13,18 +14,44 @@ angular.module('jabbrApp')
 
     console.log($scope.suggestedPartners);
 
-    $scope.acceptRequest = function(form, request) {
+    // sends request acceptance
+    $scope.acceptRequest = function(form, partnershipId, text) {
       $scope.submitted = true;
-      console.log(request.response);
       if(form.$valid) {
-        console.log($scope.acceptText);
-        Partnership.confirm({id: request._partnership}, {
-            text: $scope.acceptText
+        Partnership.confirm({id: partnershipId}, {
+            text: text
           }, function(partnership) {
           $state.go($state.current, {}, {reload: true}); // reloads right panel to show new partner
         });
       }
     };
+
+    $scope.seePartnership = function(partnershipId) {
+      $state.go('partnership', {partnershipId: partnershipId});
+    }
+
+    // sends a regular message 
+    $scope.sendMessage = function(form, fromId, text) {
+      $scope.submitted = true;
+      if(form.$valid) {
+
+      }
+    };
+
+    $scope.sortMessage = function(message) {  // used to sort the messages by date
+      var date = new Date(message.timestamp);
+      return date;
+    };
+
+
+    // sends a put request to server to mark message as seen, if it is not already seen
+    $scope.markSeen = function(message) {
+      if(!message.seen) {
+        message.seen = true; // update in current DOM 
+        Message.update({id: message._id}, {seen: true}); // update in server 
+      }
+
+    }
 
     $scope.viewProfile = function(partner) {
       $state.go('profile', { userId: partner._id });

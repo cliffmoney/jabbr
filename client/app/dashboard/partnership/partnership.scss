@@ -1,0 +1,49 @@
+.partner-col {
+
+  .profile-heading {
+    position: relative;
+    margin-bottom: 20px;
+    
+    .profile-text {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+
+      h1 {
+        margin: 0;
+        line-height: 22px;
+
+        span {
+          font-size: 16px;
+          color: $brand-primary;
+          font-style: italics;
+        }
+      }
+    }
+  }
+
+  .language-box {
+    @include border-radius(20px);
+    background-color: #c2aabb;
+    margin-bottom: 30px;
+    padding: 10px 20px 20px 20px;
+  }
+
+}
+
+.history-col {
+  padding-top: 40px;
+
+  .message-header {
+    margin-top: 50px;
+    margin-bottom: 30px;
+
+    button {
+      margin-left: 10px;
+    }
+  }
+
+  .list-group {
+    margin-top: 30px;
+  }
+}

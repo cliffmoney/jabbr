@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Message = require('./message.model');
+var Partnership = require('../partnership/partnership.model');
 var mongoose = require('mongoose');
 
 // Get list of messages that the user is a recipient of
@@ -28,7 +29,10 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
   Message.create(req.body, function(err, message) {
     if(err) { return handleError(res, err); }
-    return res.json(201, message);
+    Partnership.findByIdAndUpdate(message._partnership, { '$push': {messages: message._id}},
+      function(err, partnership) {
+        return res.json(201, message);
+      });
   });
 };
 
