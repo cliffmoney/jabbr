@@ -67,24 +67,8 @@ angular.module('jabbrApp')
         console.log(res);
         // console.log(res.recording);
         $scope.oneRecording = res;
-
-    //----------AUDIO COMMENT STUFF FOR TESTING---------------//
-    Audio.get('test').then(function(res){
-      console.log(res.data.comments);
-    });
-
-    $scope.comment = '';
-    var pop = Popcorn('#test');
-    $scope.addComment = function(comment) {
-      var start = pop.currentTime();
-      Audio.update('test', {
-        time: start,
-        body: $scope.comment
       });
-      $('#target').append('<li>'+$scope.comment+'</li>');
-      $scope.comment = '';
     };
-    //--------------------------------//
 
     $scope.parseTime = function(unixDate) {
       var foo = new Date(unixDate);
@@ -97,6 +81,4 @@ angular.module('jabbrApp')
       return 'http://' + location.host + '/' + filename;
     };
 
-
-  })
-  ;
+});
