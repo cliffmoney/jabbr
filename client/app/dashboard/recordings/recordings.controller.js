@@ -20,8 +20,6 @@ angular.module('jabbrApp')
 
     $scope.getUserRecordings = function() {
       Recording.getUserRecordings(function(res) {
-        console.log('res.recordings: ');
-        console.log(res.recordings);
         $scope.userRecordings = res.recordings;
       });
     };
@@ -41,8 +39,11 @@ angular.module('jabbrApp')
     };    
     
     $scope.audioUrl = function(filename) {
+<<<<<<< HEAD
       // console.log('location.host: ');
       // console.log(location.host);
+=======
+>>>>>>> add audio comment route to get, add and remove comments for a recording
       return 'http://' + location.host + '/' + filename;
     };
 <<<<<<< HEAD
@@ -103,6 +104,7 @@ angular.module('jabbrApp')
     // ss(socket).emit("getRecording", currentUser.email);
 
   })
+<<<<<<< HEAD
   .controller('RecordingCtrl', function ($scope, Auth, Recording,
                                          $stateParams) {
     $scope.userRecordings = [];
@@ -115,16 +117,49 @@ angular.module('jabbrApp')
         console.log(res);
         // console.log(res.recording);
         $scope.oneRecording = res;
+=======
+  .controller('RecordingCtrl', function ($scope, Auth, Recording, Audio,
+                                         $stateParams) {
+
+    //----------AUDIO COMMENT STUFF FOR TESTING---------------//
+    Audio.get('test').then(function(res){
+      console.log(res.data.comments);
+    });
+
+    $scope.comment = '';
+    var pop = Popcorn('#test');
+    $scope.addComment = function(comment) {
+      var start = pop.currentTime();
+      Audio.update('test', {
+        time: start,
+        body: $scope.comment
+>>>>>>> add audio comment route to get, add and remove comments for a recording
       });
+      $('#target').append('<li>'+$scope.comment+'</li>');
+      $scope.comment = '';
     };
+    //--------------------------------//
 
-    $scope.getOneRecording();
-    // ===========
+    // $scope.userRecordings = [];
+    // $scope.oneRecording = undefined;
+    // $scope.foobar = 'barfoo';
 
-    $scope.parseDate = function(unixDate) {
-      var foo = new Date(unixDate);
-      return foo.toDateString();
-    };
+    // // ==========
+    // // use $stateParams.recordingId
+    // $scope.getOneRecording = function() {
+    //   Recording.getOneRecording({ id: $stateParams.recordingId }, function(res) {
+    //     // console.log(res.recording);
+    //     $scope.oneRecording = res;
+    //   });
+    // };
+
+    // $scope.getOneRecording();
+    // // ===========
+
+    // $scope.parseDate = function(unixDate) {
+    //   var foo = new Date(unixDate);
+    //   return foo.toDateString();
+    // };
 
     $scope.parseTime = function(unixDate) {
       var foo = new Date(unixDate);

@@ -58,8 +58,11 @@ exports.destroy = function(req, res) {
 
 // Get list of recordings belonging to user
 exports.getUserRecordings = function(req, res, next) {
+<<<<<<< HEAD
   // console.log('req.user: ');
   // console.log(req.user);
+=======
+>>>>>>> add audio comment route to get, add and remove comments for a recording
   // Recording.find({ $or: [ { creator: req.user.email }, { partner: req.user.email } ] }, 'url creator partner date',
   Recording.find({ $or: [ { creator: req.user._id }, { partner: req.user._id } ] }, 'filename creator partner date',
     function(err, recordings) {
@@ -106,8 +109,7 @@ exports.getUserRecordings = function(req, res, next) {
       renaming();  
       Q.all(promises)
       .then(function(value){
-        console.log('RECORDINGS: ' + recordings);
-        // console.log('_id: ' + req.user._id);
+
         res.json({recordings: recordings});
       })
       .catch(function(err){
