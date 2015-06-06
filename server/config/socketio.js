@@ -76,7 +76,6 @@ module.exports = function (socketio) {
         return;
       }
       delete rooms[currentRoom][rooms[currentRoom].indexOf(socket)];
-      socket.disconnect();
       rooms[currentRoom].forEach(function (socket) {
         if (socket) {
           socket.emit('peer.disconnected', { id: id });
