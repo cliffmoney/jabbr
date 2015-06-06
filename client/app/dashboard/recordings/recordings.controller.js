@@ -34,10 +34,15 @@ angular.module('jabbrApp')
       var foo = new Date(unixDate);
       return foo.toDateString();
     };
+
+    $scope.parseTime = function(unixDate) {
+      var foo = new Date(unixDate);
+      return foo.toLocaleTimeString();
+    };    
     
     $scope.audioUrl = function(filename) {
-      console.log('location.host: ');
-      console.log(location.host);
+      // console.log('location.host: ');
+      // console.log(location.host);
       return 'http://' + location.host + '/' + filename;
     };
 

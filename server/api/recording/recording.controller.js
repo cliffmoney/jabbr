@@ -59,8 +59,8 @@ exports.destroy = function(req, res) {
 
 // Get list of recordings belonging to user
 exports.getUserRecordings = function(req, res, next) {
-  console.log('req.user: ');
-  console.log(req.user);
+  // console.log('req.user: ');
+  // console.log(req.user);
   // Recording.find({ $or: [ { creator: req.user.email }, { partner: req.user.email } ] }, 'url creator partner date',
   Recording.find({ $or: [ { creator: req.user._id }, { partner: req.user._id } ] }, 'filename creator partner date',
     function(err, recordings) {
@@ -90,7 +90,7 @@ exports.getUserRecordings = function(req, res, next) {
       renaming();  
       Q.all(promises)
       .then(function(value){
-        console.log('RECORDINGS: ' + recordings);
+        // console.log('RECORDINGS: ' + recordings);
         // console.log('_id: ' + req.user._id);
         res.json({recordings: recordings});
       })

@@ -1,16 +1,16 @@
 <div class="col-md-12">
 <h1>Recordings</h1>
 <div class='row' ng-repeat="recording in userRecordings">
-  <div class='col-md-1'>
+  <div class='col-md-2'>
     <img src="https://avatars3.githubusercontent.com/u/1560627" width="100">
   </div>
   <div class='col-md-3'>
     {{recording.partner}}<br/>
-    {{ parseDate(recording.date) }}
+    {{ parseDate(recording.date) }}<br/>
+    {{ parseTime(recording.date) }}
   </div>
   <div class='col-md-6'>
     <a ng-href="dashboard/recordings/{{recording._id}}">details</a>
-    <div>{{ audioUrl(recording.filename) }}</div>
     <audio controls ng-src="{{ audioUrl(recording.filename) }}"></audio>
   </div>
   <!-- <div class='col-md-3'>
