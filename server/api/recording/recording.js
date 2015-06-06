@@ -106,7 +106,7 @@ var merge = function(socket, fileName, userId) {
         .input(placeholder)
         .inputOptions('-filter_complex amix=duration=shortest:dropout_transition=1')
         .on('start', function(commandline) {
-          console.log('Spawned ffmpeg with command: ' + commandline);
+          //console.log('Spawned ffmpeg with command: ' + commandline);
         })
         .on('error', function (err) {
             console.log(err.message);
