@@ -1,17 +1,17 @@
 <div class="col-md-12">
   <h1>Single Recording Template</h1>
 
-  <div class='row' >
+  <div class='row' ng-repeat='recording in userRecordings'>
     <div class='col-md-2'>
       <img src="https://avatars3.githubusercontent.com/u/1560627" width="100">
     </div>
     <div class='col-md-3'>
-      {{oneRecording.partner}}<br/>
-      {{ parseDate(oneRecording.date) }}<br/>
-      {{ parseTime(oneRecording.date) }}
+      {{ recording.partner}}<br/>
+      {{ parseDate(recording.date) }}<br/>
+      {{ parseTime(recording.date) }}
     </div>
     <div class='col-md-6'>
-      <audio controls ng-src="{{ audioUrl(oneRecording.filename) }}"></audio>
+      <player src="{{audioUrl(recording.filename)}}"></player>
     </div>
 
   </div>

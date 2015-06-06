@@ -12,8 +12,10 @@
   </div>
   <div class='col-md-6'>
     <a ng-href="dashboard/recordings/{{recording._id}}">details</a>
-    <sound-button src="{{audioUrl(recording.filename)}}" class="col-md-4"></sound-button>
+    <audio controls ng-src="{{ audioUrl(recording.filename) }}"></audio>
   </div>
 </div>
-</div>
 
+
+<audio>
+</div>

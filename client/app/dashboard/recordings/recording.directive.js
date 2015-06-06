@@ -1,12 +1,46 @@
-angular.module('jabbrApp').directive('soundButton', [function () {
+angular.module('jabbrApp').directive('player', [function () {
     return {
         restrict: 'E',
-        template: '<div class="player gradient"><a class="button gradient" ng-click="play()" id="play" href="" title="Play">Play</a><a class="button gradient" id="mute" href="" title=""></a><input type="range" id="seek" value="0" max=""/><a class="button gradient" id="close" href="" title=""></a></div>',
+        template: '<button id="pButton" class="play" ng-click="play()"><i class="fa fa-play-circle fa-2x"></i></button><div ng-click="clickTimeline($event)" id="timeline"><div id="playhead"></div></div>',
         replace: false,
         link: function (scope, element, attrs) {
             var audioSrc = attrs.src;
             var audio = new Audio(audioSrc);
+            var playhead = $('#playhead');
+            var timeline = $('#timeline');
+            var duration;
+            var timelineWidth = timeline.width() - playhead.width(); // adjust width of timeline for playhead
+            var timelineOffset = timeline.offset().left;
 
+            scope.clickTimeline = function(event) {
+              moveplayhead(event);
+              audio.currentTime = duration * clickPercent(event);
+            }
+            audio.addEventListener('timeupdate', function() {
+              var playPercent = 100 * (parseInt(audio.currentTime, 10) / audio.duration);
+              playhead.css('margin-left', playPercent + '%');
+            });
+
+            audio.addEventListener("canplaythrough", function () {
+              duration = audio.duration;
+            }, false);
+
+            function moveplayhead(e) {
+              var newMargLeft = e.pageX - timelineOffset;
+              if (newMargLeft >= 0 && newMargLeft <= timelineWidth) {
+                playhead.css('marginLeft', newMargLeft + "px");
+              }
+              if (newMargLeft < 0) {
+                playhead.css('marginLeft', "0px");
+              }
+              if (newMargLeft > timelineWidth) {
+                playhead.css('marginLeft', timelineWidth + "px");              }
+            };
+
+            function clickPercent(e) {
+              return (e.pageX - timelineOffset) / timelineWidth;
+            };
+          
             scope.play = function () {
                 if (audio.paused) {
                     audio.play();
@@ -15,9 +49,6 @@ angular.module('jabbrApp').directive('soundButton', [function () {
                 }
             };
 
-            element.bind('mouseover', function() {
-              element.css('cursor', 'pointer');
-            });
 
         }
     }

@@ -58,17 +58,19 @@ angular.module('jabbrApp')
   .controller('RecordingCtrl', function ($scope, Auth, Recording,
                                          $stateParams) {
     $scope.userRecordings = [];
-    $scope.oneRecording = undefined;
+    
 
     // ==========
     // use $stateParams.recordingId
     $scope.getOneRecording = function() {
       Recording.getOneRecording({ id: $stateParams.recordingId }, function(res) {
-        console.log(res);
+      
         // console.log(res.recording);
-        $scope.oneRecording = res;
+        $scope.userRecordings = [res];
       });
     };
+
+    $scope.getOneRecording();
 
     $scope.parseTime = function(unixDate) {
       var foo = new Date(unixDate);
