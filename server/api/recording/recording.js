@@ -97,11 +97,17 @@ var merge = function(socket, fileName, userId) {
 
     var audioFile = path.join(__dirname, 'uploads', fileName + '.wav'),
         peerAudioFile = path.join(__dirname, 'uploads', fileName + '_1.wav'),
-        mergedFile = path.join(__dirname, 'uploads', fileName + '-merged.wav');
+        mergedFile = path.join(__dirname, 'uploads', fileName + '-merged.wav'),
+        placeholder = path.join(__dirname, 'uploads/uploadsfoldertest.mp3');
 
-    var command = ffmpeg(audioFile)
-        .input(peerAudioFile)
+
+    var command = ffmpeg(peerAudioFile)
+        .input(audioFile)
+        .input(placeholder)
         .inputOptions('-filter_complex amix=duration=shortest:dropout_transition=1')
+        .on('start', function(commandline) {
+          console.log('Spawned ffmpeg with command: ' + commandline);
+        })
         .on('error', function (err) {
             console.log(err.message);
         })
@@ -121,7 +127,7 @@ var merge = function(socket, fileName, userId) {
 
             // });
               
-            console.log(RecordingModel.findOne({filename: fileName + '.wav'}))
+           // console.log(RecordingModel.findOne({filename: fileName + '.wav'}))
             RecordingModel.update({filename: fileName + '.wav'},
                                   { $set: { filename: fileName + '-merged.wav' }},
                                   function(err, docs){
