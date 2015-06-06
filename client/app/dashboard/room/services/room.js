@@ -12,6 +12,10 @@ angular.module('jabbrApp')
         currentId, roomId,
         stream;
 
+
+    socket.removeAllListeners("peer.connected");
+    socket.removeAllListeners("peer.disconnected");
+    socket.removeAllListeners("msg");
     function getPeerConnection(id) {
       if (peerConnections[id]) {
         return peerConnections[id];
@@ -109,6 +113,7 @@ angular.module('jabbrApp')
           console.log("Joining Room");
           socket.emit('joinRoom', { roomid: r });
           socket.on('enterRoom', function(roomInfo){
+            console.log("Entering Room")
             currentId = roomInfo.id;
             roomId = roomInfo.roomid;
             connected = true;
@@ -139,6 +144,8 @@ angular.module('jabbrApp')
         currentId = undefined;
         roomId = undefined;
         connected = false;
+        peerConnections = {};
+        socket.emit('leaveRoom');
       }
     };
     EventEmitter.call(api);

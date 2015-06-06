@@ -28,11 +28,13 @@ angular.module('jabbrApp')
     $scope.peer = {};
     $scope.partner = '';
     Room.on('peer.stream', function (peer) {
-      console.log('Client connected, adding new stream');
-      $scope.peer = {
-        id: peer.id,
-        stream: URL.createObjectURL(peer.stream)
-      };
+      $scope.$apply(function(){
+        console.log('Client connected, adding new stream');
+        $scope.peer = {
+          id: peer.id,
+          stream: URL.createObjectURL(peer.stream)
+        };
+      })
       recordPeerAudio = RecordRTC(peer.stream);
       $scope.partner = Session.getCurrentlyMessaging();
 
@@ -45,7 +47,10 @@ angular.module('jabbrApp')
     });
     Room.on('peer.disconnected', function (peer) {
       console.log('Client disconnected, removing stream');
-      $scope.peer = {}; // peer's video disappears
+      $scope.$apply(function(){
+        console.log("Removing Peer Video")
+        $scope.peer.stream = ""; // peer's video disappears
+      })
     });
 
     $scope.stopDisabled = true;
