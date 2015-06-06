@@ -4,22 +4,22 @@ angular.module('jabbrApp')
   .factory('Audio', function ($http) {
 
 //gets comments for that recording
-  var get = function(filename) {
+  var get = function(filename, cb) {
     return $http.get('/api/audioComments/'+filename)
     .success(function(data, status){
-      return data;
+      cb(data, status);
     }).error(function(data, status) {
       console.log('Error getting comments');
     });
   };
 
 //create a doc for recording or update existing recording
-  var update = function(filename, comment) {
+  var update = function(filename, comment, cb) {
     $http.post('/api/audioComments', {
       filename: filename,
       comments: comment
     }).success(function(data, status){
-      console.log('Comment saved');
+      cb(data);
     }).error(function(data, status) {
       console.log('Error updating comments');
     });

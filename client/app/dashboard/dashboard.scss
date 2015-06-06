@@ -81,3 +81,51 @@
     display: none;
   }
 }
+
+#pButton{
+  height:60px; 
+  width: 60px;
+  border: none;
+  background-size: 50% 50%;
+  background-position: center;
+}
+
+#timeline{
+  width: 100%;
+  height: 20px;
+  background: #888;
+  margin-top: 20px;
+  border-radius: 15px;
+}
+ 
+#playhead{
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  margin-top: 1px;
+  background: $brand-primary;
+}
+
+.comment-row {
+  width: 100%;
+  height: 150px;
+  padding-top: 50px;
+  position: relative;
+}
+
+#comment-text {
+  margin: 0px;
+}
+
+.comment {
+  position: absolute;
+  top: 0px;
+  width: 6px;
+  height: 10px;
+  background-color: $brand-primary;
+}
+
+.comment:hover {
+  background-color: red;
+  cursor: pointer;
+}
