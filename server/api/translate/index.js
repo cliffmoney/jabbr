@@ -19,14 +19,29 @@ var requestGoogle = function(req, res) {
       console.log('Error getting translation from Google');
       return;
     }
-    console.log(response.body);
     var body = JSON.parse(response.body);
-    console.log(body.data.translations[0].translatedText);
     res.send(body.data.translations[0].translatedText);
   })
 };
 
-router.post('/', auth.isAuthenticated(), requestGoogle);
+var languageList = function(req, res) {
+  var baseUrl = 'https://www.googleapis.com/language/translate/v2/languages?&key='+config.TRANSLATE_API;
+  var params = req.params.lang || 'en';
+  var options = {
+    url: baseUrl + "&target=" + params,
+    method: 'GET',
+  };
+  request(options, function(error, response) {
+    if (error) {
+      console.log("Error getting list of supported languages");
+      return;
+    }
+    res.send(response.body);
+  })
+};
 
+router.post('/', auth.isAuthenticated(), requestGoogle);
+router.get('/', auth.isAuthenticated(), languageList);
+router.get('/:lang', auth.isAuthenticated(), languageList);
 
 module.exports = router;
