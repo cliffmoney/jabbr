@@ -8,7 +8,6 @@ var RecordingSchema = new Schema({
   creator: String,
   partner: String,
   date: Number
-
 });
 
 module.exports = mongoose.model('Recording', RecordingSchema);

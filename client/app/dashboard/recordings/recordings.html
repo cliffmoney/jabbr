@@ -1,3 +1,4 @@
+
 <div class="col-md-12">
 <h1>Recordings</h1>
 <div class='row' ng-repeat="recording in userRecordings">
@@ -13,8 +14,8 @@
     <a ng-href="dashboard/recordings/{{recording._id}}">details</a>
     <audio controls ng-src="{{ audioUrl(recording.filename) }}"></audio>
   </div>
-  <!-- <div class='col-md-3'>
-  <p>placeholder text</p>
-  </div> -->
 </div>
+
+
+<audio>
 </div>

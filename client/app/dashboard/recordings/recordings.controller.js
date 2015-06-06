@@ -1,17 +1,7 @@
-
-
-
-
-
-
-
-
-
-
 'use strict';
 
 angular.module('jabbrApp')
-  .controller('RecordingsCtrl', function ($scope, $sce, Auth, Recording,
+  .controller('RecordingsCtrl', function ($scope, $sce, $http, Auth, Recording,
                                           User, $stateParams, JabbrSocket) {
     // TODO: query Recordings collection for 
     //   audio associated with the current user
@@ -20,8 +10,6 @@ angular.module('jabbrApp')
 
     $scope.getUserRecordings = function() {
       Recording.getUserRecordings(function(res) {
-        console.log('res.recordings: ');
-        console.log(res.recordings);
         $scope.userRecordings = res.recordings;
       });
     };
@@ -43,8 +31,10 @@ angular.module('jabbrApp')
     $scope.audioUrl = function(filename) {
       // console.log('location.host: ');
       // console.log(location.host);
+
       return 'http://' + location.host + '/' + filename;
     };
+
     // $scope.recordingsURL = [];
     // var socket = JabbrSocket;
     // var currentUser = Auth.getCurrentUser();
@@ -64,6 +54,7 @@ angular.module('jabbrApp')
     // ss(socket).emit("getRecording", currentUser.email);
 
   })
+
   .controller('RecordingCtrl', function ($scope, Auth, Recording,
                                          $stateParams) {
     $scope.userRecordings = [];
@@ -79,14 +70,6 @@ angular.module('jabbrApp')
       });
     };
 
-    $scope.getOneRecording();
-    // ===========
-
-    $scope.parseDate = function(unixDate) {
-      var foo = new Date(unixDate);
-      return foo.toDateString();
-    };
-
     $scope.parseTime = function(unixDate) {
       var foo = new Date(unixDate);
       return foo.toLocaleTimeString();
@@ -98,6 +81,4 @@ angular.module('jabbrApp')
       return 'http://' + location.host + '/' + filename;
     };
 
-
-  })
-  ;
+});

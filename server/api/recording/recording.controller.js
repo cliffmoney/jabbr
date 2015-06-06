@@ -15,7 +15,6 @@ exports.index = function(req, res) {
 
 // Get a single recording
 exports.show = function(req, res) {
-  console.log(req.params.id, 789);
   Recording.findById(req.params.id, function (err, recording) {
     if(err) { return handleError(res, err); }
     if(!recording) { return res.send(404); }
@@ -107,8 +106,7 @@ exports.getUserRecordings = function(req, res, next) {
       renaming();  
       Q.all(promises)
       .then(function(value){
-        console.log('RECORDINGS: ' + recordings);
-        // console.log('_id: ' + req.user._id);
+
         res.json({recordings: recordings});
       })
       .catch(function(err){
