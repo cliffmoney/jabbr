@@ -8,7 +8,7 @@ var AudioComment = require('./audioComment.model');
 exports.show = function(req, res) {
   AudioComment.findOne({filename: req.params.id}, function (err, audioComment) {
     if(err) { return handleError(res, err); }
-    if(!audioComment) { return res.send(404); }
+    if(!audioComment) { return res.send([]); }
     return res.json(audioComment);
   });
 };

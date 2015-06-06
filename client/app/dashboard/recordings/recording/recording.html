@@ -1,25 +1,23 @@
 <div class="col-md-12">
   <h1>Single Recording Template</h1>
 
-  <div class='row' ng-repeat='recording in userRecordings'>
-    <div class='col-md-2'>
-      <img src="https://avatars3.githubusercontent.com/u/1560627" width="100">
+  <div ng-repeat='recording in userRecordings'>
+    <div class="row">
+      <div class='col-md-2'>
+        <img src="https://avatars3.githubusercontent.com/u/1560627" width="100">
+      </div>
+      <div class='col-md-3'>
+        {{ recording.partner}}<br/>
+        {{ parseDate(recording.date) }}<br/>
+        {{ parseTime(recording.date) }}
+      </div>
     </div>
-    <div class='col-md-3'>
-      {{ recording.partner}}<br/>
-      {{ parseDate(recording.date) }}<br/>
-      {{ parseTime(recording.date) }}
-    </div>
-    <div class='col-md-6'>
-      <player src="{{audioUrl(recording.filename)}}"></player>
+    <div class="row">
+      <div class='col-md-12'>
+        <player src="{{audioUrl(recording.filename)}}"></player>
+      </div>
     </div>
 
   </div>
-
-  <form class="form form-inline" ng-submit='addComment(comment)'>
-    <input class="form-control" type="text" ng-model="comment" placeholder='Add comment'>
-    <input class="btn btn-lg btn-primary" type="submit">
-  </form>
   <ul id='target'></ul>
-
 </div>

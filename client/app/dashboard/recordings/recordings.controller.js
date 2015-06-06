@@ -56,9 +56,9 @@ angular.module('jabbrApp')
   })
 
   .controller('RecordingCtrl', function ($scope, Auth, Recording,
-                                         $stateParams) {
+                                         $stateParams, Audio) {
     $scope.userRecordings = [];
-    
+    $scope.Audio = Audio;
 
     // ==========
     // use $stateParams.recordingId
