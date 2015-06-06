@@ -49,7 +49,7 @@ angular.module('jabbrApp')
       console.log('Client disconnected, removing stream');
       $scope.$apply(function(){
         console.log("Removing Peer Video")
-        $scope.peer.stream = "FUCK"; // peer's video disappears
+        $scope.peer.stream = ""; // peer's video disappears
       })
     });
 
