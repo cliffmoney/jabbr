@@ -10,7 +10,8 @@ router.get('/userRecordings', auth.isAuthenticated(), controller.getUserRecordin
 router.get('/oneRecording', auth.isAuthenticated(), controller.getOneRecording);
 
 router.get('/', controller.index);
-router.get('/:id', auth.isAuthenticated(), controller.show);
+router.get('/:id', auth.isAuthenticated(), controller.getOneRecording);
+// router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);
 router.put('/:id', controller.update);
 router.patch('/:id', controller.update);

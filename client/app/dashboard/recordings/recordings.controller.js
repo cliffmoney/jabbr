@@ -45,9 +45,6 @@ angular.module('jabbrApp')
       // console.log(location.host);
       return 'http://' + location.host + '/' + filename;
     };
-
-
-
     // $scope.recordingsURL = [];
     // var socket = JabbrSocket;
     // var currentUser = Auth.getCurrentUser();
@@ -67,36 +64,16 @@ angular.module('jabbrApp')
     // ss(socket).emit("getRecording", currentUser.email);
 
   })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   .controller('RecordingCtrl', function ($scope, Auth, Recording,
                                          $stateParams) {
     $scope.userRecordings = [];
     $scope.oneRecording = undefined;
-    $scope.foobar = 'barfoo';
 
     // ==========
     // use $stateParams.recordingId
     $scope.getOneRecording = function() {
       Recording.getOneRecording({ id: $stateParams.recordingId }, function(res) {
         console.log(res);
-        console.log(123);
         // console.log(res.recording);
         $scope.oneRecording = res;
       });
@@ -108,6 +85,17 @@ angular.module('jabbrApp')
     $scope.parseDate = function(unixDate) {
       var foo = new Date(unixDate);
       return foo.toDateString();
+    };
+
+    $scope.parseTime = function(unixDate) {
+      var foo = new Date(unixDate);
+      return foo.toLocaleTimeString();
+    };    
+    
+    $scope.audioUrl = function(filename) {
+      // console.log('location.host: ');
+      // console.log(location.host);
+      return 'http://' + location.host + '/' + filename;
     };
 
 
