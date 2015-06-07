@@ -1,23 +1,4 @@
-<div class="col-md-12">
-  <h1>Single Recording Template</h1>
-
-  <div ng-repeat='recording in userRecordings'>
-    <div class="row">
-      <div class='col-md-2'>
-        <img src="https://avatars3.githubusercontent.com/u/1560627" width="100">
-      </div>
-      <div class='col-md-3'>
-        {{ recording.partner}}<br/>
-        {{ parseDate(recording.date) }}<br/>
-        {{ parseTime(recording.date) }}
-      </div>
-    </div>
-    <div class="row">
-      <div class='col-md-12'>
-        <player src="{{audioUrl(recording.filename)}}"></player>
-      </div>
-    </div>
-
-  </div>
-  <ul id='target'></ul>
+<div class="col-md-12" ng-repeat='recording in userRecordings'>
+  <h1 class='text-center'>With {{recording.partner}} on {{parseDate(recording.date)}}</h1>
+  <circleplay src="{{audioUrl(recording.filename)}}"><circleplay>
 </div>
