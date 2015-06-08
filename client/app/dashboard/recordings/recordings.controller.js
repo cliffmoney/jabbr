@@ -76,6 +76,12 @@ angular.module('jabbrApp')
       var foo = new Date(unixDate);
       return foo.toLocaleTimeString();
     };    
+
+    $scope.parseDate = function(unixDate) {
+      var foo = new Date(unixDate);
+      return foo.toDateString();
+    };
+    
     
     $scope.audioUrl = function(filename) {
       // console.log('location.host: ');

@@ -74,7 +74,8 @@ angular.module('jabbrApp').directive('player', [function () {
                 playhead.css('marginLeft', "0px");
               }
               if (newMargLeft > timelineWidth) {
-                playhead.css('marginLeft', timelineWidth + "px");              }
+                playhead.css('marginLeft', timelineWidth + "px");              
+              }
             };
 
             function clickPercent(e) {

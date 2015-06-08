@@ -129,3 +129,35 @@
   background-color: red;
   cursor: pointer;
 }
+
+svg {
+  display: block;
+  top: 0px;
+  margin: 0px auto;
+}
+
+
+.recording-box {
+  position: relative;
+}
+#loader 
+{ fill: #888 }
+
+#border 
+{ fill: $brand-primary; }
+
+#center-circle 
+{ fill: #888; }
+
+#larger-circle 
+{ fill: #000; }
+
+.control-overlay {
+  position: absolute;
+  margin: 0 auto;
+  width: 350px;
+  height: 350px;
+  top: 100px;
+  left: 262.5px;
+  z-index: 999;
+}

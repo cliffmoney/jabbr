@@ -16,7 +16,10 @@
     "lodash": "~2.4.1",
     "angular-ui-router": "~0.2.10",
     "eventEmitter": "~4.2.11",
-    "recordrtc": "*"
+    "recordrtc": "*",
+    "raphael": "~2.1.4",
+    "snap": "*",
+    "Snap.svg": "~0.4.1"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",
