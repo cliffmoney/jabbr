@@ -1,4 +1,3 @@
-<div class="col-md-12" ng-repeat='recording in userRecordings'>
-  <h1 class='text-center'>With {{recording.partner}} on {{parseDate(recording.date)}}</h1>
+<div class="col-md-12 recording-box" ng-repeat='recording in userRecordings'>
   <circleplay src="{{audioUrl(recording.filename)}}"><circleplay>
 </div>
