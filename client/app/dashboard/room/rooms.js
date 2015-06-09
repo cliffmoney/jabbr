@@ -9,7 +9,7 @@ angular.module('jabbrApp')
         templateUrl: 'app/dashboard/room/views/room.html',
         controller: 'RoomCtrl',
         onExit: function(JabbrSocket, VideoStream, Room) {
-          console.log(VideoStream.userMedia)
+          //console.log(VideoStream.userMedia)
           if(VideoStream.userMedia){
             VideoStream.userMedia.stop();
             VideoStream.userMedia = "";

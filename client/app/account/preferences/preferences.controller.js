@@ -16,13 +16,7 @@ angular.module('jabbrApp')
     }).error(function (data, status) {
       console.log('Error getting list of languages');
     });
-
-
-    $scope.user = {
-      native: "English",
-      learning: "English"
-    };
-
+    
     $scope.getCurrentUser = Auth.getCurrentUser;
 
     //save what languages user want to learn on submit
