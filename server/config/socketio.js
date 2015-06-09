@@ -117,12 +117,7 @@ module.exports = function (socketio) {
 
   //------------SOCKET ON AUDIO START------------------------
     socket.on('audio', function(audio){
-      var file = {
-        audio : audio.dataURL,
-        userId: audio.user.email,
-        roomId: audio.roomid
-      };
-      saveRecording.writeToDisk(file);
+      saveRecording.writeToDisk(audio);
     });
   //------------SOCKET ON AUDIO END--------------------------
 

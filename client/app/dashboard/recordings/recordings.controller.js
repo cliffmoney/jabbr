@@ -8,15 +8,10 @@ angular.module('jabbrApp')
     $scope.userRecordings = [];
     // ==========
 
-    $scope.getUserRecordings = function() {
-      Recording.getUserRecordings(function(res) {
-        $scope.userRecordings = res.recordings;
-      });
-    };
-
-    $scope.getUserRecordings();
-    // ==========
-
+    Recording.get(function(res) {
+      console.log(res.data);
+      $scope.userRecordings = res.data;
+    });
 
     $scope.parseDate = function(unixDate) {
       var foo = new Date(unixDate);
@@ -29,9 +24,6 @@ angular.module('jabbrApp')
     };    
     
     $scope.audioUrl = function(filename) {
-      // console.log('location.host: ');
-      // console.log(location.host);
-
       return 'http://' + location.host + '/' + filename;
     };
   })

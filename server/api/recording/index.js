@@ -6,12 +6,12 @@ var auth = require('../../auth/auth.service');
 
 var router = express.Router();
 
-router.get('/userRecordings', auth.isAuthenticated(), controller.getUserRecordings);
-router.get('/oneRecording', auth.isAuthenticated(), controller.getOneRecording);
+//router.get('/userRecordings', auth.isAuthenticated(), controller.getUserRecordings);
+router.get('/oneRecording', auth.isAuthenticated(), controller.show);
 
-router.get('/', controller.index);
-router.get('/:id', auth.isAuthenticated(), controller.getOneRecording);
-// router.get('/:id', auth.isAuthenticated(), controller.show);
+router.get('/', auth.isAuthenticated(), controller.index);
+router.get('/:id', auth.isAuthenticated(), controller.show);
+
 router.post('/', controller.create);
 router.put('/:id', controller.update);
 router.patch('/:id', controller.update);

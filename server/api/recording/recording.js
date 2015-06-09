@@ -15,19 +15,19 @@ var writeToDisk = function(recording){ // roomId is a prop of recording
   var filename = recording.roomId;
   var rootPath = 'server/api/recording/uploads/';
   var filePath = rootPath + filename,
-      dataURL = recording.audio.split(',').pop(),
+      dataURL = recording.dataURL.split(',').pop(),
       fileBuffer = new Buffer(dataURL, 'base64');
   if (singles[filename]) {
     var otherHalf = filePath + "_1.wav";
     fs.writeFile(otherHalf, fileBuffer, function() {
-      var partners = [];
-      partners.push(singles[filename], recording.userId);
-      merge(filename, partners);
+      var userEmails = [];
+      userEmails.push(singles[filename], recording.user.email);
+      merge(filename, userEmails);
       delete singles[filename]; 
     })
   } else {
+    singles[filename] = recording.user.email;
     fs.writeFile(filePath + ".wav", fileBuffer, function() {
-      singles[filename] = recording.userId;
     });
   }  
 };
@@ -53,7 +53,7 @@ var writeToDisk = function(recording){ // roomId is a prop of recording
 // };
 
 //merge two files into one file and deletes original two files
-var merge = function(fileName, partners) {
+var merge = function(fileName, userEmails) {
   var ffmpeg = require('fluent-ffmpeg');
 
   var finalName = uuid.v4();
@@ -79,12 +79,20 @@ var merge = function(fileName, partners) {
       fs.unlink(peerAudioFile);
       RecordingModel.create({
         filename: finalName + '-merged.wav',
-        belongsTo: partners,
+        creator: userEmails[0],
+        partner: userEmails[1],
         date: new Date().valueOf()
         }, function (err, recording) {
           if (err) {console.log (err);}
         });
-
+      RecordingModel.create({
+        filename: finalName + '-merged.wav',
+        creator: userEmails[1],
+        partner: userEmails[0],
+        date: new Date().valueOf()
+        }, function (err, recording) {
+          if (err) {console.log (err);}
+        });
     })
     .save(mergedFile);
 };

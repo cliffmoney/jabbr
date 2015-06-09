@@ -74,7 +74,7 @@ angular.module('jabbrApp')
             type: recordAudio.getBlob().type || 'audio/wav',
             dataURL: audioDataURL,
             user: Auth.getCurrentUser(),
-            roomid: roomId,     
+            roomId: roomId,     
           };
           socket.emit('audio', files);
         });
