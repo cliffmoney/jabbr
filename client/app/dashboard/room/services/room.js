@@ -90,6 +90,7 @@ angular.module('jabbrApp')
       });
       socket.on('peer.disconnected', function (data) {
         closeConnection(data.id);
+        console.log(data);
         api.trigger('peer.disconnected', [data]);
         if (!$rootScope.$$digest) {
           $rootScope.$apply();

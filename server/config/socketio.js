@@ -51,6 +51,7 @@ module.exports = function (socketio) {
       socket.emit("openRoom", {roomid:currentRoom, 'id': id})
     };
   //------------SOCKET ON CREATE ROOM END---------------------
+
   //------------SOCKET ON JOINROOM START----------------------
     socket.on('joinRoom',function(data){
       console.log(data.roomid);
@@ -70,6 +71,7 @@ module.exports = function (socketio) {
       console.log('Peer connected to room', currentRoom, 'with #', id);
     });
   //------------SOCKET ON JOINROOM END-----------------------
+
   //------------SOCKET ON LEAVEROOM START----------------------
     socket.on('leaveRoom', function(data) {
       if (!currentRoom || !rooms[currentRoom]) {
@@ -83,18 +85,20 @@ module.exports = function (socketio) {
       });
     });
   //------------SOCKET ON LEAVEROOM START----------------------
+
   //------------SOCKET ON MSG START--------------------------
     socket.on('msg', function (data) {
       var to = parseInt(data.to, 10);
-      console.log('Two variables: ' + rooms[currentRoom] + 'and' + rooms[currentRoom][to]);
+    //  console.log('Two variables: ' + rooms[currentRoom] + 'and' + rooms[currentRoom][to]);
       if (rooms[currentRoom] && rooms[currentRoom][to]) {
-        console.log('Redirecting message to', to, 'by', data.by);
+      //  console.log('Redirecting message to', to, 'by', data.by);
         rooms[currentRoom][to].emit('msg', data);
       } else {
         console.warn('Invalid user');
       }
     });
   //------------SOCKET ON MSG END----------------------------
+
   //------------SOCKET ON CHAT START------------------------
     socket.on('chat', function (data) {
       if(rooms[data.currentRoom]) {
@@ -110,45 +114,17 @@ module.exports = function (socketio) {
       }  
     });
   //------------SOCKET ON CHAT END-----------------------
+
   //------------SOCKET ON AUDIO START------------------------
     socket.on('audio', function(audio){
-      var fileName = uuid.v4();
-      //peerAudio is undefined if no peer stream
       var file = {
-        selfAudio : audio.selfAudio.dataURL,
-        peerAudio: audio.peerAudio.dataURL,
-        fileName : fileName + ".wav",
-        peerFileName: fileName + "_1.wav",
-        userId: audio.user.user.email,
-        roomId: audio.room
+        audio : audio.dataURL,
+        userId: audio.user.email,
+        roomId: audio.roomid
       };
-      //writeToDisk will handle if peer stream exists logic
       saveRecording.writeToDisk(file);
-      if (audio.peerAudio.dataURL) {
-        //merge two files
-        saveRecording.merge(socket, fileName, file.userId);
-      } else {
-        socket.emit('merged', fileName + ".wav");
-      }
-
     });
   //------------SOCKET ON AUDIO END--------------------------
-
-
-    ss(socket).on('getRecording', function(userId){
-      sendRecording(userId,
-        function (wavStreams) {
-          wavStreams.forEach( function(eachStream) {
-            eachStream.on('error', function (err) {
-              console.log('An error occurred!', err);
-              throw err;
-            });
-            var stream = ss.createStream();
-            ss(socket).emit('sendRecording', stream);
-            eachStream.pipe(stream);
-          });
-        });
-      });
 
   });
 };

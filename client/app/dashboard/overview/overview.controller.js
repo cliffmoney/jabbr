@@ -12,7 +12,7 @@ angular.module('jabbrApp')
       $scope.suggestedPartners = res.partners;
     });
 
-    console.log($scope.suggestedPartners);
+    //console.log($scope.suggestedPartners);
 
     // sends request acceptance
     $scope.acceptRequest = function(form, partnershipId, text) {

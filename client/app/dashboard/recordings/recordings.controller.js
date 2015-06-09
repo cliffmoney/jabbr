@@ -34,25 +34,6 @@ angular.module('jabbrApp')
 
       return 'http://' + location.host + '/' + filename;
     };
-
-    // $scope.recordingsURL = [];
-    // var socket = JabbrSocket;
-    // var currentUser = Auth.getCurrentUser();
-
-    // ss(socket).removeAllListeners("sendRecording");
-
-    // ss(socket).on("sendRecording", function(recording){
-    //   recording.pipe(blobStream())
-    //   .on('finish', function(){
-    //     $scope.$apply(function(){
-    //       var url = this.toBlobURL();
-    //       $scope.recordingsURL.push(url);
-    //     }.bind(this));
-    //    });
-    // });
-
-    // ss(socket).emit("getRecording", currentUser.email);
-
   })
 
   .controller('RecordingCtrl', function ($scope, Auth, Recording,
