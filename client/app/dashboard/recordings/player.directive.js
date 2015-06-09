@@ -1,13 +1,15 @@
 angular.module('jabbrApp').directive('circleplay', [function () {
     return {
         restrict: 'E',
-        template: '<div class="control-overlay"><h3 class="text-center">With {{recording.partner}} on {{parseDate(recording.date)}}</h3><button id="pButton" class="play center-block" ng-click="play()"><i class="fa fa-play-circle fa-2x"></i></button></div><svg id="svg-player" width="700" height="700" viewbox="0 0 700 700"><circle id="larger-circle" cx="350" cy="350" r="349" /><path id="border" transform="translate(350, 350)"/><circle id="center-circle" cx="350" cy="350" r="325"/></svg>',
+        template: '<div class="control-overlay"><h3 class="text-center">With {{recording.partner}} on {{parseDate(recording.date)}}</h3><button id="pButton" class="play center-block" ng-click="play()"><i class="fa fa-play-circle fa-2x"></i></button><div class="time-display"><h3 class="text-center"><span class="track-time"></span> / <span class="track-duration"></span></h3></div><div class="interface"><button class="center-block btn btn-md" ng-click="showStepOne()" ng-show="!commentStepOne && !commentStepTwo">Create Marker</button><div ng-show="commentStepOne"><button class="center-block btn btn-md" ng-click="showStepTwo()">Mark</button><p class="cut-error" ng-show="cutError">Select two points or times to mark the track</p></div><div ng-show="commentStepTwo">hey</div></div></div><svg id="svg-player" width="700" height="700" viewbox="0 0 700 700"><circle id="larger-circle" cx="350" cy="350" r="349" /><path id="border" transform="translate(350, 350)"/><circle id="center-circle" cx="350" cy="350" r="325"/></svg>',
         replace: false,
         link: function (scope, element, attrs) {
             var audioSrc = attrs.src;
             var audio = new Audio(audioSrc);
             var largerCircle = Snap('#larger-circle');
             var track = Snap('#border');
+            var trackTime = $('.track-time');
+            var trackDuration = $('.track-duration')
             // var commentBox = $('.comment-row');
             // var commentText = $('#commentText');
             var duration;
@@ -21,6 +23,38 @@ angular.module('jabbrApp').directive('circleplay', [function () {
               , α = 0
               , π = Math.PI;
 
+            scope.commentStepOne = false;
+            scope.commentStepTwo = false;
+            scope.cutError = false;
+
+            // by default user cannot mark up the audio track
+            var markerMode = false; 
+            // these two variables used to define the time bounds of a marker
+            scope.timeOne = undefined;  
+            scope.timeTwo = undefined;
+            // the text that accompanies each marker
+            scope.markerText = '';
+
+            // shows instructions and form for marking up a track
+            scope.showStepOne = function() {
+              scope.commentStepOne = true;
+              markerMode = true;
+            };
+
+            // ensures that the two time bounds for a marker are defined and then shows commenting step
+            scope.showStepTwo = function(form) {
+              if(form.isValid) {
+                scope.commentStepOne = false;
+                scope.commentStepTwo = true;
+              }
+            };
+
+            scope.submitMarker = function(form) {
+              if(form.isValid) {
+                console.log("submitted");
+              }
+            }
+
             largerCircle.click(function(event) {
               moveTrack(event);
             });
@@ -31,6 +65,13 @@ angular.module('jabbrApp').directive('circleplay', [function () {
 
             audio.addEventListener("canplaythrough", function () {
               duration = audio.duration;
+              trackTime.text('00:00');
+              if (isNaN(duration)){
+                trackDuration.text('00:00');
+              } 
+              else {
+                trackDuration.text(formatSecondsAsTime(Math.floor(duration).toString()));
+              }
             }, false);
 
             var moveTrack = function(e) {
@@ -73,11 +114,26 @@ angular.module('jabbrApp').directive('circleplay', [function () {
               if(play)
                 setTimeout(draw, 30);
             };
+          
             
-            // audio.addEventListener('timeupdate', function() {
-            //   var playPercent = parseFloat(audio.currentTime) / audio.duration;
-            //   draw(playPercent);
-            // });
+            audio.addEventListener('timeupdate', function() {
+              trackTime.text(formatSecondsAsTime(Math.floor(audio.currentTime).toString()));
+            });
+
+            function formatSecondsAsTime(secs, format) {
+              var hr  = Math.floor(secs / 3600);
+              var min = Math.floor((secs - (hr * 3600))/60);
+              var sec = Math.floor(secs - (hr * 3600) -  (min * 60));
+
+              if (min < 10){ 
+                min = "0" + min; 
+              }
+              if (sec < 10){ 
+                sec  = "0" + sec;
+              }
+
+              return min + ':' + sec;
+            };
 
             scope.play = function () {
                 if (audio.paused) {
@@ -172,3 +228,4 @@ angular.module('jabbrApp').directive('circleplay', [function () {
         }
     }
 }]);
+
