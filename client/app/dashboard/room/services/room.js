@@ -141,6 +141,7 @@ angular.module('jabbrApp')
         stream = s;
       },
       leaveRoom: function() {
+        api.trigger('leaving room', []);
         currentId = undefined;
         roomId = undefined;
         connected = false;

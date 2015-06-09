@@ -62,7 +62,6 @@ angular.module('jabbrApp')
       $http.get('/api/users/' + $scope.currentUser._id + '/messages')
         .success(function(messages, status) {
           $scope.messages = messages;
-          console.log(messages);
         }).error(function(error) {
           console.log(error);
         });

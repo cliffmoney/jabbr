@@ -10,10 +10,11 @@ angular.module('jabbrApp')
     $scope.localVideo; 
     var socket = JabbrSocket;
     var stream, peerstream, streamUrl,recordAudio, recordPeerAudio;
+    var startedRecording = false;
     console.log('RoomCtrl Digest')
     VideoStream.once("streamReady", function(userMedia){
       stream = userMedia;
-
+      recordAudio = RecordRTC(stream);
       Room.init(stream)
       streamUrl = URL.createObjectURL(stream);
       $scope.$apply(function(){
@@ -35,6 +36,10 @@ angular.module('jabbrApp')
           stream: URL.createObjectURL(peer.stream)
         };
       })
+      if(!startedRecording) {
+        startedRecording = true;
+        recordAudio.startRecording();
+      }
       peerstream = peer.stream;
       $scope.partner = Session.getCurrentlyMessaging();
 
@@ -46,62 +51,71 @@ angular.module('jabbrApp')
 
     });
     Room.on('peer.disconnected', function (peer) {
+      stopRecording();
+      startedRecording = false;
       console.log('Client disconnected, removing stream');
       $scope.$apply(function(){
         console.log("Removing Peer Video")
         $scope.peer.stream = ""; // peer's video disappears
       })
     });
+    
+    Room.on('leaving room', function() {
+      if(startedRecording) {
+        stopRecording();
+        startedRecording = false;
+      }
+    })
 
     $scope.stopDisabled = true;
 
     // $scope.getLocalVideo = function () {
     //   return $sce.trustAsResourceUrl(stream);
     // };
-    var sendBothRecording = function(audioDataURL) {
-      recordPeerAudio.stopRecording(function() {
-        recordPeerAudio.getDataURL(function (peerAudioURL) {
-          var files = {
-            selfAudio: {
-              type: recordAudio.getBlob().type || 'audio/wav',
-              dataURL: audioDataURL
-            },
-            peerAudio: {
-              type: recordPeerAudio.getBlob().type || 'audio/wav',
-              dataURL: peerAudioURL
-            },
-            user: {
-              user: Auth.getCurrentUser()
-              // TODO: add peer email
-            },
-            room: location.pathname.split('/').pop()
-          };
-          socket.emit('audio', files);
-        })
-      })
-    };
+    // var sendBothRecording = function(audioDataURL) {
+    //   recordPeerAudio.stopRecording(function() {
+    //     recordPeerAudio.getDataURL(function (peerAudioURL) {
+    //       var files = {
+    //         selfAudio: {
+    //           type: recordAudio.getBlob().type || 'audio/wav',
+    //           dataURL: audioDataURL
+    //         },
+    //         peerAudio: {
+    //           type: recordPeerAudio.getBlob().type || 'audio/wav',
+    //           dataURL: peerAudioURL
+    //         },
+    //         user: {
+    //           user: Auth.getCurrentUser()
+    //           // TODO: add peer email
+    //         },
+    //         room: location.pathname.split('/').pop()
+    //       };
+    //       socket.emit('audio', files);
+    //     })
+    //   })
+    // };
 
-    $scope.startRecording = function() {
-      recordAudio = RecordRTC(stream);
-      recordPeerAudio = peerstream ? RecordRTC(peerstream) : "";
-      $scope.stopDisabled = false;
-      recordAudio.startRecording();
-      recordPeerAudio && recordPeerAudio.startRecording();
-    };
+    // $scope.startRecording = function() {
+    //   recordAudio = RecordRTC(stream);
+    //   recordPeerAudio = peerstream ? RecordRTC(peerstream) : "";
+    //   $scope.stopDisabled = false;
+    //   recordAudio.startRecording();
+    //   recordPeerAudio && recordPeerAudio.startRecording();
+    // };
 
-    $scope.stopRecording = function() {
+    var stopRecording = function() {
 
-      $scope.stopDisabled = true;
+      // $scope.stopDisabled = true;
       
-      //if peer exists, record both streams
-      if(Object.keys(recordPeerAudio).length !== 0) {
+      // //if peer exists, record both streams
+      // if(Object.keys(recordPeerAudio).length !== 0) {
 
-        recordAudio.stopRecording(function() {
-          recordAudio.getDataURL(function (audioDataURL) {
-            sendBothRecording(audioDataURL);
-          });
-        });
-      } else {
+      //   recordAudio.stopRecording(function() {
+      //     recordAudio.getDataURL(function (audioDataURL) {
+      //       sendBothRecording(audioDataURL);
+      //     });
+      //   });
+      // } else {
         //if no peer, record self only
         recordAudio.stopRecording(function() {
            // get audio data-URL
@@ -119,7 +133,7 @@ angular.module('jabbrApp')
                socket.emit('audio', files);
             });
         });
-      }
+      // }
     
     };
 
