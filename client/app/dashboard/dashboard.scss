@@ -144,7 +144,7 @@ svg {
 #border 
 { fill: $brand-primary; }
 
-#center-circle 
+#center-circle, #top-circle,
 { fill: #888; }
 
 #larger-circle 
@@ -155,6 +155,13 @@ svg {
   cursor: pointer;
 }
 #border:hover {
+  cursor: pointer;
+}
+#marker-edit {
+  fill: #396CFF; 
+}
+.marker:hover {
+  fill: $brand-primary;
   cursor: pointer;
 }
 .circle-play {

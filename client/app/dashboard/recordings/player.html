@@ -9,8 +9,9 @@
   <div class="interface">
     <button class="center-block btn btn-md" ng-click="showStepOne()" ng-show="!commentStepOne && !commentStepTwo">Create Marker</button>
     <div ng-show="commentStepOne">
+      <p class="text-center">Select two points on the outside track to create a marker</p>
+      <h3 class="text-center'">{{comment.fromMinute}}:{{comment.fromSecond}} - {{comment.toMinute}}:{{comment.toSecond}}</h3>
       <button class="center-block btn btn-md" ng-click="showStepTwo()">Mark</button>
-      <p class="cut-error" ng-show="cutError">Select two points or times to mark the track</p>
     </div>
     <div ng-show="commentStepTwo">hey
     </div>
@@ -18,6 +19,9 @@
 </div>
 <svg id="svg-player" width="700" height="700" viewbox="0 0 700 700">
   <circle id="larger-circle" cx="350" cy="350" r="349" />
+  <path id="first-edge" transform="translate(350, 350)" />
+  <path id="second-edge" transform="translate(350, 350)" />
   <path id="border" transform="translate(350, 350)"/>
   <circle id="center-circle" cx="350" cy="350" r="325"/>
 </svg>
+
