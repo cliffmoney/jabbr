@@ -9,11 +9,11 @@ angular.module('jabbrApp')
     }
     $scope.localVideo; 
     var socket = JabbrSocket;
-    var stream, streamUrl,recordAudio, recordPeerAudio;
+    var stream, peerstream, streamUrl,recordAudio, recordPeerAudio;
     console.log('RoomCtrl Digest')
     VideoStream.once("streamReady", function(userMedia){
       stream = userMedia;
-      recordAudio = RecordRTC(stream);
+
       Room.init(stream)
       streamUrl = URL.createObjectURL(stream);
       $scope.$apply(function(){
@@ -35,7 +35,7 @@ angular.module('jabbrApp')
           stream: URL.createObjectURL(peer.stream)
         };
       })
-      recordPeerAudio = RecordRTC(peer.stream);
+      peerstream = peer.stream;
       $scope.partner = Session.getCurrentlyMessaging();
 
       console.log('roomId line 47: ');
@@ -58,71 +58,79 @@ angular.module('jabbrApp')
     // $scope.getLocalVideo = function () {
     //   return $sce.trustAsResourceUrl(stream);
     // };
+    var sendBothRecording = function(audioDataURL) {
+      recordPeerAudio.stopRecording(function() {
+        recordPeerAudio.getDataURL(function (peerAudioURL) {
+          var files = {
+            selfAudio: {
+              type: recordAudio.getBlob().type || 'audio/wav',
+              dataURL: audioDataURL
+            },
+            peerAudio: {
+              type: recordPeerAudio.getBlob().type || 'audio/wav',
+              dataURL: peerAudioURL
+            },
+            user: {
+              user: Auth.getCurrentUser()
+              // TODO: add peer email
+            },
+            room: location.pathname.split('/').pop()
+          };
+          socket.emit('audio', files);
+        })
+      })
+    };
 
     $scope.startRecording = function() {
+      recordAudio = RecordRTC(stream);
+      recordPeerAudio = peerstream ? RecordRTC(peerstream) : "";
       $scope.stopDisabled = false;
       recordAudio.startRecording();
       recordPeerAudio && recordPeerAudio.startRecording();
     };
 
     $scope.stopRecording = function() {
+
       $scope.stopDisabled = true;
-
+      
       //if peer exists, record both streams
-      //stop self's audio recording
-      recordPeerAudio && recordAudio.stopRecording(function() {
-        //stop peer's audio recording
-        recordPeerAudio.stopRecording(function() {
-          //get self's audio data-URL
-          recordAudio.getDataURL(function (audioDataURL) {
-            //get peer's audio data-URL
-            recordPeerAudio.getDataURL(function (peerAudioURL) {
-              var files = {
-                selfAudio: {
-                  type: recordAudio.getBlob().type || 'audio/wav',
-                  dataURL: audioDataURL
-                },
-                peerAudio: {
-                  type: recordPeerAudio.getBlob().type || 'audio/wav',
-                  dataURL: peerAudioURL
-                },
-                user: {
-                  user: Auth.getCurrentUser()
-                  // TODO: add peer email
-                },
-                room: location.pathname.split('/').pop()
-              };
-              socket.emit('audio', files);
-            });
+      if(Object.keys(recordPeerAudio).length !== 0) {
 
+        recordAudio.stopRecording(function() {
+          recordAudio.getDataURL(function (audioDataURL) {
+            sendBothRecording(audioDataURL);
           });
         });
-      });
-
-      //if no peer, record self only
-      !recordPeerAudio && recordAudio.stopRecording(function() {
-         // get audio data-URL
-         recordAudio.getDataURL(function(audioDataURL) {
-             var files = {
-                 selfAudio: {
-                     type: recordAudio.getBlob().type || 'audio/wav',
-                     dataURL: audioDataURL
-                 },
-                 peerAudio: {},
-                 user: {
-                   user: Auth.getCurrentUser()
-                 }
-             };
-             socket.emit('audio', files);
-          });
-      });
+      } else {
+        //if no peer, record self only
+        recordAudio.stopRecording(function() {
+           // get audio data-URL
+           recordAudio.getDataURL(function(audioDataURL) {
+               var files = {
+                   selfAudio: {
+                       type: recordAudio.getBlob().type || 'audio/wav',
+                       dataURL: audioDataURL
+                   },
+                   peerAudio: {},
+                   user: {
+                     user: Auth.getCurrentUser()
+                   }
+               };
+               socket.emit('audio', files);
+            });
+        });
+      }
     
     };
 
     socket.on("merged", function(filename) {
       console.log(filename + " successfully saved to database");
     });
-  
+    
+    $scope.toggleAudio = function() {
+      stream.getAudioTracks()[0].enabled =
+         !(stream.getAudioTracks()[0].enabled);
+    }
   //-----chat stuff-----//
   $scope.user = Auth.getCurrentUser();
   $scope.targetLanguages = $scope.currentUser.languagesLearning;
