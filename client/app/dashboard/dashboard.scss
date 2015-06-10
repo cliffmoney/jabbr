@@ -137,27 +137,50 @@ svg {
 }
 
 
-.recording-box {
-  position: relative;
-}
+
 #loader 
 { fill: #888 }
 
 #border 
 { fill: $brand-primary; }
 
-#center-circle 
+#center-circle, #top-circle,
 { fill: #888; }
 
 #larger-circle 
 { fill: #000; }
 
+#larger-circle:hover {
+  fill: #444;
+  cursor: pointer;
+}
+#border:hover {
+  cursor: pointer;
+}
+#marker-edit {
+  fill: #396CFF; 
+}
+.marker:hover {
+  fill: $brand-primary;
+  cursor: pointer;
+}
+.circle-play {
+  display: block;
+  width: 700px;
+  height: 700px;
+  margin: 0 auto;
+  position: relative;
+}
 .control-overlay {
   position: absolute;
-  margin: 0 auto;
   width: 350px;
   height: 350px;
   top: 100px;
-  left: 262.5px;
+  left: 175px;
   z-index: 999;
+}
+
+.marker-panel {
+  text-align: center;
+  margin-top: 50px;
 }

@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 
 var AudioCommentSchema = new Schema({
   filename: String,
-  comments: [{time: Number, body: String}]
+  comments: [{fromTime: Number, toTime: Number, body: String}]
 });
 
 module.exports = mongoose.model('AudioComment', AudioCommentSchema);
