@@ -22,7 +22,7 @@ var writeToDisk = function(recording){ // roomId is a prop of recording
     fs.writeFile(otherHalf, fileBuffer, function() {
       var userEmails = [];
       userEmails.push(singles[filename], recording.user.email);
-      merge(filename, userEmails);
+      setTimeout(merge(filename, userEmails, socket), 1000);
       delete singles[filename]; 
     })
   } else {
