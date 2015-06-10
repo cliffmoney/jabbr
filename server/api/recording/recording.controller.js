@@ -7,7 +7,7 @@ var Q = require('q');
 
 // Get list of recordings
 exports.index = function (req, res, next) {
-  Recording.find({creator: req.user.email}, function(err, recordings) {
+  Recording.find({"creator.email": req.user.email}, function(err, recordings) {
     if(err) { return handleError(res, err); }
     if (!recordings) {return res.json([]);}
     return res.json({data: recordings});

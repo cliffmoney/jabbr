@@ -5,8 +5,8 @@ var mongoose = require('mongoose'),
 
 var RecordingSchema = new Schema({
   filename: String,
-  creator: String,
-  partner: String,
+  creator: Object,
+  partner: Object,
   date: Number
 });
 

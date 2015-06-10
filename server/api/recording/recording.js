@@ -26,7 +26,12 @@ var writeToDisk = function(recording){ // roomId is a prop of recording
     fs.writeFile(filePath+'.wav', filebuffer, function() {
       fs.writeFile(filePath+'_1.wav', fileBuffer, function() {
         var userEmails = [];
-        userEmails.push(firstHalf.creator, recording.user.email);
+        userEmails.push(firstHalf.userInfo, {
+          email: recording.user.email,
+          pic: recording.user.pic,
+          name: recording.user.name
+        });
+
         merge(filename, userEmails);
         delete singles[filename]; 
       });
@@ -34,7 +39,11 @@ var writeToDisk = function(recording){ // roomId is a prop of recording
 
   } else {
     singles[filename] = {
-      creator: recording.user.email,
+      userInfo: {
+        email: recording.user.email,
+        pic: recording.user.pic,
+        name: recording.user.name
+      },
       dataURL : dataURL
     }
   }  
