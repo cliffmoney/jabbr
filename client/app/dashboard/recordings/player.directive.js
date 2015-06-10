@@ -1,7 +1,7 @@
 angular.module('jabbrApp').directive('circleplay', [function () {
     return {
         restrict: 'E',
-        template: '<div class="control-overlay"><h3 class="text-center">With {{recording.partner}} on {{parseDate(recording.date)}}</h3><button id="pButton" class="play center-block" ng-click="play()"><i class="fa fa-play-circle fa-2x"></i></button><button ng-click="changeSpeed()"class="center-block">Change Speed</button><div class="time-display"><h3 class="text-center"><span class="track-time"></span> / <span class="track-duration"></span></h3></div><div class="interface"><button class="center-block btn btn-md" ng-click="showStepOne()" ng-show="!commentStepOne && !commentStepTwo">Create Marker</button><div ng-show="commentStepOne"><p class="text-center">Select two points on the outside track to create a marker</p><h3 class="text-center"><span class="from-time"></span> - <span class="to-time"></span></h3><button class="center-block btn btn-md" ng-click="showStepTwo()">Mark</button><button class="center-block btn btn-md" ng-click="cancelMark()">Cancel</button></div><div ng-show="commentStepTwo"><form class="form" name="form" ng-submit="saveMarker(markerText)" novalidate><div class="form-group"><label>Marker Text</label><textarea type="text" ng-model="markerText" name="text" class="form-control" ng-model="comment.text" required></textarea></div><button class="btn btn-inverse btn-lg btn-login center-block" type="submit">Save Marker</button><button class="center-block btn btn-md" ng-click="cancelMark()">Cancel</button></form></div><div class="marker-panel"></div></div></div><svg id="svg-player" width="700" height="700" viewbox="0 0 700 700"><circle id="larger-circle" cx="350" cy="350" r="349" /><path id="border" transform="translate(350, 350)"/><circle id="center-circle" cx="350" cy="350" r="325"/><line id="first-edge" x1="0" y1 = "0" transform="translate(350, 350)" stroke-width="3" stroke="#396CFF" /><path id="marker-edit" transform="translate(350, 350)"/><circle id="top-circle" cx="350" cy="350" r="305" /></svg>',
+        template: '<div class="control-overlay"><h3 class="text-center">With {{recording.partner.name}} on {{parseDate(recording.date)}}</h3><div class="row"><div class="col-md-6"><button id="pButton" class="play center-block" ng-class="{red: !showPlay}" ng-click="play()"><i ng-show="showPlay" class="fa fa-play-circle fa-3x"></i><i ng-hide="showPlay" class="fa fa-pause fa-2x"></i></button></div><div class="col-md-6"><button ng-click="changeSpeed()" id="slowButton" class="play center-block" ng-class="{orange: slowedDown}">x0.8</button></div></div><div class="time-display"><h3 class="text-center"><span class="track-time"></span> / <span class="track-duration"></span></h3></div><div class="interface"><button class="mark-start center-block btn btn-md btn-primary" ng-click="showStepOne()" ng-show="!commentStepOne && !commentStepTwo">Create Marker</button><div ng-show="commentStepOne" class="comment-one"><h3 class="text-center">Click two points on the track</h3><h3 class="text-center"><span class="from-time"></span> - <span class="to-time"></span></h3><button class="center-block btn btn-lg btn-primary" ng-click="showStepTwo()">Mark</button><button class="center-block btn btn-md cancel-mark" ng-click="cancelMark()">Cancel</button></div><div class="comment-two" ng-show="commentStepTwo"><form class="form" name="form" ng-submit="saveMarker(markerText)" novalidate><div class="form-group"><label>Marker Text</label><textarea type="text" ng-model="markerText" name="text" class="form-control" ng-model="comment.text" required></textarea></div><button class="btn btn-primary btn-lg btn-login center-block" type="submit">Save Marker</button><button class="center-block btn btn-md cancel-mark" ng-click="cancelMark()">Cancel</button></form></div><div class="marker-panel"></div></div></div><svg id="svg-player" width="700" height="700" viewbox="0 0 700 700"><circle id="larger-circle" cx="350" cy="350" r="349" /><path id="border" transform="translate(350, 350)"/><circle id="center-circle" cx="350" cy="350" r="325"/><line id="first-edge" x1="0" y1 = "0" transform="translate(350, 350)" stroke-width="3" stroke="#396CFF" /><path id="marker-edit" transform="translate(350, 350)"/><circle id="top-circle" cx="350" cy="350" r="305" /></svg>',
         replace: false,
         link: function (scope, element, attrs) {
             var audioSrc = attrs.src;
@@ -38,6 +38,8 @@ angular.module('jabbrApp').directive('circleplay', [function () {
               , α = 0
               , π = Math.PI;
 
+            scope.showPlay = true;
+            scope.slowedDown = false;
             scope.commentStepOne = false;
             scope.commentStepTwo = false;
             scope.cutError = false;
@@ -73,9 +75,11 @@ angular.module('jabbrApp').directive('circleplay', [function () {
               if(!slowedDown) {
                 audio.playbackRate = 0.8;
                 slowedDown = true;
+                scope.slowedDown = true;
               } else {
                 audio.playbackRate = 1.0;
                 slowedDown = false;
+                scope.slowedDown = false;
               }
             };
 
@@ -140,9 +144,13 @@ angular.module('jabbrApp').directive('circleplay', [function () {
                     if(!play) {
                       draw();
                     }
+                    scope.commentStepOne = false;
+                    scope.commentStepTwo = false;
                     markerPanel.empty(); // clear if there's already one
                     var text = $('<h4>').text(this.data('text'));
                     var loopButton = $('<button>').text("Loop Marker");
+                    loopButton.html('<i class="fa fa-refresh fa-3x"></i>');
+                    loopButton.addClass('btn play center-block');
                     loopButton.on('click', function(e) {
                       looping = !looping;
                       playLoop(thisMarker.data('fromTime'), thisMarker.data('toTime'));
@@ -204,9 +212,13 @@ angular.module('jabbrApp').directive('circleplay', [function () {
                     if(!play) {
                       draw();
                     }
+                    scope.commentStepOne = false;
+                    scope.commentStepTwo = false;
                     markerPanel.empty(); // clear if there's already one
                     var text = $('<h4>').text(this.data('text'));
                     var loopButton = $('<button>').text("Loop Marker");
+                    loopButton.html('<i class="fa fa-refresh fa-3x"></i>');
+                    loopButton.addClass('btn play center-block');
                     loopButton.on('click', function(e) {
                       looping = !looping;
                       playLoop(thisMarker.data('fromTime'), thisMarker.data('toTime'));
@@ -319,6 +331,7 @@ angular.module('jabbrApp').directive('circleplay', [function () {
               trackTime.text(formatSecondsAsTime(Math.floor(audio.currentTime).toString()));
             });
 
+
             function formatSecondsAsTime(secs, format) {
               var hr  = Math.floor(secs / 3600);
               var min = Math.floor((secs - (hr * 3600))/60);
@@ -334,17 +347,21 @@ angular.module('jabbrApp').directive('circleplay', [function () {
               return min + ':' + sec;
             };
 
+
+
             scope.play = function () {
                 if (audio.paused) {
                     play = true;
                     draw();
                     audio.play();
+                    scope.showPlay = false;
                 } else {
                     play = false;
                     if(looping) {
                       looping = false;
                     }
                     audio.pause();
+                    scope.showPlay = true;
                 }
             };
 

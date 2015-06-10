@@ -83,11 +83,31 @@
 }
 
 #pButton{
+  background: #03a65a;
+}
+
+#slowButton.orange {
+  background-color: #fd8a18;
+}
+
+.play {
+  background-size: 50% 50%;
+  background-position: center;
   height:60px; 
   width: 60px;
   border: none;
-  background-size: 50% 50%;
-  background-position: center;
+}
+#slowButton {
+  background-color: #fbdc2c;
+  font-size: 17px;
+}
+
+#pButton.red {
+  background: #db475f;
+}
+
+button {
+  outline: 0;
 }
 
 #timeline{
@@ -182,5 +202,26 @@ svg {
 
 .marker-panel {
   text-align: center;
+  margin-top: 50px;
+}
+
+.comment-one {
+  margin-top: 75px;
+}
+
+.comment-two {
+  margin-top: 75px;
+}
+
+.cancel-mark {
+  margin-top: 15px;
+}
+
+.mark-start {
+  margin-top: 20px;
+
+}
+
+.marker-panel button {
   margin-top: 50px;
 }
