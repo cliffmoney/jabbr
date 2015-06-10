@@ -8,7 +8,7 @@ var AudioComment = require('./audioComment.model');
 exports.show = function(req, res) {
   AudioComment.findOne({filename: req.params.id}, function (err, audioComment) {
     if(err) { return handleError(res, err); }
-    if(!audioComment) { return res.send([]); }
+    if(!audioComment) { return res.send(404); }
     return res.json(audioComment);
   });
 };
@@ -23,7 +23,7 @@ exports.upsert = function(req, res) {
       comments.push(req.body.comments);
       AudioComment.create({filename: req.body.filename, comments:comments}, function(err, recording) {
         if(err) { return handleError(res, err); }
-        return res.json(201, audioComment);
+        return res.json(201, recording);
       });
     } else {
       audioComment.comments.push(req.body.comments);

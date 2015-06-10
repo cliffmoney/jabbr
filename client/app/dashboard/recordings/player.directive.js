@@ -119,7 +119,6 @@ angular.module('jabbrApp').directive('circleplay', [function () {
                 var time = formatSecondsAsTime(Math.floor(scope.duration).toString());
                 trackDuration.text(time);
                 scope.minutes = parseInt(time.split(":")[0]);
-                console.log(scope.minutes);
               }
               scope.Audio.get(scope.recording.filename, function(recording, status) {
                 for(var i = 0; i < recording.comments.length; i++) {
