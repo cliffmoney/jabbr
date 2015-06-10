@@ -6,38 +6,41 @@
   <span ng-bind="error"></span>
 </div>
 
-<div class="row">
-  <div class="col-md-7">
-    <div class="video-wrapper partner-video">
+<!-- <div class="row"> -->
+<!--   <div class="col-md-7"> -->
+<!--     <div class="video-wrapper partner-video"> -->
       <video class="col-md-4" ng-src="{{peer.stream}}" autoplay></video>
-    </div>
-  </div>
-  <div class="col-md-5 user-panel">
-    <div class="video-wrapper user-video">
-      <div class="col-md-2">
-        <video ng-src="{{localVideo}}" autoplay muted></video>
-      </div>
+<!--     </div> -->
+<!--   </div> -->
+<!--   <div class="col-md-5 user-panel"> -->
+<!--     <div class="video-wrapper user-video"> -->
+ <!--      <div class="col-md-2"> -->
+        <video class='col-md-2' ng-src="{{localVideo}}" autoplay></video>
+<!--       </div> -->
+<!--     </div> -->
+<!--     <div class='row'>  -->
+      <i class="glyphicon glyphicon-volume-off" ng-hide='muted' ng-click='toggleAudio()'></i>
+      <i class="glyphicon glyphicon-volume-up" ng-show='muted' ng-click='toggleAudio()'></i>
 
-    </div>
-    <div class='row'>      <button ng-click='toggleAudio()'>Mute/Unmute></button>
-      <div class='conversation col-md-12'>
+
+      <i class="glyphicon glyphicon-eye-close" ng-hide='cameraOff' ng-click='toggleVideo()'></i>
+      <i class="glyphicon glyphicon-eye-open" ng-show='cameraOff' ng-click='toggleVideo()'></i>
+ 
+      <div class='conversation'>
         <ul id="msgs" class="list-unstyled"></ul>
       </div>
-    </div>
+<!--     </div> -->
 
       <div class="form-group form-inline">
         <form ng-submit='sendMsg()'>
+          <input type="text" class="form-control input-lg" name="msg" placeholder="Send message in" ng-model='msg'>
           <select class='btn btn-default btn-lg' ng-options="language.language for language in targetLanguages" ng-model="targetLanguage"></select>
-          <input type="text" class="form-control input-lg" name="msg" placeholder="Send message" ng-model='msg'>
           <input type="submit" name="send" id="send" value="Send" class="btn btn-primary btn-lg">
-          <button id="start" class="btn btn-lg" ng-click="startRecording()" ng-show="stopDisabled">Start Recording</button>
-          <button id="stop" class="btn btn-lg" ng-click="stopRecording()" ng-hide="stopDisabled">Stop Recording</button>
-         
         </form>
       </div>
 
-  </div>
-</div>
-
+<!--   </div> -->
+<!-- </div>
+ -->
     
 
