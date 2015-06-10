@@ -2,32 +2,8 @@
 
 angular.module('jabbrApp')
   .factory('Recording', function ($resource) {
-    return $resource('/api/recordings/:id/:controller', {
+    return $resource('/api/recordings/:id/', {
       id: '@_id'
     },
-    {
-      get: {
-        method: 'GET',
-      },
-      // getUserRecordings: {
-      //   method: 'GET',
-      //   params: {
-      //     id:'userRecordings'
-      //   }
-      // },
-      getOneRecording: {
-        method: 'GET',
-        // isArray: true,
-        params: {
-          id:'oneRecording'
-        }
-      },
-      // show: {
-      //   method: 'GET',
-      //   isArray: true,
-      //   params: {
-
-      //   }
-      // }
-    });
+    {});
   });

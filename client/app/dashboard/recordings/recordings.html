@@ -3,10 +3,10 @@
 <h1>Recordings</h1>
 <div class='row' ng-repeat="recording in userRecordings">
   <div class='col-md-2'>
-    <img ng-src="" width="100">
+    <img ng-src="{{recording.partner.pic}}" width="100">
   </div>
   <div class='col-md-3'>
-    {{recording.partner}}<br/>
+    {{recording.partner.name}}<br/>
     {{ parseDate(recording.date) }}<br/>
     {{ parseTime(recording.date) }}
   </div>

@@ -9,7 +9,6 @@ angular.module('jabbrApp')
     // ==========
 
     Recording.get(function(res) {
-      console.log(res.data);
       $scope.userRecordings = res.data;
     });
 
@@ -35,15 +34,11 @@ angular.module('jabbrApp')
 
     // ==========
     // use $stateParams.recordingId
-    $scope.getOneRecording = function() {
-      Recording.getOneRecording({ id: $stateParams.recordingId }, function(res) {
-      
-        // console.log(res.recording);
-        $scope.userRecordings = [res];
-      });
-    };
+    Recording.get({ id: $stateParams.recordingId }, function(res) {
+      $scope.userRecordings = [res];
+    });
+  
 
-    $scope.getOneRecording();
 
     $scope.parseTime = function(unixDate) {
       var foo = new Date(unixDate);
@@ -57,8 +52,6 @@ angular.module('jabbrApp')
     
     
     $scope.audioUrl = function(filename) {
-      // console.log('location.host: ');
-      // console.log(location.host);
       return 'http://' + location.host + '/' + filename;
     };
 
