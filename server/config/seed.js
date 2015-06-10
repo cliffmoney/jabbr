@@ -71,67 +71,67 @@ User.find({}).remove(function() {
     email: 'admin@jabbr.com',
     password: 'admin'
   }, function() {
-      console.log('finished populating users');
-      User.findOne({email: 'angela@gmail.com'}, function(err, user1){
-        User.findOne({email: 'jeff@gmail.com'}, function(err, user2){
-          Recording.create(
-            {
-              filename: "04+One+In+A+Million.mp3",
-              creator: user1._id,
-              partner: user2._id,
-              date: new Date('May 26, 2015').valueOf()
-            }
-          );
-        });
-      });
-      User.findOne({email: 'bill@gmail.com'}, function(err, user1){
-        User.findOne({email: 'brandon@gmail.com'}, function(err, user2){
-          Recording.create(
-            {
-              filename: "https://s3-us-west-1.amazonaws.com/hr-mytunes/data/04+One+In+A+Million.mp3",
-              creator: user1._id,
-              partner: user2._id,
-              date: new Date('May 16, 2015').valueOf()
-            }
-          );
-        });
-      });
-      User.findOne({email: 'angela@gmail.com'}, function(err, user1){
-        User.findOne({email: 'bill@gmail.com'}, function(err, user2){
-          Recording.create(
-            {
-              filename: "uploadsfoldertest.mp3",
-              creator: user1._id,
-              partner: user2._id,
-              date: new Date('May 28, 2015').valueOf()
-            }
-          );
-        });
-      });
-      User.findOne({email: 'jeff@gmail.com'}, function(err, user1){
-        User.findOne({email: 'angela@gmail.com'}, function(err, user2){
-          Recording.create(
-            {
-              filename: "https://s3-us-west-1.amazonaws.com/hr-mytunes/data/04+One+In+A+Million.mp3",
-              creator: user1._id,
-              partner: user2._id,
-              date: new Date('May 16, 2015').valueOf()
-            }
-          );
-        });
-      });
-      User.findOne({email: 'jeff@gmail.com'}, function(err, user1){
-        User.findOne({email: 'angela@gmail.com'}, function(err, user2){
-          Recording.create(
-            {
-              filename: "https://s3-us-west-1.amazonaws.com/hr-mytunes/data/04+One+In+A+Million.mp3",
-              creator: user2._id,
-              partner: user1._id,
-              date: new Date('May 16, 2015').valueOf()
-            }
-          );
-        });
-      });
+       console.log('finished populating users');
+      // User.findOne({email: 'angela@gmail.com'}, function(err, user1){
+      //   User.findOne({email: 'jeff@gmail.com'}, function(err, user2){
+      //     Recording.create(
+      //       {
+      //         filename: "04+One+In+A+Million.mp3",
+      //         creator: user1._id,
+      //         partner: user2._id,
+      //         date: new Date('May 26, 2015').valueOf()
+      //       }
+      //     );
+      //   });
+      // });
+      // User.findOne({email: 'bill@gmail.com'}, function(err, user1){
+      //   User.findOne({email: 'brandon@gmail.com'}, function(err, user2){
+      //     Recording.create(
+      //       {
+      //         filename: "https://s3-us-west-1.amazonaws.com/hr-mytunes/data/04+One+In+A+Million.mp3",
+      //         creator: user1._id,
+      //         partner: user2._id,
+      //         date: new Date('May 16, 2015').valueOf()
+      //       }
+      //     );
+      //   });
+      // });
+      // User.findOne({email: 'angela@gmail.com'}, function(err, user1){
+      //   User.findOne({email: 'bill@gmail.com'}, function(err, user2){
+      //     Recording.create(
+      //       {
+      //         filename: "uploadsfoldertest.mp3",
+      //         creator: user1._id,
+      //         partner: user2._id,
+      //         date: new Date('May 28, 2015').valueOf()
+      //       }
+      //     );
+      //   });
+      // });
+      // User.findOne({email: 'jeff@gmail.com'}, function(err, user1){
+      //   User.findOne({email: 'angela@gmail.com'}, function(err, user2){
+      //     Recording.create(
+      //       {
+      //         filename: "https://s3-us-west-1.amazonaws.com/hr-mytunes/data/04+One+In+A+Million.mp3",
+      //         creator: user1._id,
+      //         partner: user2._id,
+      //         date: new Date('May 16, 2015').valueOf()
+      //       }
+      //     );
+      //   });
+      // });
+      // User.findOne({email: 'jeff@gmail.com'}, function(err, user1){
+      //   User.findOne({email: 'angela@gmail.com'}, function(err, user2){
+      //     Recording.create(
+      //       {
+      //         filename: "https://s3-us-west-1.amazonaws.com/hr-mytunes/data/04+One+In+A+Million.mp3",
+      //         creator: user2._id,
+      //         partner: user1._id,
+      //         date: new Date('May 16, 2015').valueOf()
+      //       }
+      //     );
+      //   });
+      // });
     }
   );
 });

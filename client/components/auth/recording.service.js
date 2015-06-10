@@ -8,16 +8,13 @@ angular.module('jabbrApp')
     {
       get: {
         method: 'GET',
-        params: {
-          id:'me'
-        }
       },
-      getUserRecordings: {
-        method: 'GET',
-        params: {
-          id:'userRecordings'
-        }
-      },
+      // getUserRecordings: {
+      //   method: 'GET',
+      //   params: {
+      //     id:'userRecordings'
+      //   }
+      // },
       getOneRecording: {
         method: 'GET',
         // isArray: true,

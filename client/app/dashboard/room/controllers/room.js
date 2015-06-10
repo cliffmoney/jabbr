@@ -2,16 +2,22 @@
 
 angular.module('jabbrApp')
   .controller('RoomCtrl', function ($sce, VideoStream, $location, $stateParams, $scope, Room, $state, JabbrSocket, Auth, Session, $http) {
-
+    //check if webrtc is supported 
     if (!window.RTCPeerConnection || !navigator.getUserMedia) {
       $scope.error = 'WebRTC is not supported by your browser. You can try the app with Chrome and Firefox.';
       return;
     }
+
     $scope.localVideo; 
+    $scope.peer = {};
+    $scope.partner = '';
+    $scope.stopDisabled = true;
     var socket = JabbrSocket;
     var stream, peerstream, streamUrl,recordAudio, recordPeerAudio;
     var startedRecording = false;
-    console.log('RoomCtrl Digest')
+    var roomId = location.pathname.split('/').pop();
+    var user = Auth.getCurrentUser();
+
     VideoStream.once("streamReady", function(userMedia){
       stream = userMedia;
       recordAudio = RecordRTC(stream);
@@ -20,14 +26,13 @@ angular.module('jabbrApp')
       $scope.$apply(function(){
        $scope.localVideo = streamUrl
       });
-      console.log("The blobURL is: " + streamUrl);
-      console.log("Attempting to join: " + $stateParams.roomId);
+      // console.log("The blobURL is: " + streamUrl);
+      // console.log("Attempting to join: " + $stateParams.roomId);
       Room.joinRoom($stateParams.roomId);
     });
+
     VideoStream.get();
     
-    $scope.peer = {};
-    $scope.partner = '';
     Room.on('peer.stream', function (peer) {
       $scope.$apply(function(){
         console.log('Client connected, adding new stream');
@@ -42,14 +47,8 @@ angular.module('jabbrApp')
       }
       peerstream = peer.stream;
       $scope.partner = Session.getCurrentlyMessaging();
-
-      console.log('roomId line 47: ');
-      console.log(location.pathname.split('/').pop());
-      console.log('scope peer: ');
-      console.log($scope.peer);
-      
-
     });
+
     Room.on('peer.disconnected', function (peer) {
       stopRecording();
       startedRecording = false;
@@ -67,86 +66,27 @@ angular.module('jabbrApp')
       }
     })
 
-    $scope.stopDisabled = true;
-
-    // $scope.getLocalVideo = function () {
-    //   return $sce.trustAsResourceUrl(stream);
-    // };
-    // var sendBothRecording = function(audioDataURL) {
-    //   recordPeerAudio.stopRecording(function() {
-    //     recordPeerAudio.getDataURL(function (peerAudioURL) {
-    //       var files = {
-    //         selfAudio: {
-    //           type: recordAudio.getBlob().type || 'audio/wav',
-    //           dataURL: audioDataURL
-    //         },
-    //         peerAudio: {
-    //           type: recordPeerAudio.getBlob().type || 'audio/wav',
-    //           dataURL: peerAudioURL
-    //         },
-    //         user: {
-    //           user: Auth.getCurrentUser()
-    //           // TODO: add peer email
-    //         },
-    //         room: location.pathname.split('/').pop()
-    //       };
-    //       socket.emit('audio', files);
-    //     })
-    //   })
-    // };
-
-    // $scope.startRecording = function() {
-    //   recordAudio = RecordRTC(stream);
-    //   recordPeerAudio = peerstream ? RecordRTC(peerstream) : "";
-    //   $scope.stopDisabled = false;
-    //   recordAudio.startRecording();
-    //   recordPeerAudio && recordPeerAudio.startRecording();
-    // };
-
     var stopRecording = function() {
-
-      // $scope.stopDisabled = true;
-      
-      // //if peer exists, record both streams
-      // if(Object.keys(recordPeerAudio).length !== 0) {
-
-      //   recordAudio.stopRecording(function() {
-      //     recordAudio.getDataURL(function (audioDataURL) {
-      //       sendBothRecording(audioDataURL);
-      //     });
-      //   });
-      // } else {
-        //if no peer, record self only
-        recordAudio.stopRecording(function() {
-           // get audio data-URL
-           recordAudio.getDataURL(function(audioDataURL) {
-               var files = {
-                   selfAudio: {
-                       type: recordAudio.getBlob().type || 'audio/wav',
-                       dataURL: audioDataURL
-                   },
-                   peerAudio: {},
-                   user: {
-                     user: Auth.getCurrentUser()
-                   }
-               };
-               socket.emit('audio', files);
-            });
+      recordAudio.stopRecording(function() {
+         // get audio data-URL
+        recordAudio.getDataURL(function(audioDataURL) {
+          var files = {
+            type: recordAudio.getBlob().type || 'audio/wav',
+            dataURL: audioDataURL,
+            user: Auth.getCurrentUser(),
+            roomId: roomId,     
+          };
+          socket.emit('audio', files);
         });
-      // }
-    
+      });
     };
-
-    socket.on("merged", function(filename) {
-      console.log(filename + " successfully saved to database");
-    });
     
     $scope.toggleAudio = function() {
       stream.getAudioTracks()[0].enabled =
          !(stream.getAudioTracks()[0].enabled);
     }
-  //-----chat stuff-----//
-  $scope.user = Auth.getCurrentUser();
+
+  //-----------------CHAT AND TRANSLATE---------------//
   $scope.targetLanguages = $scope.currentUser.languagesLearning;
   $scope.msg = "";
   $scope.targetLanguage = $scope.targetLanguages[0];
@@ -156,6 +96,7 @@ angular.module('jabbrApp')
     'Spanish': 'es',
     'Arabic': 'ar' 
   };
+
   $scope.sendMsg = function() {
     if($scope.msg !== "") {
       var languageCode = languageMap[$scope.targetLanguage.language];
@@ -166,7 +107,7 @@ angular.module('jabbrApp')
         var data = {
           t: translation,
           o: $scope.msg,
-          user: $scope.user.name
+          user: user.name
         };
         Room.sendMsg(data, $stateParams.roomId);
         $scope.msg = "";

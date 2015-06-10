@@ -8,15 +8,10 @@ angular.module('jabbrApp')
     $scope.userRecordings = [];
     // ==========
 
-    $scope.getUserRecordings = function() {
-      Recording.getUserRecordings(function(res) {
-        $scope.userRecordings = res.recordings;
-      });
-    };
-
-    $scope.getUserRecordings();
-    // ==========
-
+    Recording.get(function(res) {
+      console.log(res.data);
+      $scope.userRecordings = res.data;
+    });
 
     $scope.parseDate = function(unixDate) {
       var foo = new Date(unixDate);
@@ -29,30 +24,8 @@ angular.module('jabbrApp')
     };    
     
     $scope.audioUrl = function(filename) {
-      // console.log('location.host: ');
-      // console.log(location.host);
-
       return 'http://' + location.host + '/' + filename;
     };
-
-    // $scope.recordingsURL = [];
-    // var socket = JabbrSocket;
-    // var currentUser = Auth.getCurrentUser();
-
-    // ss(socket).removeAllListeners("sendRecording");
-
-    // ss(socket).on("sendRecording", function(recording){
-    //   recording.pipe(blobStream())
-    //   .on('finish', function(){
-    //     $scope.$apply(function(){
-    //       var url = this.toBlobURL();
-    //       $scope.recordingsURL.push(url);
-    //     }.bind(this));
-    //    });
-    // });
-
-    // ss(socket).emit("getRecording", currentUser.email);
-
   })
 
   .controller('RecordingCtrl', function ($scope, Auth, Recording,
