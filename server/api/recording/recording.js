@@ -12,23 +12,31 @@ var singles = {};
 Grid.mongo = mongoose.mongo;
 
 var writeToDisk = function(recording){ // roomId is a prop of recording
-  var filename = recording.roomId;
-  var rootPath = 'server/api/recording/uploads/';
-  var filePath = rootPath + filename,
-      dataURL = recording.dataURL.split(',').pop(),
-      fileBuffer = new Buffer(dataURL, 'base64');
+  var dataURL = recording.dataURL.split(',').pop(),
+      filename = recording.roomId
+
   if (singles[filename]) {
-    var otherHalf = filePath + "_1.wav";
-    fs.writeFile(otherHalf, fileBuffer, function() {
-      var userEmails = [];
-      userEmails.push(singles[filename], recording.user.email);
-      setTimeout(merge(filename, userEmails), 1000);
-      delete singles[filename]; 
-    })
-  } else {
-    singles[filename] = recording.user.email;
-    fs.writeFile(filePath + ".wav", fileBuffer, function() {
+
+    var firstHalf = singles[filename];
+        rootPath = 'server/api/recording/uploads/',
+        filePath = rootPath + filename,
+        fileBuffer = new Buffer(dataURL, 'base64'),
+        filebuffer = new Buffer(firstHalf.dataURL, 'base64');
+
+    fs.writeFile(filePath+'.wav', filebuffer, function() {
+      fs.writeFile(filePath+'_1.wav', fileBuffer, function() {
+        var userEmails = [];
+        userEmails.push(firstHalf.creator, recording.user.email);
+        merge(filename, userEmails);
+        delete singles[filename]; 
+      });
     });
+
+  } else {
+    singles[filename] = {
+      creator: recording.user.email,
+      dataURL : dataURL
+    }
   }  
 };
 
