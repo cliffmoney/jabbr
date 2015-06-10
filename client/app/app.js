@@ -76,4 +76,16 @@ angular.module('jabbrApp', [
         }
       });
     });
+
+    $rootScope.$on('$viewContentLoaded', function() {
+      var windowHeight = $(window).height();
+      var pageHeight = $(document).height();
+      console.log(pageHeight);
+      if (pageHeight > windowHeight) {
+        $('.sidePanel').css('height', pageHeight);
+      } else {
+        $('.sidePanel').css('height', windowHeight);
+      }
+    });
+
   });
