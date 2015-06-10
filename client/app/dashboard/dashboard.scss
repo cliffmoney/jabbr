@@ -3,6 +3,7 @@
 
   .main-content {
     padding-top: 30px;
+    height: auto;
   }
 
   .main-content.theater {
@@ -11,7 +12,6 @@
 
   .sidePanel {
     background-color: $dashboard-primary;
-    height: 600px;
     color: white;
     padding: 0px;
 
