@@ -21,6 +21,7 @@ angular.module('jabbrApp')
     VideoStream.once("streamReady", function(userMedia){
       stream = userMedia;
       stream.getAudioTracks()[0].enabled = true;
+      stream.getVideoTracks()[0].enabled = true;
       recordAudio = RecordRTC(stream);
       Room.init(stream)
       streamUrl = URL.createObjectURL(stream);
