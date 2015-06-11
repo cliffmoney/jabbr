@@ -11,16 +11,6 @@ var Recording = require('../api/recording/recording.model');
 User.find({}).remove(function() {
   User.create({
     provider: 'local',
-    name: 'Test User',
-    email: 'test@test.com',
-    password: 'test',
-    nativeLanguages: ['Arabic'],
-    languagesLearning: [{language: 'English', ability: 2}, {language: 'Spanish', ability: 3}],
-    languagesSpeaking: [{language: 'Arabic', ability: 5} ],
-    intro: 'I spent one year in my youth in Des Moines, Iowa. It was best year of my life but I forget much English. I want to practice my English with people so I can speak better when I return to the states.',
-    country: 'Lebanon'
-  }, {
-    provider: 'local',
     pic: 'https://avatars2.githubusercontent.com/u/6611549',
     name: 'Angela',
     email: 'angela@gmail.com',
@@ -48,8 +38,8 @@ User.find({}).remove(function() {
     email: 'brandon@gmail.com',
     password: '123',
     nativeLanguages: ['English'],
-    languagesLearning: [{language: 'Arabic', ability: 3}, {language: 'Chinese', ability: 3}],
-    languagesSpeaking: [{language: 'English', ability: 5}],
+    languagesLearning: [{language: 'Chinese', ability: 3}],
+    languagesSpeaking: [{language: 'English', ability: 5}, {language: 'Arabic', ability: 3}],
     intro: 'I spent one year in Egypt in 2010 and learned how to speak Egyptian Arabic. But I love the language and want to learn more dialects and more phrases.',
     country: 'USA'
   }, {
