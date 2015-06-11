@@ -21,7 +21,7 @@
     </tr>
   </tbody>
 </table>
-<h3 class='well wellColor'>Your Messages
+<div class='well wellColor'>Your Messages</div>
 <div class = 'message' ng-repeat="message in messages track by message._id | orderBy : sortMessage : true">
   <div class="row" ng-click='markSeen(message); messageFormOpen = !messageFormOpen' ng-class='{seen: message.seen, unseen: !message.seen}'>
     <div class='col-md-4'>

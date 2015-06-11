@@ -11,6 +11,8 @@
     font-size: 100px;
     line-height: 1;
     letter-spacing: -1px;
+    font-family: 'Berkshire Swash', cursive;
+
 }
 
 .hero-unit {
@@ -23,7 +25,8 @@
 }
 
 .feature {
-    color: $brand-primary;   
+    color: #4DB362; 
+    font-weight: bold; 
 }
 
 .feature .glyphicon {
