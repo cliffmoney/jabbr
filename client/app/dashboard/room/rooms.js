@@ -6,6 +6,7 @@ angular.module('jabbrApp')
       .state('roomId', {
         url: '/room/:roomId',
         parent: 'dashboard',
+        // parent: 'base',
         templateUrl: 'app/dashboard/room/views/room.html',
         controller: 'RoomCtrl',
         onExit: function(JabbrSocket, VideoStream, Room) {
