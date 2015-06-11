@@ -14,7 +14,7 @@ angular.module('jabbrApp')
 
     $scope.parseDate = function(unixDate) {
       var foo = new Date(unixDate);
-      return foo.toDateString();
+      return foo.toLocaleDateString();
     };
 
     $scope.parseTime = function(unixDate) {
