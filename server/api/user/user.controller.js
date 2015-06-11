@@ -145,7 +145,7 @@ exports.changeUserPreferences = function(req, res, next) {
     // and aren't already partners with the user
     User.find({'$and': [{ 'languagesSpeaking.language' : {'$in': languageNames } }
        , { '_id' : {'$nin': user.partners}}]}, 
-      'name languagesLearning nativeLanguages languagesSpeaking',
+      'name languagesLearning nativeLanguages languagesSpeaking pic',
       function(err, partners) {
         if(err) return next(err);
         res.json({partners: partners});

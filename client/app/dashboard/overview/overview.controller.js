@@ -2,7 +2,6 @@
 
 angular.module('jabbrApp')
   .controller('OverviewCtrl', function ($scope, $state, User, Message, $http, Partnership, $interval) {
-    
     $scope.suggestedPartners = [];
     $scope.messages = []; 
     $scope.submitted = false; // for showing errors appropriately in the form 
@@ -10,6 +9,7 @@ angular.module('jabbrApp')
 
     User.getSuggestedPartners(function(res) {
       $scope.suggestedPartners = res.partners;
+      console.log($scope.suggestedPartners[0])
     });
 
     //console.log($scope.suggestedPartners);

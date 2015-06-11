@@ -1,24 +1,27 @@
-<h3 class='text-center'>Find a New Language Partner</h3>
-<div class='row text-center partner-list-header'>
-    <div class='col-md-3'><h4>Name</h4></div>
-    <div class='col-md-3'><h4>Native Languages</h4></div>
-    <div class='col-md-3'><h4>Learning</h4></div>
-</div>
-<div class='row suggestion' ng-repeat="partner in suggestedPartners">
-  <div class='col-md-3'>
-    <h4>{{partner.name}}</h4>
-  </div>
-  <div class='col-md-3'>
-    <h4><span ng-repeat='nativeLanguage in partner.nativeLanguages'> {{nativeLanguage}} </span></h4>
-  </div>
-  <div class='col-md-3'>
-    <h4><span ng-repeat='language in partner.languagesLearning'> {{language.language}} </span></h4>
-  </div>
-  <div class='col-md-3'>
-    <button class="btn btn-md btn-primary" ng-click='viewProfile(partner)'>View Profile</button>
-  </div>
-</div>
-<h3 class='text-center'>Messages</h3>
+
+<div class="container siteFont">
+<div class="well wellColor">Language Partner Recommendations</div>
+<table class="table table-hover">
+  <thead>
+    <td class="col-md-1"><h4></h4></td>
+    <td class="col-md-1"><h4>Name</h4></td>
+    <td class="col-md-2"><h4>Native Languages</h4></td>
+    <td class="col-md-2"><h4>Learning</h4></td>
+  </thead>
+  <tbody class="overViewFont">
+    <tr ng-repeat="partner in suggestedPartners" ng-click='viewProfile(partner)'>
+      <td class='col-md-1'><img ng-src="{{partner.pic}}"/></td>
+      <td class='col-md-1'><h4>{{partner.name}}</h4></td>
+      <td class='col-md-2'>
+        <h4><span ng-repeat='nativeLanguage in partner.nativeLanguages'> {{nativeLanguage}} </span></h4>
+      </td>
+      <td class='col-md-2'>
+        <h4><div ng-repeat='language in partner.languagesLearning'> {{language.language}} </div></h4>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3 class='well wellColor'>Your Messages
 <div class = 'message' ng-repeat="message in messages track by message._id | orderBy : sortMessage : true">
   <div class="row" ng-click='markSeen(message); messageFormOpen = !messageFormOpen' ng-class='{seen: message.seen, unseen: !message.seen}'>
     <div class='col-md-4'>

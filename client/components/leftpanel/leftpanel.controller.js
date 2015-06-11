@@ -5,22 +5,22 @@ angular.module('jabbrApp')
         'title': 'Home',
         'state': 'overview'
       }, {
-        'title': 'My Saved Recordings',
+        'title': 'Saved Recordings',
         'state': 'recordings'
       }, {
-        'title': 'My Practice Deck',
+        'title': 'Practice Deck',
         'state': 'deck'
       }, {
-        'title': 'My Partners',
+        'title': 'Partners',
         'state': 'partners'
       }, {
-        'title': 'My Messages',
+        'title': 'Messages',
         'state': 'inbox'
       }, {
-        'title': 'My Profile',
+        'title': 'Profile',
         'state': 'myprofile'
       }, {
-        'title': 'My Preferences',
+        'title': 'Preferences',
         'state': 'preferences'
       }
     ];
