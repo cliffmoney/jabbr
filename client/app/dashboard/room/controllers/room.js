@@ -20,6 +20,7 @@ angular.module('jabbrApp')
 
     VideoStream.once("streamReady", function(userMedia){
       stream = userMedia;
+      stream.getAudioTracks()[0].enabled = true;
       recordAudio = RecordRTC(stream);
       Room.init(stream)
       streamUrl = URL.createObjectURL(stream);
@@ -85,13 +86,17 @@ angular.module('jabbrApp')
     $scope.cameraOff = false;
     $scope.toggleAudio = function() {
       $scope.muted = !$scope.muted; 
-      stream.getAudioTracks()[0].enabled =
+      if(stream) {
+        stream.getAudioTracks()[0].enabled =
          !(stream.getAudioTracks()[0].enabled);
+      }
     }
     $scope.toggleVideo = function() {
       $scope.cameraOff = !$scope.cameraOff;
-      stream.getVideoTracks()[0].enabled = 
-      !(stream.getVideoTracks()[0].enabled);
+      if (stream) {
+        stream.getVideoTracks()[0].enabled = 
+        !(stream.getVideoTracks()[0].enabled);
+      }
     }
 
   //-----------------CHAT AND TRANSLATE---------------//

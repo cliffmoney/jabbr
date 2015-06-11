@@ -19,8 +19,7 @@
     "recordrtc": "*",
     "raphael": "~2.1.4",
     "snap": "*",
-    "Snap.svg": "~0.4.1",
-    "amplitude": "~2.0.0"
+    "Snap.svg": "~0.4.1"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",
