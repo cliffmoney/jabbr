@@ -1,5 +1,5 @@
 <div class="control-overlay">
-  <h3 class="text-center">With {{recording.partner}} on {{parseDate(recording.date)}}</h3>
+  <h3 class="text-center">With {{recording.partner.name}} on {{ parseDate(recording.date) }}</h3>
   <button id="pButton" class="play center-block" ng-click="play()">
     <i class="fa fa-play-circle fa-2x"></i>
   </button>

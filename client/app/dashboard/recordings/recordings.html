@@ -1,21 +1,21 @@
+ <h1><center>Recordings</center></h1></br>
+  <div class='col-md-4' ng-repeat="recording in userRecordings">
+  <div class='row metadata'>
 
-<div class="col-md-12">
-<h1>Recordings</h1>
-<div class='row' ng-repeat="recording in userRecordings">
-  <div class='col-md-2'>
-    <img ng-src="{{recording.partner.pic}}" width="100">
+    <img class='col-sm-6' ng-src="{{recording.partner.pic}}" width="100">
+
+    <div class='col-sm-6 info'>
+      <p><strong>{{recording.partner.name}}</strong></p>
+      <p>{{ parseDate(recording.date) }}</p>
+      <p><button class='btn'><a ng-href="dashboard/recordings/{{recording._id}}">Comment</a></button></p>
+    </div>
   </div>
-  <div class='col-md-3'>
-    {{recording.partner.name}}<br/>
-    {{ parseDate(recording.date) }}<br/>
-    {{ parseTime(recording.date) }}
+
+  <div class='row audio'>
+      <audio controls ng-src="{{ audioUrl(recording.filename) }}"></audio>
+    </div>
   </div>
-  <div class='col-md-6'>
-    <a ng-href="dashboard/recordings/{{recording._id}}">details</a>
-    <audio controls ng-src="{{ audioUrl(recording.filename) }}"></audio>
-  </div>
-</div>
 
 
-<audio>
-</div>
+
+
